@@ -5,6 +5,7 @@
 Licence
 ======
 **Tricolore - Community software**
+
 Copyright (C) 2014 Maciej "Macsch15" Schmidt
 
 This program is free software: you can redistribute it and/or modify
