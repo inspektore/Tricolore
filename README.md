@@ -4,7 +4,6 @@
 
 Licence
 ======
-**Tricolore - Community software**
 
 Copyright (C) 2014 Maciej "Macsch15" Schmidt
 
