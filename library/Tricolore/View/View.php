@@ -4,10 +4,10 @@ namespace Tricolore\View;
 class View
 {
     /**
-    * Integrate with Twig
-    * 
-    * @return void
-    */
+     * Integrate with Twig
+     * 
+     * @return void
+     */
     public function register()
     {
 

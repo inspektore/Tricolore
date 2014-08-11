@@ -6,11 +6,11 @@ use Tricolore\View\View;
 class Application
 {
     /**
-    * Register application and services
-    *
-    * @param array $options
-    * @return void
-    */
+     * Register application and services
+     *
+     * @param array $options
+     * @return void
+     */
     public static function register(array $options)
     {
 
