@@ -5,7 +5,7 @@
 Licence
 ======
 
-Copyright (C) 2014 Maciej "Macsch15" Schmidt
+Copyright (C) 2014 Maciej Schmidt
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
