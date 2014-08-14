@@ -10,5 +10,6 @@ Autoloader::register();
 
 Application::register([
     'directory' => __DIR__ . DIRECTORY_SEPARATOR,
-    'environment' => 'dev'
+    'environment' => 'dev',
+    'version' => '0.1 pre-alpha'
 ]);
