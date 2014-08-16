@@ -15,7 +15,7 @@ class Input
             return false;
         }
 
-        if($field_name == null) {
+        if(self::all()[$field_name] == null) {
             return false;
         }
 
