@@ -1,0 +1,5 @@
+service-locator:
+    view: { class: Tricolore\View\View, function: register }
+
+service-autoload:
+#    - { class: Tricolore\Routing\Routing, function: startPattern }
