@@ -1,8 +1,6 @@
 <?php
 namespace Tricolore;
 
-use Tricolore\View\View;
-
 class Application
 {
     /**
