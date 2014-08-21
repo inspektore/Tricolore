@@ -1,5 +1,6 @@
 service-locator:
     view: { class: Tricolore\View\View, function: register }
+    cookie: { class: Tricolore\Http\CookieJar\CookieJar }
 
 service-autoload:
 #    - { class: Tricolore\Routing\Routing, function: startPattern }
