@@ -22,7 +22,7 @@ class View
     /**
      * Integrate with Twig
      * 
-     * @return Tricolore\View
+     * @return \Twig_Environment
      */
     public function register()
     {
@@ -38,6 +38,6 @@ class View
             'strict_variables' => ($in_dev) ?: false
         ]);
 
-        return $this;
+        return $this->environment;
     }
 }
