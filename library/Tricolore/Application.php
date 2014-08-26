@@ -60,7 +60,7 @@ class Application
      */
     public function getEnv()
     {
-        $available_environments = ['dev', 'prod'];
+        $available_environments = ['dev', 'prod', 'test'];
 
         if(isset(self::$options['environment']) === false || self::$options['environment'] == null
             || in_array(self::$options['environment'], $available_environments, true) === false
