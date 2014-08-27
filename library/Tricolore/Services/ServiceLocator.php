@@ -11,6 +11,7 @@ abstract class ServiceLocator
      * Get the service
      * 
      * @param string $key 
+     * @throws Tricolore\Exception\ServicesException
      * @return mixed
      */
     public function get($key)
