@@ -1,6 +1,8 @@
 <?php
 namespace Tricolore;
 
+use Tricolore\Exception\ApplicationException;
+
 class Application
 {
     /**
@@ -35,13 +37,13 @@ class Application
      * Create path
      * 
      * @param string $path 
-     * @throws \Exception
+     * @throws Tricolore\Exception\ApplicationException
      * @return string
      */
     public static function createPath($path = null)
     {
         if(isset(self::$options['directory']) === false || self::$options['directory'] == null) {
-            throw new \Exception('Base directory are not defined in Application options');
+            throw new ApplicationException('Base directory are not defined in Application options');
         }
 
         if($path === null) {

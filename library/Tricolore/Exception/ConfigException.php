@@ -1,7 +1,7 @@
 <?php
 namespace Tricolore\Exception;
 
-class RoutingException extends \Exception
+class ConfigException extends \Exception
 {
 
 }
