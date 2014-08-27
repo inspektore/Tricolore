@@ -19,7 +19,7 @@ class View
     /**
      * Integrate with Twig
      * 
-     * @return \Twig_Environment
+     * @return Tricolore\View
      */
     public function register()
     {
@@ -47,6 +47,27 @@ class View
 
         $this->environment->addExtension(new FormExtension(new TwigRenderer($form, $csrf_provider)));
 
+        return $this;
+    }
+
+    /**
+     * Accessor for \Twig_Environment
+     * 
+     * @return \Twig_Environment
+     */
+    public function getEnv()
+    {
         return $this->environment;
+    }
+
+    /**
+     * Send exception page
+     * 
+     * @param \Exception $exception
+     * @return void
+     */
+    public function sendExceptionPage($exception)
+    {
+
     }
 }
