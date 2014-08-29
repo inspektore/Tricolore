@@ -1,6 +1,8 @@
 <?php
 namespace Tricolore\Config;
 
+use Tricolore\Application;
+use Tricolore\View\RenderException;
 use Tricolore\Exception\ConfigException;
 use Symfony\Component\Yaml\Yaml;
 
@@ -13,14 +15,20 @@ class Config
      * @throws Tricolore\Exception\ConfigException
      * @return mixed
      */
-    public static function get($key, $collection = 'Configuration')
+    public static function key($key, $collection = 'Configuration')
     {
         if(file_exists(sprintf(
-            Application::createPath('library:Tricolore:Config:Resources:%s.yml'), $collection)) === false
+                Application::createPath('library:Tricolore:Config:Resources:%s.yml'), $collection)) === false
         ) {
             throw new ConfigException(sprintf('Configuration file: %s.yml does not exists.', $collection));
         }
 
-        return Yaml::parse(Application::createPath('library:Tricolore:Config:Resources:%s.yml'));
+        $collection_yml = Yaml::parse(sprintf(Application::createPath('library:Tricolore:Config:Resources:%s.yml'), $collection));
+
+        if(isset($collection_yml[$key]) === false) {
+            throw new ConfigException(sprintf('Key: %s in configuration file: %s.yml does not exists.', $key, $collection));
+        }      
+
+        return $collection_yml[$key];      
     }
 }

@@ -59,15 +59,4 @@ class View
     {
         return $this->environment;
     }
-
-    /**
-     * Send exception page
-     * 
-     * @param \Exception $exception
-     * @return void
-     */
-    public function sendExceptionPage($exception)
-    {
-
-    }
 }
