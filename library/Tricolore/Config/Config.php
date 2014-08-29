@@ -18,7 +18,7 @@ class Config
     public static function key($key, $collection = 'Configuration')
     {
         if(file_exists(sprintf(
-                Application::createPath('library:Tricolore:Config:Resources:%s.yml'), $collection)) === false
+            Application::createPath('library:Tricolore:Config:Resources:%s.yml'), $collection)) === false
         ) {
             throw new ConfigException(sprintf('Configuration file: %s.yml does not exists.', $collection));
         }
