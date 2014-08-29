@@ -3,4 +3,4 @@ service-locator:
     cookie: { class: Tricolore\Http\CookieJar\CookieJar }
 
 service-autoload:
-#    - { class: Tricolore\Routing\Routing, function: startPattern }
+#    - { class: Tricolore\RoutingProvider\RoutingProvider }

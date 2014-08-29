@@ -2,6 +2,7 @@
 namespace Tricolore;
 
 use Tricolore\Exception\ApplicationException;
+use Tricolore\Services\AutoloadService;
 
 class Application
 {
@@ -21,6 +22,9 @@ class Application
     public static function register(array $options)
     {
         self::$options = $options;
+
+        $services = new AutoloadService();
+        $services->dispatch();
     }
 
     /**
