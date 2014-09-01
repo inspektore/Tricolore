@@ -55,7 +55,7 @@ class RoutingProvider extends ServiceLocator
 
             return call_user_func([$controller, $parameters['action']]);
         } catch(ResourceNotFoundException $exception) {
-            $this->locate('view')->getEnv()->loadTemplate('Errors/ResourceNotFound.html.twig')->display([]);
+            $this->get('view')->getEnv()->loadTemplate('Errors/ResourceNotFound.html.twig')->display([]);
         }
     }
 }

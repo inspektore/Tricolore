@@ -14,7 +14,7 @@ abstract class ServiceLocator
      * @throws Tricolore\Exception\ServicesException
      * @return mixed
      */
-    public function locate($key)
+    public function get($key)
     {
         $service_map = Yaml::parse(Application::createPath('library:Tricolore:Services:ServicesMap:Map.yml'));
 
