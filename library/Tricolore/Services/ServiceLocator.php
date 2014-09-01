@@ -34,7 +34,7 @@ abstract class ServiceLocator
 
         if(method_exists($service_load, $service_map['service-locator'][$key]['function']) === false) {
             throw new ServicesException(sprintf('Method "%s" in class "%s" not exists.', 
-                $service_map['service-locator'][$key]['function'], get_class($service_load)));
+                $service_map['service-locator'][$key]['function'], $service_map['service-locator'][$key]['class']));
         }
 
         return call_user_func([$service_load, $service_map['service-locator'][$key]['function']]);

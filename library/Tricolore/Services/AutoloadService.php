@@ -35,7 +35,7 @@ class AutoloadService
             }
 
             if(method_exists($service, $class['function']) === false) {
-                throw new ServicesException(sprintf('Method "%s" in class "%s" not exists.', $class['function'], get_class($service)));
+                throw new ServicesException(sprintf('Method "%s" in class "%s" not exists.', $class['function'], $class['class']));
             }
 
             call_user_func([$service, $class['function']]);

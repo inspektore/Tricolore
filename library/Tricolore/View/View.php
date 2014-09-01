@@ -5,7 +5,6 @@ use Tricolore\Application;
 use Symfony\Bridge\Twig\Extension\FormExtension;
 use Symfony\Bridge\Twig\Form\TwigRenderer;
 use Symfony\Bridge\Twig\Form\TwigRendererEngine;
-use Symfony\Component\Form\Extension\Csrf\CsrfProvider\DefaultCsrfProvider;
 
 class View
 {
@@ -43,9 +42,7 @@ class View
         $form = new TwigRendererEngine(['form_div_layout.html.twig']);
         $form->setEnvironment($this->environment);
 
-        $csrf_provider = new DefaultCsrfProvider('some_secret_token');
-
-        $this->environment->addExtension(new FormExtension(new TwigRenderer($form, $csrf_provider)));
+        $this->environment->addExtension(new FormExtension(new TwigRenderer($form)));
 
         return $this;
     }
