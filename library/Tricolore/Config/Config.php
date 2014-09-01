@@ -26,7 +26,7 @@ class Config
         $collection_yml = Yaml::parse(sprintf(Application::createPath('library:Tricolore:Config:Resources:%s.yml'), $collection));
 
         if(isset($collection_yml[$key]) === false) {
-            throw new ConfigException(sprintf('Key: %s in configuration file: %s.yml does not exists.', $key, $collection));
+            return false;
         }      
 
         return $collection_yml[$key];      
