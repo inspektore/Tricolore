@@ -1,6 +1,7 @@
 service-locator:
     view: { class: Tricolore\View\View, function: register }
     cookie: { class: Tricolore\Http\CookieJar\CookieJar }
+    form.factory: { class: Tricolore\FormFactory\FormFactory, function: getFactory }
 
 service-autoload:
     - { class: Tricolore\RoutingProvider\RoutingProvider, function: register }
