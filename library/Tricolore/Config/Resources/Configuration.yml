@@ -1,1 +1,4 @@
 base.full_url: "http://localhost/Tricolore/develop/"
+
+router.prefix: ~
+router.host: ~
