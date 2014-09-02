@@ -23,6 +23,10 @@ class Application
     {
         self::$options = $options;
 
+        if(self::getEnv() === 'test') {
+            return false;
+        }
+
         $services = new AutoloadService();
         $services->dispatch();
     }
