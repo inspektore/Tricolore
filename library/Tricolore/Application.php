@@ -23,7 +23,7 @@ class Application
     {
         self::$options = $options;
 
-        if(self::getEnv() === 'test') {
+        if(self::getInstance()->getEnv() === 'test') {
             return false;
         }
 
