@@ -34,7 +34,7 @@ class View
             Application::createPath('library:Symfony:Bridge:Twig:Resources:views:Form')
         ]);
 
-        $in_dev = (Application::getInstance()->getEnv() === 'dev') ? true : false;
+        $in_dev = Application::getInstance()->getEnv() === 'dev';
 
         $this->environment = new \Twig_Environment($loader, [
             'cache' => ($in_dev) ? Application::createPath('storage:twig') : false,
