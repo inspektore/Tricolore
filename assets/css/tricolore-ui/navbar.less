@@ -4,14 +4,10 @@
 }
 
 .navbar-default .navbar-brand {
-  color: @navbar-brand-color;
-  background: @navbar-brand-background;
-}
-
-.navbar-default .navbar-brand:hover,
-.navbar-default .navbar-brand:focus {
-  color: @navbar-brand-color;
-  background: @navbar-brand-background;
+  &, &:hover, &:focus {
+    color: @navbar-brand-color;
+    background: @navbar-brand-background;
+  }
 }
 
 .navbar-default .navbar-nav > li > a {
