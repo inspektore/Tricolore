@@ -51,29 +51,22 @@ class RoutingProvider extends ServiceLocator
         try {
             $parameters = $matcher->match($request);
 
-            $controller = new $parameters['controller']();
+            $controller = explode(':', $parameters['_controller']);
+            $call = new $controller[0]();
 
-            $arguments = $parameters;
+            $arguments = [];
+            
+            foreach($parameters as $key => $value) {
+                if($key[0] === '_') {
+                    continue;
+                }
 
-            unset($arguments['action'],
-            $arguments['controller'],
-            $arguments['resource'],
-            $arguments['type'],
-            $arguments['prefix'],
-            $arguments['pattern'],
-            $arguments['path'],
-            $arguments['host'],
-            $arguments['schemes'],
-            $arguments['methods'],
-            $arguments['defaults'],
-            $arguments['requirements'],
-            $arguments['options'],
-            $arguments['condition'],
-            $arguments['_route']);
+                $arguments[$key] = $value;
+            }
 
-            return call_user_func_array([$controller, $parameters['action']], $arguments);
+            return call_user_func([$call, $controller[1]], (object)$arguments);
         } catch(ResourceNotFoundException $exception) {
-            $this->get('view')->getEnv()->loadTemplate('Errors/ResourceNotFound.html.twig')->display([]);
+            $this->get('view')->display('Errors', 'ResourceNotFound');
         }
     }
 }
