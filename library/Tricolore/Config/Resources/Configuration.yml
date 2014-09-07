@@ -4,3 +4,7 @@ base.charset: "utf-8"
 
 router.prefix: ~
 router.host: ~
+
+cookie.path: ~
+cookie.domain: ~
+cookie.secure: false

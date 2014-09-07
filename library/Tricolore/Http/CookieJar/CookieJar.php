@@ -1,6 +1,8 @@
 <?php
 namespace Tricolore\Http\CookieJar;
 
+use Tricolore\Config\Config;
+
 class CookieJar
 {
     /**
@@ -60,15 +62,15 @@ class CookieJar
     public function set($name, $value, $expire = 86400)
     {
         if(isset($this->options['path']) === false) {
-            $this->options['path'] = '';
+            $this->options['path'] = Config::key('cookie.path');
         }
 
         if(isset($this->options['domain']) === false) {
-            $this->options['domain'] = '';
+            $this->options['domain'] = Config::key('cookie.domain');
         }
 
         if(isset($this->options['secure']) === false) {
-            $this->options['secure'] = false;
+            $this->options['secure'] = Config::key('cookie.secure');
         }
 
         return setcookie($name, $value, time() + $expire, 
