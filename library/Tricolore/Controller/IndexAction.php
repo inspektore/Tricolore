@@ -12,6 +12,6 @@ class IndexAction extends ServiceLocator
      */
     public function index()
     {
-        return $this->get('view')->getEnv()->loadTemplate('Actions/IndexAction.html.twig')->display([]);
+        return $this->get('view')->display('Actions', 'IndexAction');
     }
 }

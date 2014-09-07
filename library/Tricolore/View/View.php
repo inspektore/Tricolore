@@ -50,6 +50,30 @@ class View
     }
 
     /**
+     * Render and display
+     * 
+     * @param string $template_section
+     * @param string $template_name
+     * @param array $variables
+     * @param bool $return
+     * @return void
+     */
+    public function display($template_section, $template_name, array $variables = [], $return = false)
+    {
+        if(substr($template_name, -10) !== '.html.twig') {
+            $template_name .= '.html.twig';
+        }
+
+        $combined_template_path = $template_section . '/' . $template_name;
+
+        if($return === true) {
+            return $this->environment->loadTemplate($combined_template_path)->render($variables);
+        }
+
+        return $this->environment->loadTemplate($combined_template_path)->display($variables);
+    }
+
+    /**
      * Register global variables
      * 
      * @return void
