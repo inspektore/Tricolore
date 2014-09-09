@@ -3,11 +3,13 @@ namespace Tricolore\View;
 
 use Tricolore\Application;
 use Tricolore\Config\Config;
+use Tricolore\Services\ServiceLocator;
 use Symfony\Bridge\Twig\Extension\FormExtension;
 use Symfony\Bridge\Twig\Form\TwigRenderer;
 use Symfony\Bridge\Twig\Form\TwigRendererEngine;
+use Symfony\Bridge\Twig\Extension\TranslationExtension;
 
-class View
+class View extends ServiceLocator
 {
     /**
      * Twig Environment
@@ -45,6 +47,7 @@ class View
         $this->registerGlobals();
         $this->registerFunctions();
         $this->formIntegration();
+        $this->transIntegration();
 
         return $this;
     }
@@ -110,6 +113,16 @@ class View
         $form->setEnvironment($this->environment);
 
         $this->environment->addExtension(new FormExtension(new TwigRenderer($form)));        
+    }
+
+    /**
+     * Translation integration
+     * 
+     * @return void
+     */
+    private function transIntegration()
+    {
+        $this->environment->addExtension(new TranslationExtension($this->get('translator')));
     }
 
     /**

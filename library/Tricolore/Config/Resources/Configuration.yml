@@ -8,3 +8,6 @@ router.host: ~
 cookie.path: ~
 cookie.domain: ~
 cookie.secure: false
+
+trans.locale: "en_EN"
+trans.domain: "messages"
