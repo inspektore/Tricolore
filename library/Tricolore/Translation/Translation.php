@@ -12,16 +12,27 @@ class Translation
     /**
      * Get translator
      * 
+     * @param string $resource
+     * @param string $locale
      * @return Symfony\Component\Translation\Translator
      */
-    public function getTranslator()
+    public function getTranslator($resource = null, $locale = null)
     {
-        $translator = new Translator(Config::key('trans.locale'), new MessageSelector());
+        if($locale === null) {
+            $locale = Config::key('trans.locale');
+        }
+
+        $translator = new Translator($locale, new MessageSelector());
         $translator->addLoader('xliff', new XliffFileLoader());
-        $translator->addResource('xliff', 
-            Application::getInstance()->createPath(
-                sprintf('library:Tricolore:Translation:Resources:%s:%s.xliff', Config::key('trans.locale'), Config::key('trans.domain'))), 
-            Config::key('trans.locale'));
+        if($resource === null) {
+            $translator->addResource('xliff', 
+                Application::getInstance()->createPath(
+                    sprintf('library:Tricolore:Translation:Resources:%s:%s.xliff', $locale, Config::key('trans.domain'))), 
+                $locale);            
+        } else {
+            $translator->addResource('xliff', $resource, $locale);
+        }
+
         $translator->setFallbackLocale(['en_EN']);
 
         return $translator;
