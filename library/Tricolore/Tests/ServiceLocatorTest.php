@@ -17,7 +17,7 @@ class ServiceLocatorTest extends \PHPUnit_Framework_TestCase
         $this->service_locator = new ServiceLocatorAccessor();
 
         $this->service_path = Application::createPath('library:Tricolore:Tests:Fixtures:ServiceLocator.yml');
-        $this->service = $this->service_locator->get('extra', $this->service_path);
+        $this->service = $this->service_locator->get('extra', [], $this->service_path);
     }
 
     public function testServiceInstanceOf()
@@ -33,7 +33,7 @@ class ServiceLocatorTest extends \PHPUnit_Framework_TestCase
      */
     public function testExceptionServiceNotExists()
     {
-        return $this->service_locator->get('fake_foo', $this->service_path);
+        return $this->service_locator->get('fake_foo', [], $this->service_path);
     }
 
     /**
@@ -41,7 +41,7 @@ class ServiceLocatorTest extends \PHPUnit_Framework_TestCase
      */
     public function testExceptionWrongPath()
     {
-        return $this->service_locator->get('fake', 'fake/path');
+        return $this->service_locator->get('fake', [], 'fake/path');
     }
 
     public function testMethodReturn()
@@ -55,7 +55,7 @@ class ServiceLocatorTest extends \PHPUnit_Framework_TestCase
     public function testServiceFunction()
     {
         $expected = 'myFunc';
-        $actual = $this->service_locator->get('extra_func', $this->service_path);
+        $actual = $this->service_locator->get('extra_func', [], $this->service_path);
 
         $this->assertEquals($expected, $actual);
     }
