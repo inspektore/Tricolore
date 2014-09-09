@@ -26,4 +26,22 @@ class ServiceAutoloadTest extends \PHPUnit_Framework_TestCase
         $this->assertContains('Tricolore\Tests\Fixtures\ServiceAutoloadExtraClassSecond:testFunc', $this->loaded_classes);
         $this->assertContains('Tricolore\Tests\Fixtures\ServiceAutoloadExtraClassFourth:testFunc', $this->loaded_classes);
     }
+
+    public function testClassExistsServiceAutoloadExtraClassFirst()
+    {
+        if(class_exists('Tricolore\Tests\Fixtures\ServiceAutoloadExtraClassFirst')) {
+            $this->assertTrue(true);
+        } else {
+            $this->assertTrue(false);
+        }
+    }
+
+    public function testClassExistsServiceAutoloadExtraClassThird()
+    {
+        if(class_exists('Tricolore\Tests\Fixtures\ServiceAutoloadExtraClassThird')) {
+            $this->assertTrue(true);
+        } else {
+            $this->assertTrue(false);
+        }
+    }
 }
