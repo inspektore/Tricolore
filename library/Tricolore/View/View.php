@@ -27,14 +27,20 @@ class View extends ServiceLocator
     {
         \Twig_Autoloader::register();
 
-        $loader = new \Twig_Loader_Filesystem([
-            Application::createPath('library:Tricolore:View:Templates'),
-            Application::createPath('library:Tricolore:View:Templates:Actions'),
-            Application::createPath('library:Tricolore:View:Templates:Blocks'),
-            Application::createPath('library:Tricolore:View:Templates:Errors'),
-            Application::createPath('library:Tricolore:View:Templates:Macros'),
+        $finder = $this->get('finder')
+        ->directories()
+        ->in(Application::createPath('library:Tricolore:View:Templates'));
+
+        foreach($finder as $file) {
+            $directories[] = $file->getRealpath();
+        }
+
+        $directories = array_merge($directories, [
+            Application::createPath('library:Tricolore:View:Templates'), 
             Application::createPath('library:Symfony:Bridge:Twig:Resources:views:Form')
         ]);
+
+        $loader = new \Twig_Loader_Filesystem($directories);
 
         $in_dev = Application::getInstance()->getEnv() === 'dev';
 
