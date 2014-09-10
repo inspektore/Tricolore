@@ -3,6 +3,8 @@ service-locator:
     cookie: { class: Tricolore\Http\CookieJar\CookieJar }
     form: { class: Tricolore\FormFactory\FormFactory, function: getFactory }
     translator: { class: Tricolore\Translation\Translation, function: getTranslator }
+    http: { class: Symfony\Component\HttpFoundation\Request, function: createFromGlobals }
+    finder: { class: Symfony\Component\Finder\Finder }
 
 service-autoload:
     - { class: Tricolore\RoutingProvider\RoutingProvider, function: register }
