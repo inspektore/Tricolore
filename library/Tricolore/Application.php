@@ -3,6 +3,7 @@ namespace Tricolore;
 
 use Tricolore\Exception\ApplicationException;
 use Tricolore\Services\AutoloadService;
+use Tricolore\View\View;
 
 class Application
 {
@@ -93,5 +94,15 @@ class Application
         }
 
         return self::$options['version'];
+    }
+
+    /**
+     * Get memory usage
+     * 
+     * @return int
+     */
+    public function getUsageMemory()
+    {
+        return memory_get_usage(true);
     }
 }
