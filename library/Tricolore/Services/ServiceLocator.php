@@ -18,7 +18,7 @@ abstract class ServiceLocator
      * @throws Tricolore\Exception\AssetNotFound
      * @return mixed
      */
-    public function get($key, array $arguments = [], $service_file = null)
+    final public function get($key, array $arguments = [], $service_file = null)
     {
         if($service_file === null) {
             $service_map = Yaml::parse(Application::createPath('library:Tricolore:Services:ServicesMap:Map.yml'));
