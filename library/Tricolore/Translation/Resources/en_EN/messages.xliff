@@ -3,8 +3,18 @@
     <file source-language="en" datatype="plaintext" original="messages.xliff">
         <body>
             <trans-unit id="1">
-                <source>Hello World!</source>
-                <target>Hello World! Love and hugs.</target>
+                <source>Page not found</source>
+                <target>Page not found</target>
+            </trans-unit>
+
+            <trans-unit id="2">
+                <source>The resource requested could not be found!</source>
+                <target>The resource requested could not be found!</target>
+            </trans-unit>
+
+            <trans-unit id="3">
+                <source>Home</source>
+                <target>Home</target>
             </trans-unit>
         </body>
     </file>
