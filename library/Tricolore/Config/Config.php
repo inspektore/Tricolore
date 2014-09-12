@@ -27,7 +27,7 @@ class Config
 
         if(isset($collection_yml[$key]) === false) {
             return false;
-        }      
+        }
 
         return $collection_yml[$key];      
     }
