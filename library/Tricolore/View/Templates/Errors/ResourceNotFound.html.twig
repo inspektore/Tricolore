@@ -1,1 +1,19 @@
-404 Not Found
+{% extends "BaseBlock.html.twig" %}
+
+{% block head_title %}{% trans %}Page not found{% endtrans %}{% endblock %}
+
+{% block body_content %}
+  <div class="error-wrap">
+    <div class="focused-error-number">
+      404
+    </div>
+
+    <div class="focused-error-message">
+      <i class="fa fa-exclamation-triangle"></i> {% trans %}Page not found{% endtrans %}
+    </div>
+
+    <div class="error-message">
+      {% trans %}The resource requested could not be found!{% endtrans %}
+    </div> 
+  </div>
+{% endblock %}
