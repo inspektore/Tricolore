@@ -40,6 +40,12 @@ class View extends ServiceLocator
             Application::createPath('library:Symfony:Bridge:Twig:Resources:views:Form')
         ]);
 
+        if(Application::getInstance()->getEnv() === 'test') {
+            $directories = array_merge($directories, [
+                Application::createPath('library:Tricolore:Tests:Fixtures:Templates') 
+            ]);
+        }
+
         $loader = new \Twig_Loader_Filesystem($directories);
 
         $in_dev = Application::getInstance()->getEnv() === 'dev';
@@ -128,7 +134,14 @@ class View extends ServiceLocator
      */
     private function transIntegration()
     {
-        $this->environment->addExtension(new TranslationExtension($this->get('translator')));
+        if(Application::getInstance()->getEnv() === 'test') {
+            $this->environment->addExtension(new TranslationExtension($this->get('translator', [
+                Application::createPath('library:Tricolore:Tests:Fixtures:Translation_enEN.xliff'),
+                'en_EN'
+            ])));
+        } else {
+            $this->environment->addExtension(new TranslationExtension($this->get('translator')));
+        }
     }
 
     /**
