@@ -2,28 +2,17 @@
 namespace Tricolore\Tests;
 
 use Tricolore\Application;
-use Tricolore\Services\ServiceLocator;
-
-class ServiceLocatorAccessor extends ServiceLocator { }
 
 class ServiceLocatorTest extends \PHPUnit_Framework_TestCase
 {
-    private $service_locator;
-    private $service_path;
-    private $service;
-
-    public function __construct()
-    {
-        $this->service_locator = new ServiceLocatorAccessor();
-
-        $this->service_path = Application::createPath('library:Tricolore:Tests:Fixtures:ServiceLocator.yml');
-        $this->service = $this->service_locator->get('extra', [], $this->service_path);
-    }
-
     public function testServiceInstanceOf()
     {
+        $service_locator = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator');
+        $service_path = Application::createPath('library:Tricolore:Tests:Fixtures:ServiceLocator.yml');
+        $service_extra = $service_locator->get('extra', [], $service_path);
+
         $expected = 'Tricolore\Tests\Fixtures\ServiceLocatorExtra';
-        $actual = $this->service->getInstance();
+        $actual = $service_extra->getInstance();
 
         $this->assertInstanceOf($expected, $actual);
     }
@@ -33,7 +22,10 @@ class ServiceLocatorTest extends \PHPUnit_Framework_TestCase
      */
     public function testExceptionServiceNotExists()
     {
-        return $this->service_locator->get('fake_foo', [], $this->service_path);
+        $service_locator = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator');
+        $service_path = Application::createPath('library:Tricolore:Tests:Fixtures:ServiceLocator.yml');
+
+        return $service_locator->get('fake_foo', [], $service_path);
     }
 
     /**
@@ -41,21 +33,30 @@ class ServiceLocatorTest extends \PHPUnit_Framework_TestCase
      */
     public function testExceptionWrongPath()
     {
-        return $this->service_locator->get('fake', [], 'fake/path');
+        $service_locator = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator');
+
+        return $service_locator->get('fake', [], 'fake/path');
     }
 
     public function testMethodReturn()
     {
+        $service_locator = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator');
+        $service_path = Application::createPath('library:Tricolore:Tests:Fixtures:ServiceLocator.yml');
+        $service_extra = $service_locator->get('extra', [], $service_path);
+
         $expected = 'Hello World';
-        $actual = $this->service->getInstance()->stringReturn();
+        $actual = $service_extra->getInstance()->stringReturn();
 
         $this->assertEquals($expected, $actual);
     }
 
     public function testServiceFunction()
     {
+        $service_locator = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator');
+        $service_path = Application::createPath('library:Tricolore:Tests:Fixtures:ServiceLocator.yml');
+
         $expected = 'myFunc';
-        $actual = $this->service_locator->get('extra_func', [], $this->service_path);
+        $actual = $service_locator->get('extra_func', [], $service_path);
 
         $this->assertEquals($expected, $actual);
     }
