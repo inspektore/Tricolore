@@ -53,7 +53,7 @@ class TranslationTest extends \PHPUnit_Framework_TestCase
         $service_view = $service_locator->get('view');
 
         $expected = 'Translated template';
-        $actual = $service_view->getEnv()->loadTemplate('TestTranslationTemplate.html.twig')->render([]);
+        $actual = $service_view->display(null, 'TestTranslationTemplate', [], true);
 
         $this->assertEquals($expected, $actual);
     }
