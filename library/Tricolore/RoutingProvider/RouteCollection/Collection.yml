@@ -1,3 +1,8 @@
 home:
     path: /
     defaults: { _controller: Tricolore\Controller\IndexAction:index }
+
+hello:
+    path: /hello/{name}
+    requirements: { name: "[A-Za-z0-9-_]+" }
+    defaults: { _controller: Tricolore\Controller\HelloAction:sayHello }
