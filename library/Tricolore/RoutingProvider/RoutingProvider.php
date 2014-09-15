@@ -14,13 +14,32 @@ use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 class RoutingProvider extends ServiceLocator
 {
     /**
+     * Route collection
+     * 
+     * @var Symfony\Component\Routing\RouteCollection
+     */
+    private $collection;
+
+    /**
+     * Request context
+     * 
+     * @var Symfony\Component\Routing\RequestContext
+     */    
+    private $context;
+
+    /**
      * Register routing
-     *  
+     * 
+     * @param bool $silent
      * @return void
      */
     public function register()
     {
         $request = getenv('QUERY_STRING');
+        
+        if(substr($request, -1) === '/') {
+            $request = substr($request, 0, -1);
+        }
 
         if($request == null) {
             $request = '/';
@@ -28,15 +47,37 @@ class RoutingProvider extends ServiceLocator
 
         $locator = new FileLocator([__DIR__]);
         $loader = new YamlFileLoader($locator);
-        $collection = $loader->load('RouteCollection/Collection.yml');
+        $this->collection = $loader->load('RouteCollection/Collection.yml');
 
-        $collection->addPrefix(Config::key('router.prefix'));
-        $collection->setHost(Config::key('router.host'));
+        $this->collection->addPrefix(Config::key('router.prefix'));
+        $this->collection->setHost(Config::key('router.host'));
 
-        $context = new RequestContext(Config::key('base.full_url'));
-        $matcher = new UrlMatcher($collection, $context);
+        $this->context = new RequestContext();
+        $this->context->fromRequest($this->get('http'));
+
+        $matcher = new UrlMatcher($this->collection, $this->context);
 
         $this->callToController($matcher, $request);
+    }
+
+    /**
+     * Route collection
+     *  
+     * @return Symfony\Component\Routing\RouteCollection
+     */
+    public function getRouteCollection()
+    {
+        return $this->collection;
+    }
+
+    /**
+     * Request context
+     * 
+     * @return Symfony\Component\Routing\RequestContext
+     */
+    public function getContext()
+    {
+        return $this->context;
     }
 
     /**
