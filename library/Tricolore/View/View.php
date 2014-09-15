@@ -79,7 +79,7 @@ class View extends ServiceLocator
             $template_name .= '.html.twig';
         }
 
-        $combined_template_path = $template_section . '/' . $template_name;
+        $combined_template_path = ($template_section != null ? $template_section . '/' : null) . $template_name;
 
         if($return === true) {
             return $this->environment->loadTemplate($combined_template_path)->render($variables);
