@@ -6,7 +6,8 @@
 
     <div class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="{{ config('base.full_url') }}"><i class="fa fa-home"></i> {% trans %}Home{% endtrans %}</a></li>
+        <li class="active"><a href="{{ url('home') }}"><i class="fa fa-home"></i> {% trans %}Home{% endtrans %}</a></li>
+        <li><a href="{{ url('hello', {'name': name is defined ? name : 'Jurij'}) }}"><i class="fa fa-heart"></i> Example page</a></li>
         <li><a href="https://github.com/Macsch15/Tricolore"><i class="fa fa-github"></i> Project on GitHub</a></li>
       </ul>
     </div>

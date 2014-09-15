@@ -110,7 +110,11 @@ class View extends ServiceLocator
         }));
 
         $this->environment->addFunction(new \Twig_SimpleFunction('assets', function ($section, $file) {
-            return Config::key('base.full_url') . 'assets/' . $section . '/' . $file;
+            return Config::key('base.full_url') . '/assets/' . $section . '/' . $file;
+        }));
+
+        $this->environment->addFunction(new \Twig_SimpleFunction('url', function ($route_name = null, $arguments = []) {
+            return Application::getInstance()->buildUrl($route_name, $arguments);
         }));
     }
 

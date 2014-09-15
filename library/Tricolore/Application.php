@@ -1,9 +1,11 @@
 <?php
 namespace Tricolore;
 
+use Tricolore\Config\Config;
 use Tricolore\Exception\ApplicationException;
-use Tricolore\Services\AutoloadService;
 use Tricolore\View\View;
+use Tricolore\RoutingProvider\RoutingProvider;
+use Symfony\Component\Routing\Generator\UrlGenerator;
 
 class Application
 {
@@ -13,6 +15,13 @@ class Application
      * @var array
      */
     private static $options;
+
+    /**
+     * Routing object
+     * 
+     * @var Tricolore\RoutingProvider\RoutingProvider
+     */
+    private static $routing;
 
     /**
      * Register application and services
@@ -28,8 +37,8 @@ class Application
             return false;
         }
 
-        $services = new AutoloadService();
-        $services->dispatch();
+        self::$routing = new RoutingProvider();
+        self::$routing->register();
     }
 
     /**
@@ -40,6 +49,24 @@ class Application
     public static function getInstance()
     {
         return new static();
+    }
+
+    /**
+     * Build URL address
+     * 
+     * @param string $route_name
+     * @param array $arguments
+     * @return string
+     */
+    public static function buildUrl($route_name = null, array $arguments = [])
+    {
+        if($route_name == null) {
+            return Config::key('base.full_url');
+        }
+
+        $generator = new UrlGenerator(self::$routing->getRouteCollection(), self::$routing->getContext());
+
+        return $generator->generate($route_name, $arguments);
     }
 
     /**
