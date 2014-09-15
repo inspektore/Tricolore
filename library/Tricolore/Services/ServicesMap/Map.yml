@@ -5,6 +5,3 @@ service-locator:
     translator: { class: Tricolore\Translation\Translation, function: getTranslator }
     http: { class: Symfony\Component\HttpFoundation\Request, function: createFromGlobals }
     finder: { class: Symfony\Component\Finder\Finder }
-
-service-autoload:
-    - { class: Tricolore\RoutingProvider\RoutingProvider, function: register }

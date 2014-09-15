@@ -1,5 +1,0 @@
-service-autoload:
-    - { class: Tricolore\Tests\Fixtures\ServiceAutoloadExtraClassFirst }
-    - { class: Tricolore\Tests\Fixtures\ServiceAutoloadExtraClassSecond, function: testFunc }
-    - { class: Tricolore\Tests\Fixtures\ServiceAutoloadExtraClassThird }
-    - { class: Tricolore\Tests\Fixtures\ServiceAutoloadExtraClassFourth, function: testFunc }

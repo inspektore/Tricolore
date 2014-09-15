@@ -1,4 +1,4 @@
-base.full_url: "http://localhost/Tricolore/develop/"
+base.full_url: "http://localhost/Tricolore/develop"
 base.locale: "en"
 base.charset: "utf-8"
 
