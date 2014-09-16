@@ -36,8 +36,7 @@ class View extends ServiceLocator
         }
 
         $directories = array_merge($directories, [
-            Application::createPath('library:Tricolore:View:Templates'), 
-            Application::createPath('library:Symfony:Bridge:Twig:Resources:views:Form')
+            Application::createPath('library:Tricolore:View:Templates')
         ]);
 
         if(Application::getInstance()->getEnv() === 'test') {
