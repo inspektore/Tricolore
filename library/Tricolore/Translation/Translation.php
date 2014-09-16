@@ -26,11 +26,12 @@ class Translation
 
         $translator = new Translator($locale, new MessageSelector());
         $translator->addLoader('xliff', new XliffFileLoader());
+
         if($resource === null) {
             $translator->addResource('xliff', 
                 Application::getInstance()->createPath(
-                    sprintf('library:Tricolore:Translation:Resources:%s:%s.xliff', $locale, Config::key('trans.domain'))), 
-                $locale);            
+                    sprintf('library:Tricolore:Translation:Resources:%s:messages.xliff', $locale)), 
+                $locale);           
         } else {
             if(file_exists($resource) === false) {
                 throw new AssetNotFound(sprintf('Translation resource "%s" not found.', $resource));
@@ -39,8 +40,25 @@ class Translation
             $translator->addResource('xliff', $resource, $locale);
         }
 
+        $this->addValidatorResource($translator, $locale);
+
         $translator->setFallbackLocale(['en_EN']);
 
         return $translator;
+    }
+
+    /**
+     * Add validator resource
+     * 
+     * @param Symfony\Component\Translation\Translator $translator
+     * @param string $locale
+     * @return void
+     */
+    private function addValidatorResource(Translator $translator, $locale)
+    {
+        $translator->addResource('xliff', 
+            Application::getInstance()->createPath(
+                sprintf('library:Tricolore:Translation:Resources:%s:validators.xliff', $locale)), 
+            $locale);  
     }
 }
