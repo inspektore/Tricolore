@@ -3,8 +3,8 @@ namespace Tricolore;
 
 use Tricolore\Config\Config;
 use Tricolore\Exception\ApplicationException;
-use Tricolore\View\View;
 use Tricolore\RoutingProvider\RoutingProvider;
+use Tricolore\View\View;
 use Symfony\Component\Routing\Generator\UrlGenerator;
 
 class Application
@@ -37,8 +37,12 @@ class Application
             return false;
         }
 
-        self::$routing = new RoutingProvider();
-        self::$routing->register();
+        try {
+            self::$routing = new RoutingProvider();
+            self::$routing->register();            
+        } catch(\Exception $exception) {
+            (new View)->register(true)->handleException($exception);
+        }
     }
 
     /**
@@ -79,7 +83,7 @@ class Application
     public static function createPath($path = null)
     {
         if(isset(self::$options['directory']) === false || self::$options['directory'] == null) {
-            throw new ApplicationException('Base directory are not defined in Application options');
+            return false;
         }
 
         if($path === null) {

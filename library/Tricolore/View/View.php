@@ -21,9 +21,10 @@ class View extends ServiceLocator
     /**
      * Integrate with Twig
      * 
+     * @param bool $safe_mode
      * @return Tricolore\View
      */
-    public function register()
+    public function register($safe_mode = false)
     {
         \Twig_Autoloader::register();
 
@@ -57,8 +58,11 @@ class View extends ServiceLocator
 
         $this->registerGlobals();
         $this->registerFunctions();
-        $this->formIntegration();
-        $this->transIntegration();
+
+        if($safe_mode === false) {
+            $this->formIntegration();
+            $this->transIntegration();
+        }
 
         return $this;
     }
@@ -155,5 +159,22 @@ class View extends ServiceLocator
     public function getEnv()
     {
         return $this->environment;
+    }
+
+    /**
+     * Handle exception
+     * 
+     * @param $exception 
+     * @return void
+     */
+    public function handleException($exception)
+    {
+        $file_array = file($exception->getFile());
+
+        return $this->display('Exceptions', 'HandleDevException', [
+            'exception' => $exception,
+            'class' => $exception->getTrace()[0],
+            'file_array' => $file_array
+        ]);
     }
 }
