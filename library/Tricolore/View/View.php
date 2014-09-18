@@ -173,7 +173,6 @@ class View extends ServiceLocator
 
         return $this->display('Exceptions', 'HandleDevException', [
             'exception' => $exception,
-            'class' => $exception->getTrace()[0],
             'file_array' => $file_array
         ]);
     }

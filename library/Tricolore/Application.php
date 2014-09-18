@@ -2,12 +2,11 @@
 namespace Tricolore;
 
 use Tricolore\Config\Config;
-use Tricolore\Exception\ApplicationException;
 use Tricolore\RoutingProvider\RoutingProvider;
-use Tricolore\View\View;
+use Tricolore\Services\ServiceLocator;
 use Symfony\Component\Routing\Generator\UrlGenerator;
 
-class Application
+class Application extends ServiceLocator
 {
     /**
      * Application options
@@ -41,7 +40,7 @@ class Application
             self::$routing = new RoutingProvider();
             self::$routing->register();            
         } catch(\Exception $exception) {
-            (new View)->register(true)->handleException($exception);
+            self::getInstance()->get('view', [true])->handleException($exception);
         }
     }
 
