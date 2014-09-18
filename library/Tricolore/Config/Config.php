@@ -20,7 +20,7 @@ class Config
         if(file_exists(sprintf(
             Application::createPath('library:Tricolore:Config:Resources:%s.yml'), $collection)) === false
         ) {
-            throw new ConfigException(sprintf('Configuration file: %s.yml does not exists.', $collection));
+            return false;
         }
 
         $collection_yml = Yaml::parse(sprintf(Application::createPath('library:Tricolore:Config:Resources:%s.yml'), $collection));
