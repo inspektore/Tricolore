@@ -169,11 +169,22 @@ class View extends ServiceLocator
      */
     public function handleException($exception)
     {
+        if(Application::getInstance()->getEnv() === 'prod') {
+            return $this->display('Exceptions', 'HandleClientException');
+        }
+
+        $exception_name = null;
+
+        if(method_exists($exception, 'getExceptionName')) {
+            $exception_name = $exception->getExceptionName();
+        }
+
         $file_array = file($exception->getFile());
 
         return $this->display('Exceptions', 'HandleDevException', [
             'exception' => $exception,
-            'file_array' => $file_array
+            'file_array' => $file_array,
+            'exception_name' => $exception_name
         ]);
     }
 }
