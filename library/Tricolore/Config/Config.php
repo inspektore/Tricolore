@@ -2,8 +2,6 @@
 namespace Tricolore\Config;
 
 use Tricolore\Application;
-use Tricolore\View\RenderException;
-use Tricolore\Exception\ConfigException;
 use Symfony\Component\Yaml\Yaml;
 
 class Config
@@ -12,7 +10,6 @@ class Config
      * Get the config by key
      * 
      * @param string $key
-     * @throws Tricolore\Exception\ConfigException
      * @return mixed
      */
     public static function key($key, $collection = 'Configuration')

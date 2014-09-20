@@ -76,7 +76,6 @@ class Application extends ServiceLocator
      * Create path
      * 
      * @param string $path 
-     * @throws Tricolore\Exception\ApplicationException
      * @return string
      */
     public static function createPath($path = null)
