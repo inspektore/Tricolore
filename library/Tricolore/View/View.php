@@ -179,7 +179,7 @@ class View extends ServiceLocator
             $exception_name = $exception->getExceptionName();
         }
 
-        $file_array = file($exception->getFile());
+        $file_array = new \SplFileObject($exception->getFile(), 'r');
 
         return $this->display('Exceptions', 'HandleDevException', [
             'exception' => $exception,
