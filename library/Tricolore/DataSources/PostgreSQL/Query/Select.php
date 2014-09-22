@@ -66,6 +66,21 @@ class Select
     }
 
     /**
+     * Left join
+     * 
+     * @param string $left_join 
+     * @param string $on
+     * @return Tricolore\DataSources\PostgreSQL\DatabaseFactory
+     */
+    public function leftJoin($left_join, $on)
+    {
+        $this->collection['left_join'] = $left_join;
+        $this->collection['left_join_on'] = $on;
+
+        return $this;
+    }
+
+    /**
      * Where
      * 
      * @param string $where
@@ -155,6 +170,12 @@ class Select
         $query = 'select ' . $this->collection['select'];
         $query .= ' from ' . $this->collection['from'];
 
+        if(isset($this->collection['left_join']) === true 
+            && isset($this->collection['left_join_on']) === true
+        ) {
+            $query .= ' left join ' . $this->collection['left_join'] . ' on ' . $this->collection['left_join_on'];
+        }
+
         if(isset($this->collection['where']) === true) {
             $query .= ' where ' . $this->collection['where'];            
         }
@@ -183,8 +204,12 @@ class Select
             }
         }
 
-        $prepare->execute();
-
-        return $prepare->fetchAll();        
+        try {
+            $prepare->execute();
+        } catch(\PDOException $exception) {
+            throw new DatabaseException($exception->getMessage());
+        }
+        
+        return $prepare->fetchAll();
     }
 }
