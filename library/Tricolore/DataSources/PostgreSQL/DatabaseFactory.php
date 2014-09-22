@@ -57,6 +57,9 @@ class DatabaseFactory
 
         try {
             $this->pdo = new \PDO($dsn, $config['username'], $config['password']);
+            $this->pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+
+
             $this->table_prefix = $config['table_prefix'];
         } catch(\PDOException $exception) {
             throw new DatabaseException($exception->getMessage());
