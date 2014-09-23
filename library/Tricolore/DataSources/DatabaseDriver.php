@@ -27,8 +27,6 @@ class DatabaseDriver
         $driver_class = __NAMESPACE__ . '\\' . $database_config['driver'] . '\\DatabaseFactory';
         $driver_class = new $driver_class;
 
-        unset($database_config['driver']);
-
-        return $driver_class->connection($database_config);
+        return $driver_class->connection($database_config[$database_config['driver']]);
     }
 }
