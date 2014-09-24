@@ -4,6 +4,7 @@ base.charset: "utf-8"
 
 router.prefix: ~
 router.host: ~
+router.use_httpd_rewrite: true
 
 cookie.path: ~
 cookie.domain: ~

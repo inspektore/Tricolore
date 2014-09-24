@@ -69,7 +69,11 @@ class Application extends ServiceLocator
 
         $generator = new UrlGenerator(self::$routing->getRouteCollection(), self::$routing->getContext());
 
-        return $generator->generate($route_name, $arguments);
+        if(Config::key('router.use_httpd_rewrite') === true) {
+            return $generator->generate($route_name, $arguments, $generator::ABSOLUTE_URL);
+        }
+        
+        return 'index.php?/' . $generator->generate($route_name, $arguments, $generator::RELATIVE_PATH);
     }
 
     /**
