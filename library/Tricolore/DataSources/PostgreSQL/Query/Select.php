@@ -199,8 +199,25 @@ class Select
         $prepare = $this->pdo->prepare($query);
 
         if(isset($this->collection['where_binding']) === true && count($this->collection['where_binding'])) {
-            foreach($this->collection['where_binding'] as $key => $value) {
-                $prepare->bindValue($key, $value);
+            foreach($this->collection['where_binding'] as $key => $binding) {
+                if(isset($binding['value']) === false) {
+                    throw new DatabaseException('Missing "value" in parameters');
+                }
+
+                $allowed_types = ['BOOL', 'NULL', 'INT', 'STR', 'LOB', 'STMT'];
+
+                if(isset($binding['type']) === false) {
+                    $binding['type'] = 'STR';
+                }
+
+                $binding['type'] = strtoupper($binding['type']);
+
+                if(in_array($binding['type'], $allowed_types, true) === false) {
+                    throw new DatabaseException(
+                        sprintf('Unknown data type "%s". Known types: %s', $binding['type'], implode(', ', $allowed_types)));
+                }
+
+                $prepare->bindValue($key, $binding['value'], constant('PDO::PARAM_' . $binding['type']));
             }
         }
 
