@@ -201,7 +201,7 @@ class Select
         if(isset($this->collection['where_binding']) === true && count($this->collection['where_binding'])) {
             foreach($this->collection['where_binding'] as $key => $binding) {
                 if(isset($binding['value']) === false) {
-                    throw new DatabaseException('Missing "value" in parameters');
+                    throw new DatabaseException('Missing "value" in parameters.');
                 }
 
                 $allowed_types = ['BOOL', 'NULL', 'INT', 'STR', 'LOB', 'STMT'];
