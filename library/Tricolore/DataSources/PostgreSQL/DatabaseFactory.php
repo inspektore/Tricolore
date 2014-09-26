@@ -90,4 +90,15 @@ class DatabaseFactory
 
         return new $class_type($this->pdo, $this->table_prefix);
     }
+
+    /**
+     * Execute query
+     * 
+     * @param $query 
+     * @return mixed
+     */
+    public function exec($query)
+    {
+        return $this->pdo->exec($query);
+    }
 }
