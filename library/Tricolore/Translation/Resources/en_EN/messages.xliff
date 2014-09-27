@@ -16,6 +16,11 @@
                 <source>Home</source>
                 <target>Home</target>
             </trans-unit>
+
+            <trans-unit id="4">
+                <source>Return to index</source>
+                <target>Return to index</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
