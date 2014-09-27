@@ -26,7 +26,13 @@
 
       <div class="jumbotron jumbotron-exception">
         <div class="exception-message">
-          <h2 {{ exception.getMessage()|length > 80 ? 'class="less-font-size"' : null }}><i class="muted-text fa fa-quote-left"></i> {{ exception.getMessage() }}</h2>
+          <h2 {{ exception.getMessage()|length > 80 ? 'class="less-font-size"' : null }}><i class="muted-text fa fa-quote-left"></i>
+            {% if exception.getMessage() is empty %} 
+              <em>(No message)</em>
+            {% else %}
+              {{ exception.getMessage() }}
+            {% endif %}
+          </h2>
         </div>
 
         <h4>Exception caught in <code>{{ exception.getTrace().0.class }}->{{ exception.getTrace().0.function }}()</code></h4>
