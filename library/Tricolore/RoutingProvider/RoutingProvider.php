@@ -53,7 +53,7 @@ class RoutingProvider extends ServiceLocator
         $this->collection->setHost(Config::key('router.host'));
 
         $this->context = new RequestContext();
-        $this->context->fromRequest($this->get('http'));
+        $this->context->fromRequest($this->get('request'));
 
         $matcher = new UrlMatcher($this->collection, $this->context);
 
