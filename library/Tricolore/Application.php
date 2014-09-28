@@ -4,6 +4,7 @@ namespace Tricolore;
 use Tricolore\Config\Config;
 use Tricolore\RoutingProvider\RoutingProvider;
 use Tricolore\Services\ServiceLocator;
+use Tricolore\Exception\ErrorException;
 use Symfony\Component\Routing\Generator\UrlGenerator;
 
 class Application extends ServiceLocator
@@ -32,6 +33,8 @@ class Application extends ServiceLocator
     {
         self::$options = $options;
 
+        self::getInstance()->setupErrorReporting();
+
         if(self::getInstance()->getEnv() === 'test') {
             return false;
         }
@@ -42,6 +45,28 @@ class Application extends ServiceLocator
         } catch(\Exception $exception) {
             self::getInstance()->get('view', [true])->handleException($exception);
         }
+    }
+
+    /**
+     * Setup error reporting
+     * 
+     * @return void
+     */
+    private function setupErrorReporting()
+    {
+        if(self::getInstance()->getEnv() === 'prod') {
+            error_reporting(0);
+        } elseif(self::getInstance()->getEnv() === 'dev') {
+            error_reporting(E_ALL);
+        }
+
+        set_error_handler(function ($errno, $errstr, $errfile, $errline, $errcontext) {
+            if(error_reporting() === 0) {
+                return false;
+            }
+
+            throw new ErrorException(sprintf('[%s] %s in %s on line %s', $errno, $errstr, $errline, $errfile));
+        });
     }
 
     /**
