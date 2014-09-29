@@ -1,6 +1,7 @@
 <?php
 namespace Tricolore\DataSources\PostgreSQL\Query;
 
+use Tricolore\DataSources\PostgreSQL\DatabaseFactory;
 use Tricolore\Exception\DatabaseException;
 
 class Select
@@ -20,6 +21,13 @@ class Select
     private $collection = [];
 
     /**
+     * Database factory
+     * 
+     * @var Tricolore\DataSources\PostgreSQL\DatabaseFactory
+     */
+    private $factory;
+
+    /**
      * Table prefix
      * 
      * @var string
@@ -30,12 +38,14 @@ class Select
      * Construct
      * 
      * @param \PDO $pdo
+     * @param Tricolore\DataSources\PostgreSQL\DatabaseFactory $factory
      * @param string $table_prefix
      * @return void
      */
-    public function __construct(\PDO $pdo, $table_prefix)
+    public function __construct(\PDO $pdo, DatabaseFactory $factory, $table_prefix)
     {
         $this->pdo = $pdo;
+        $this->factory = $factory;
         $this->table_prefix = $table_prefix;
     }
 
@@ -43,7 +53,7 @@ class Select
      * Select
      * 
      * @param mixed $select 
-     * @return Tricolore\DataSources\PostgreSQL\DatabaseFactory
+     * @return Tricolore\DataSources\PostgreSQL\Query\Select
      */
     public function select($select)
     {
@@ -56,7 +66,7 @@ class Select
      * From
      * 
      * @param string $from 
-     * @return Tricolore\DataSources\PostgreSQL\DatabaseFactory
+     * @return Tricolore\DataSources\PostgreSQL\Query\Select
      */
     public function from($from)
     {
@@ -70,7 +80,7 @@ class Select
      * 
      * @param string $left_join 
      * @param string $on
-     * @return Tricolore\DataSources\PostgreSQL\DatabaseFactory
+     * @return Tricolore\DataSources\PostgreSQL\Query\Select
      */
     public function leftJoin($left_join, $on)
     {
@@ -85,7 +95,7 @@ class Select
      * 
      * @param string $where
      * @param array $binding
-     * @return Tricolore\DataSources\PostgreSQL\DatabaseFactory
+     * @return Tricolore\DataSources\PostgreSQL\Query\Select
      */
     public function where($where, array $binding = [])
     {
@@ -99,7 +109,7 @@ class Select
      * Group by
      * 
      * @param string $group_by
-     * @return Tricolore\DataSources\PostgreSQL\DatabaseFactory
+     * @return Tricolore\DataSources\PostgreSQL\Query\Select
      */
     public function groupBy($group_by)
     {
@@ -113,7 +123,7 @@ class Select
      * 
      * @param string $order_by
      * @param string $sorting
-     * @return Tricolore\DataSources\PostgreSQL\DatabaseFactory
+     * @return Tricolore\DataSources\PostgreSQL\Query\Select
      */
     public function orderBy($order_by, $sorting = 'ASC')
     {
@@ -134,7 +144,7 @@ class Select
      * Max results
      * 
      * @param int $limit 
-     * @return Tricolore\DataSources\PostgreSQL\DatabaseFactory
+     * @return Tricolore\DataSources\PostgreSQL\Query\Select
      */
     public function maxResults($limit)
     {
@@ -198,28 +208,7 @@ class Select
 
         $prepare = $this->pdo->prepare($query);
 
-        if(isset($this->collection['where_binding']) === true && count($this->collection['where_binding'])) {
-            foreach($this->collection['where_binding'] as $key => $binding) {
-                if(isset($binding['value']) === false) {
-                    throw new DatabaseException('Missing "value" in parameters.');
-                }
-
-                $allowed_types = ['BOOL', 'NULL', 'INT', 'STR', 'LOB', 'STMT'];
-
-                if(isset($binding['type']) === false) {
-                    $binding['type'] = 'STR';
-                }
-
-                $binding['type'] = strtoupper($binding['type']);
-
-                if(in_array($binding['type'], $allowed_types, true) === false) {
-                    throw new DatabaseException(
-                        sprintf('Unknown data type "%s". Known types: %s', $binding['type'], implode(', ', $allowed_types)));
-                }
-
-                $prepare->bindValue($key, $binding['value'], constant('PDO::PARAM_' . $binding['type']));
-            }
-        }
+        $this->factory->binding($this->collection['where_binding'], $prepare);
 
         try {
             $prepare->execute();

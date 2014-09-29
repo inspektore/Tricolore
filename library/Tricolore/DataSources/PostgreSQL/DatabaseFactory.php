@@ -79,7 +79,7 @@ class DatabaseFactory
     {
         $type = ucfirst($type);
 
-        $allowed_types = ['Select'];
+        $allowed_types = ['Select', 'Delete'];
 
         if(in_array($type, $allowed_types, true) === false) {
             throw new InvalidArgumentException(
@@ -88,7 +88,47 @@ class DatabaseFactory
 
         $class_type = __NAMESPACE__ . '\\Query\\' . $type;
 
-        return new $class_type($this->pdo, $this->table_prefix);
+        return new $class_type($this->pdo, $this, $this->table_prefix);
+    }
+
+    /**
+     * Binding
+     * 
+     * @param array $binding_container
+     * @param \PDOStatement $prepare
+     * @throws Tricolore\Exception\DatabaseException 
+     * @return void
+     */
+    public function binding(array $binding_container, \PDOStatement $prepare)
+    {
+        if(isset($binding_container) === false || !count($binding_container)) {
+            return false;
+        }
+
+        if($prepare->queryString == null) {
+            return false;
+        }
+
+        foreach($binding_container as $key => $binding) {
+            if(isset($binding['value']) === false) {
+                throw new DatabaseException('Missing "value" in parameters.');
+            }
+
+            $allowed_types = ['BOOL', 'NULL', 'INT', 'STR', 'LOB', 'STMT'];
+
+            if(isset($binding['type']) === false) {
+                $binding['type'] = 'STR';
+            }
+
+            $binding['type'] = strtoupper($binding['type']);
+
+            if(in_array($binding['type'], $allowed_types, true) === false) {
+                throw new DatabaseException(
+                    sprintf('Unknown data type "%s". Known types: %s', $binding['type'], implode(', ', $allowed_types)));
+            }
+
+            $prepare->bindValue($key, $binding['value'], constant('PDO::PARAM_' . $binding['type']));
+        }
     }
 
     /**
