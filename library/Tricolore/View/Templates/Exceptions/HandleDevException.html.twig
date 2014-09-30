@@ -35,12 +35,14 @@
           </h2>
         </div>
 
-        <h4>Exception caught in <code>{{ exception.getTrace().0.class }}->{{ exception.getTrace().0.function }}()</code></h4>
-        <small><em>{{ exception.getFile() }}:{{ exception.getLine() }}</em></small>
+        {% if exception_name != 'ErrorException' %}
+          <h4>Exception caught in <code>{{ exception.getTrace().0.class }}->{{ exception.getTrace().0.function }}()</code></h4>
+        {% endif %}
+        <small><em>{{ error_file }}:{{ error_line }}</em></small>
 
         <pre class="exception-code"><code class="php">
-          {%- for line in file_array|slice(exception.getLine() - 14, 25) -%}
-            <div {{ loop.index0 == 13 ? 'class="red"' : null }}><div class="pull-left line-number">{{ loop.index + exception.getLine() - 14 }}. </div> {{ line|raw }}</div>
+          {%- for line in file_array|slice(error_line - 14, 25) -%}
+            <div {{ loop.index0 == 13 ? 'class="red"' : null }}><div class="pull-left line-number">{{ loop.index + error_line - 14 }}. </div> {{ line|raw }}</div>
           {%- endfor -%}
         </code></pre>
       </div>

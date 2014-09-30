@@ -65,7 +65,7 @@ class Application extends ServiceLocator
                 return false;
             }
 
-            throw new ErrorException(sprintf('[%s] %s in %s on line %s', $errno, $errstr, $errline, $errfile));
+            throw new ErrorException($errstr, $errno, $errfile, $errline);
         });
     }
 
