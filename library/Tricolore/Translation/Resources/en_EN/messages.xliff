@@ -6,20 +6,21 @@
                 <source>Page not found</source>
                 <target>Page not found</target>
             </trans-unit>
-
             <trans-unit id="2">
                 <source>The resource requested could not be found!</source>
                 <target>The resource requested could not be found!</target>
             </trans-unit>
-
             <trans-unit id="3">
                 <source>Home</source>
                 <target>Home</target>
             </trans-unit>
-
             <trans-unit id="4">
                 <source>Return to index</source>
                 <target>Return to index</target>
+            </trans-unit>
+            <trans-unit id="5">
+                <source>Toggle navigation</source>
+                <target>Toggle navigation</target>
             </trans-unit>
         </body>
     </file>
