@@ -17,9 +17,9 @@
   <body itemscope itemtype="http://schema.org/WebPage">
     {% include "NavbarBlock.html.twig" %}
 
-    <div class="container">
+    <main class="container" role="main">
       {% block body_content %}{% endblock %}
-    </div>
+    </main>
 
     <script src="{{ assets('js', 'jquery.min.js') }}"></script>
     <script src="{{ assets('js', 'bootstrap.min.js') }}"></script>

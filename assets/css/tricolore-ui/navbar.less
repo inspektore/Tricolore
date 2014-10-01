@@ -1,5 +1,4 @@
 .navbar-default {
-  background: @navbar-background;
   border: none;
 }
 
@@ -7,6 +6,7 @@
   &, &:hover, &:focus {
     color: @navbar-brand-color;
     background: @navbar-brand-background;
+    font-weight: bold;
   }
 }
 
@@ -27,6 +27,21 @@
     &:focus {
       color: @navbar-active-hover-color;
       background-color: @navbar-active-background;
+      border-bottom: @navbar-active-border-width @navbar-hover-background @navbar-active-border-type;
+      max-height: 50px;
     }
   }
+}
+
+.navbar-default .navbar-toggle {
+  border-color: @navbar-toggle-border-color;
+
+  &:hover, &:focus {
+    background-color: @navbar-toggle-border-color-hover-focus;
+  }
+}
+
+.navbar-default .navbar-collapse, 
+.navbar-default .navbar-form {
+  border: none;
 }

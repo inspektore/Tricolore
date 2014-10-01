@@ -1,4 +1,6 @@
 $(function() {
+  $('[data-toggle="tooltip"]').tooltip({container: 'body'});
+
   var filter = $('.nav a').filter(function () {
     return this.href == location.href;
   });
