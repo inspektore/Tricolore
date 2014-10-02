@@ -14,8 +14,8 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
-  <body>
-    <div class="container">
+  <body itemscope itemtype="http://schema.org/WebPage">
+    <main class="container" role="main">
       <h1>
         <i class="fa fa-exclamation-circle"></i> Exception detected! <small>{{ exception_name }}</small>
 
@@ -64,7 +64,13 @@
           {% endif %}
         {% endfor %}
       </div>
-    </div>
+    </main>
+
+    <footer class="container">
+      <div class="pull-right footer">
+        Powered by Tricolore by <a href="http://www.macsch15.pl">Macsch15</a>
+      </div>
+    </footer>
 
     <script src="{{ assets('js', 'highlight.min.js') }}"></script>
     <script>hljs.initHighlightingOnLoad();</script>
