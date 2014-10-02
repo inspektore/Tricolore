@@ -208,8 +208,10 @@ class Select
 
         $prepare = $this->pdo->prepare($query);
 
-        $this->factory->binding($this->collection['where_binding'], $prepare);
-
+        if(isset($this->collection['where_binding']) === true) {
+           $this->factory->binding($this->collection['where_binding'], $prepare); 
+        }
+        
         try {
             $prepare->execute();
         } catch(\PDOException $exception) {
