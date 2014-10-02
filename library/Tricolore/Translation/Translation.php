@@ -14,15 +14,12 @@ class Translation
      * Get translator
      * 
      * @param string $resource
-     * @param string $locale
      * @throws Tricolore\Exception\AssetNotFound
      * @return Symfony\Component\Translation\Translator
      */
-    public function getTranslator($resource = null, $locale = null)
+    public function getTranslator($resource = null)
     {
-        if($locale === null) {
-            $locale = Config::key('trans.locale');
-        }
+        $locale = Config::key('trans.locale');
 
         $translator = new Translator($locale, new MessageSelector());
         $translator->addLoader('xliff', new XliffFileLoader());
