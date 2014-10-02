@@ -1,6 +1,7 @@
 <?php
 namespace Tricolore\RoutingProvider;
 
+use Tricolore\Application;
 use Tricolore\Config\Config;
 use Tricolore\Services\ServiceLocator;
 use Symfony\Component\Routing\Matcher\UrlMatcher;
@@ -47,17 +48,27 @@ class RoutingProvider extends ServiceLocator
 
         $locator = new FileLocator([__DIR__]);
         $loader = new YamlFileLoader($locator);
-        $this->collection = $loader->load('RouteCollection/Collection.yml');
 
+        $collection_filename = 'Collection';
+
+        if(Application::getInstance()->getEnv() === 'test') {
+            $collection_filename = 'TestCollection';
+        }
+
+        $this->collection = $loader->load(sprintf('RouteCollection/%s.yml', $collection_filename));
         $this->collection->addPrefix(Config::key('router.prefix'));
         $this->collection->setHost(Config::key('router.host'));
 
         $this->context = new RequestContext();
-        $this->context->fromRequest($this->get('request'));
+
+        $http_foundation = $this->get('request');
+        $this->context->fromRequest($http_foundation::createFromGlobals());
 
         $matcher = new UrlMatcher($this->collection, $this->context);
 
-        $this->callToController($matcher, $request);
+        if(Application::getInstance()->getEnv() !== 'test') {
+            $this->callToController($matcher, $request);
+        }
     }
 
     /**
