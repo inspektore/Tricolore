@@ -1,9 +1,29 @@
 service-locator:
-    view: { class: Tricolore\View\View, function: register }
-    cookie: { class: Tricolore\Http\CookieJar\CookieJar }
-    form: { class: Tricolore\FormFactory\FormFactory, function: getFactory }
-    translator: { class: Tricolore\Translation\Translation, function: getTranslator }
-    request: { class: Symfony\Component\HttpFoundation\Request, function: createFromGlobals }
-    response: { class: Symfony\Component\HttpFoundation\Response }
-    finder: { class: Symfony\Component\Finder\Finder }
-    datasource: { class: Tricolore\DataSources\DatabaseDriver, function: getDatabaseFactory }
+    view:
+        class: Tricolore\View\View
+        function: register
+
+    cookie:
+        class: Tricolore\Http\CookieJar\CookieJar
+
+    form:
+        class: Tricolore\FormFactory\FormFactory
+        function: getFactory
+
+    translator:
+        class: Tricolore\Translation\Translation
+        function: getTranslator
+
+    request:
+        class: Symfony\Component\HttpFoundation\Request
+        static: true
+
+    response:
+        class: Symfony\Component\HttpFoundation\Response
+
+    finder:
+        class: Symfony\Component\Finder\Finder
+
+    datasource:
+        class: Tricolore\DataSources\DatabaseAdapter
+        function: getDatabaseFactory
