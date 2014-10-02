@@ -14,6 +14,10 @@ class Config
      */
     public static function key($key, $collection = 'Configuration')
     {
+        if(Application::getInstance()->getEnv() === 'test') {
+            $collection = 'TestConfiguration';
+        }
+        
         if(file_exists(sprintf(
             Application::createPath('library:Tricolore:Config:Resources:%s.yml'), $collection)) === false
         ) {
