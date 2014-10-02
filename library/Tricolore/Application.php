@@ -35,10 +35,6 @@ class Application extends ServiceLocator
 
         self::getInstance()->setupErrorReporting();
 
-        if(self::getInstance()->getEnv() === 'test') {
-            return false;
-        }
-
         try {
             self::$routing = new RoutingProvider();
             self::$routing->register();            
@@ -162,5 +158,15 @@ class Application extends ServiceLocator
     public function getUsageMemory()
     {
         return memory_get_usage(true);
+    }
+
+    /**
+     * In travis
+     * 
+     * @return bool
+     */
+    public function inTravis()
+    {
+        return getenv('TRAVIS') ? true : false;
     }
 }
