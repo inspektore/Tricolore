@@ -32,7 +32,6 @@ class Application extends ServiceLocator
     public static function register(array $options)
     {
         self::$options = $options;
-
         self::getInstance()->setupErrorReporting();
 
         try {
