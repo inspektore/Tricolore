@@ -1,0 +1,15 @@
+server {
+    # Nginx configuration
+
+    location ^~ /library {
+        deny all;
+    }
+
+    location / {
+        if(!-e $request_filename) {
+            rewrite ^(.*)$ /index.php?/$1 break;
+        }
+    }
+
+    # Nginx configuration
+}
