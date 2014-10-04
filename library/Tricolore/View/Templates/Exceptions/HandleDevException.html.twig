@@ -38,7 +38,16 @@
         {% if exception_name != 'ErrorException' %}
           <h4>Exception caught in <code>{{ exception.getTrace().0.class }}->{{ exception.getTrace().0.function }}()</code></h4>
         {% endif %}
-        <small><em>{{ error_file }}:{{ error_line }}</em></small>
+
+        <small>
+          <em>
+            <b>Path:</b> {{ path_info }}<br />
+            <b>Server:</b> {{ server_os }}<br />
+            <b>User-Agent:</b> {{ useragent }}<br /><br />
+            
+            {{ error_file }}:{{ error_line }}
+          </em>
+        </small>
 
         <pre class="exception-code"><code class="php">
           {%- for line in file_array|slice(error_line - 14, 25) -%}

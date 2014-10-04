@@ -169,6 +169,8 @@ class View extends ServiceLocator
      */
     public function handleException($exception)
     {
+        http_response_code(500);
+
         if(Application::getInstance()->getEnv() === 'prod') {
             return $this->display('Exceptions', 'HandleClientException');
         }
@@ -189,12 +191,18 @@ class View extends ServiceLocator
 
         $file_array = new \SplFileObject($error_file, 'r');
 
+        $request = $this->get('request');
+        $request = $request::createFromGlobals();
+
         return $this->display('Exceptions', 'HandleDevException', [
             'exception' => $exception,
             'file_array' => $file_array,
             'error_line' => $error_line,
             'error_file' => $error_file,
-            'exception_name' => $exception_name
+            'exception_name' => $exception_name,
+            'path_info' => $request->getPathInfo(),
+            'useragent' => $request->server->all()['HTTP_USER_AGENT'],
+            'server_os' => $request->server->all()['SERVER_SOFTWARE']
         ]);
     }
 }
