@@ -1,4 +1,8 @@
 <?php
+if(version_compare(phpversion(), '5.5.0', '<')) {
+    die('Tricolore requires PHP 5.5 or higher.');
+}
+
 use Tricolore\Autoloader;
 use Tricolore\Application;
 
