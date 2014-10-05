@@ -36,7 +36,7 @@ class Application extends ServiceLocator
 
         try {
             self::$routing = new RoutingProvider();
-            self::$routing->register();            
+            self::$routing->register();
         } catch(\Exception $exception) {
             self::getInstance()->get('view', [true])->handleException($exception);
         }
