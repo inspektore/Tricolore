@@ -18,18 +18,45 @@ class Config
             $collection = 'TestConfiguration';
         }
         
-        if(file_exists(sprintf(
-            Application::createPath('library:Tricolore:Config:Resources:%s.yml'), $collection)) === false
+        if(self::collectionExists($collection) === false) {
+            return false;
+        }
+
+        $collection_parsed = Yaml::parse(sprintf(Application::createPath('library:Tricolore:Config:Resources:%s.yml'), $collection));
+
+        if(isset($collection_parsed[$key]) === false) {
+            return false;
+        }
+
+        return $collection_parsed[$key];
+    }
+
+    /**
+     * Fech all as array
+     * 
+     * @param string $collection 
+     * @return array
+     */
+    public static function all($collection)
+    {
+        if(self::collectionExists($collection) === false ||
+            !count($collection_parsed = Yaml::parse(
+                sprintf(Application::createPath('library:Tricolore:Config:Resources:%s.yml'), $collection)))
         ) {
-            return false;
+            return [];
         }
 
-        $collection_yml = Yaml::parse(sprintf(Application::createPath('library:Tricolore:Config:Resources:%s.yml'), $collection));
+        return $collection_parsed;
+    }
 
-        if(isset($collection_yml[$key]) === false) {
-            return false;
-        }
-
-        return $collection_yml[$key];      
+    /**
+     * Collection exists
+     * 
+     * @param $collection
+     * @return bool
+     */
+    private static function collectionExists($collection)
+    {
+        return file_exists(sprintf(Application::createPath('library:Tricolore:Config:Resources:%s.yml'), $collection));
     }
 }
