@@ -30,23 +30,23 @@ class DatabaseFactory
     public function connection(array $config)
     {
         if(isset($config['server']) === false) {
-            throw new DatabaseException('Missing config key: driver');
+            $config['server'] = 'localhost';
         }
 
         if(isset($config['port']) === false) {
-            throw new DatabaseException('Missing config key: port');
+            $config['port'] = 5432;
         }
 
         if(isset($config['database_name']) === false) {
-            throw new DatabaseException('Missing config key: database_name');
+            $config['database_name'] = 'tricolore';
         }
 
         if(isset($config['username']) === false) {
-            throw new DatabaseException('Missing config key: username');
+            $config['username'] = 'root';
         }
 
         if(isset($config['password']) === false) {
-            throw new DatabaseException('Missing config key: driver');
+            $config['password'] = null;
         }
 
         if(isset($config['table_prefix']) === false) {
@@ -101,7 +101,7 @@ class DatabaseFactory
      */
     public function binding(array $binding_container, \PDOStatement $prepare)
     {
-        if(isset($binding_container) === false || !count($binding_container)) {
+        if(!count($binding_container)) {
             return false;
         }
 
