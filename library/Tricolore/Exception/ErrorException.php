@@ -37,16 +37,6 @@ class ErrorException extends \Exception
     }
 
     /**
-     * Return exception name
-     * 
-     * @return string
-     */
-    public function getExceptionName()
-    {
-        return 'ErrorException';
-    }
-
-    /**
      * Error file
      * 
      * @return string

@@ -4,6 +4,8 @@ namespace Tricolore\View;
 use Tricolore\Application;
 use Tricolore\Config\Config;
 use Tricolore\Services\ServiceLocator;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Bridge\Twig\Extension\FormExtension;
 use Symfony\Bridge\Twig\Form\TwigRenderer;
 use Symfony\Bridge\Twig\Form\TwigRendererEngine;
@@ -78,7 +80,7 @@ class View extends ServiceLocator
      */
     public function display($template_section, $template_name, array $variables = [], $return = false)
     {
-        if(substr($template_name, -10) !== '.html.twig') {
+        if(endsWith('.html.twig', $template_name, 10) === false) {
             $template_name .= '.html.twig';
         }
 
@@ -128,7 +130,7 @@ class View extends ServiceLocator
      */
     private function formIntegration()
     {
-        $form = new TwigRendererEngine(['form_div_layout.html.twig']);
+        $form = new TwigRendererEngine(['bootstrap_3_layout.html.twig']);
         $form->setEnvironment($this->environment);
 
         $this->environment->addExtension(new FormExtension(new TwigRenderer($form)));        
@@ -171,28 +173,28 @@ class View extends ServiceLocator
     {
         http_response_code(500);
 
+        $reflection = new \ReflectionClass(get_class($exception));
+        $exception_name = $reflection->getShortName();
+
         if(Application::getInstance()->getEnv() === 'prod') {
             return $this->display('Exceptions', 'HandleClientException');
-        }
-
-        $exception_name = null;
-
-        if(method_exists($exception, 'getExceptionName')) {
-            $exception_name = $exception->getExceptionName();
         }
 
         $error_file = $exception->getFile();
         $error_line = $exception->getLine();
 
-        if($exception_name === 'ErrorException') {
+        if($reflection->getName() === 'Tricolore\Exception\ErrorException') {
             $error_file = $exception->getErrorFile();
             $error_line = $exception->getErrorLine();
         }
 
         $file_array = new \SplFileObject($error_file, 'r');
 
-        $request = $this->get('request');
-        $request = $request::createFromGlobals();
+        $request = Request::createFromGlobals();
+
+        if($reflection->getName() !== 'Tricolore\Exception\ErrorException') {
+            $this->logException($exception);
+        }
 
         return $this->display('Exceptions', 'HandleDevException', [
             'exception' => $exception,
@@ -204,5 +206,25 @@ class View extends ServiceLocator
             'useragent' => $request->server->all()['HTTP_USER_AGENT'],
             'server_os' => $request->server->all()['SERVER_SOFTWARE']
         ]);
+    }
+
+    /**
+     * Log exception
+     * 
+     * @param \Exception $exception 
+     * @return void
+     */
+    private function logException($exception)
+    {
+        $filesystem = new Filesystem();
+
+        $exception_log = str_repeat('-', 20) . ' LAST EXCEPTION LOG ' . str_repeat('-', 20) . PHP_EOL . PHP_EOL;
+        $exception_log .= 'MESSAGE: ' . $exception->getMessage() . PHP_EOL;
+        $exception_log .= 'FILE: ' . $exception->getFile() . PHP_EOL;
+        $exception_log .= 'LINE: ' . $exception->getLine() . PHP_EOL;
+        $exception_log .= 'TIME: ' . date('r') . PHP_EOL . PHP_EOL;
+        $exception_log .= str_repeat('-', 20) . ' LAST EXCEPTION LOG ' . str_repeat('-', 20);
+
+        $filesystem->dumpFile(Application::createPath('storage:last_exception.txt'), $exception_log);
     }
 }
