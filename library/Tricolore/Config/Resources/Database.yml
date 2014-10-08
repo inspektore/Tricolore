@@ -1,9 +1,26 @@
-driver: "PostgreSQL"
+Adapter: "PostgreSQL"
 
-PostgreSQL:
-    server: "localhost"
-    port: 5432
-    database_name: "tricolore"
-    table_prefix: ~
-    username: "postgres"
-    password: "root"
+Configuration:
+    PostgreSQL:
+        server: ~
+        port: ~
+        database_name: ~
+        table_prefix: ~
+        username: "postgres"
+        password: "root"
+
+    Travis:
+        server: ~
+        port: ~
+        database_name: "travis_ci_test"
+        table_prefix: ~
+        username: "postgres"
+        password: ~
+
+    Tests:
+        server: ~
+        port: ~
+        database_name: "tricolore_tests"
+        table_prefix: ~
+        username: "postgres"
+        password: "root"
