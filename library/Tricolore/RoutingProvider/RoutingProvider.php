@@ -4,6 +4,7 @@ namespace Tricolore\RoutingProvider;
 use Tricolore\Application;
 use Tricolore\Config\Config;
 use Tricolore\Services\ServiceLocator;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Matcher\UrlMatcher;
 use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\RouteCollection;
@@ -38,7 +39,7 @@ class RoutingProvider extends ServiceLocator
     {
         $request = getenv('QUERY_STRING');
         
-        if(substr($request, -1) === '/') {
+        if(endsWith('/', $request) === true) {
             $request = substr($request, 0, -1);
         }
 
@@ -61,13 +62,12 @@ class RoutingProvider extends ServiceLocator
 
         $this->context = new RequestContext();
 
-        $http_foundation = $this->get('request');
-        $this->context->fromRequest($http_foundation::createFromGlobals());
+        $this->context->fromRequest(Request::createFromGlobals());
 
         $matcher = new UrlMatcher($this->collection, $this->context);
 
         if(Application::getInstance()->getEnv() !== 'test') {
-            $this->callToController($matcher, $request);
+            $this->controllerCall($matcher, $request);
         }
     }
 
@@ -98,7 +98,7 @@ class RoutingProvider extends ServiceLocator
      * @param string $request
      * @return void
      */
-    private function callToController(UrlMatcher $matcher, $request)
+    private function controllerCall(UrlMatcher $matcher, $request)
     {
         try {
             $parameters = $matcher->match($request);

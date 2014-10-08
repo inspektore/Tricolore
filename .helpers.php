@@ -12,3 +12,37 @@ function dump()
         VarDumper::dump($variable);
     }
 }
+
+/**
+ * Starts with
+ * 
+ * @param string $condition
+ * @param string $from
+ * @param int $length
+ * @return bool
+ */
+function startsWith($condition, $from, $length = 1)
+{
+    if(substr($from, 0, $length) === $condition) {
+        return true;
+    }
+
+    return false;
+}
+
+/**
+ * Starts with
+ * 
+ * @param string $condition
+ * @param string $from
+ * @param int $length
+ * @return bool
+ */
+function endsWith($condition, $from, $length = 1)
+{
+    if(substr($from, -$length) === $condition) {
+        return true;
+    }
+
+    return false;
+}
