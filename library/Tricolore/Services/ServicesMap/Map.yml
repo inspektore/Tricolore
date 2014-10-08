@@ -3,9 +3,6 @@ service-locator:
         class: Tricolore\View\View
         function: register
 
-    cookie:
-        class: Tricolore\Http\CookieJar\CookieJar
-
     form:
         class: Tricolore\FormFactory\FormFactory
         function: getFactory
@@ -13,13 +10,6 @@ service-locator:
     translator:
         class: Tricolore\Translation\Translation
         function: getTranslator
-
-    request:
-        class: Symfony\Component\HttpFoundation\Request
-        static: true
-
-    response:
-        class: Symfony\Component\HttpFoundation\Response
 
     finder:
         class: Symfony\Component\Finder\Finder
