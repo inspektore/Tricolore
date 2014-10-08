@@ -1,11 +1,12 @@
 <?php
 namespace Tricolore\FormFactory;
 
+use Symfony\Component\Validator\Validation;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Form\Forms;
 use Symfony\Component\Form\Extension\Csrf\CsrfExtension;
-use Symfony\Component\Form\Extension\Csrf\CsrfProvider\DefaultCsrfProvider;
+use Symfony\Component\Form\Extension\Csrf\CsrfProvider\SessionCsrfProvider;
 use Symfony\Component\Form\Extension\Validator\ValidatorExtension;
-use Symfony\Component\Validator\Validation;
 use Symfony\Component\Form\Extension\HttpFoundation\HttpFoundationExtension;
 
 class FormFactory
@@ -33,7 +34,7 @@ class FormFactory
     {
         $csrf_secret_token = 'some_secret_token';
 
-        $csrf_provider = new DefaultCsrfProvider($csrf_secret_token);
+        $csrf_provider = new SessionCsrfProvider(new Session(), $csrf_secret_token);
 
         return new CsrfExtension($csrf_provider);
     }
