@@ -23,7 +23,7 @@
 
     <footer class="container">
       <div class="pull-right footer">
-        Powered by Tricolore by <a href="http://www.macsch15.pl">Macsch15</a>
+        Powered by Tricolore {{ app.getEnv() == 'dev' ? app.getVersion() : null }} by <a href="http://www.macsch15.pl">Macsch15</a>
       </div>
     </footer>
 
