@@ -19,9 +19,11 @@ class FormFactory
     public function getFactory()
     {
         return Forms::createFormFactoryBuilder()
-        ->addExtension($this->getCsrfExtension())
-        ->addExtension($this->getValidatorExtension())
-        ->addExtension($this->getHttpFoundationExtension())
+        ->addExtensions([
+            $this->getCsrfExtension(),
+            $this->getValidatorExtension(),
+            $this->getHttpFoundationExtension()
+        ])
         ->getFormFactory();
     }
 
