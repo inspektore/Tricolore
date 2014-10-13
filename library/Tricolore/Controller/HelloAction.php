@@ -8,10 +8,10 @@ class HelloAction extends ServiceLocator
     /**
      * Example page with arguments
      * 
-     * @param \stdObject $route
+     * @param \stdClass $route
      * @return void
      */
-    public function sayHello($route)
+    public function sayHello(\stdClass $route)
     {
         $render = [
             'name' => $route->name
