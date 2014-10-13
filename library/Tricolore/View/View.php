@@ -10,6 +10,7 @@ use Symfony\Bridge\Twig\Extension\FormExtension;
 use Symfony\Bridge\Twig\Form\TwigRenderer;
 use Symfony\Bridge\Twig\Form\TwigRendererEngine;
 use Symfony\Bridge\Twig\Extension\TranslationExtension;
+use Carbon\Carbon;
 
 class View extends ServiceLocator
 {
@@ -222,7 +223,7 @@ class View extends ServiceLocator
         $exception_log .= 'MESSAGE: ' . $exception->getMessage() . PHP_EOL;
         $exception_log .= 'FILE: ' . $exception->getFile() . PHP_EOL;
         $exception_log .= 'LINE: ' . $exception->getLine() . PHP_EOL;
-        $exception_log .= 'TIME: ' . date('r') . PHP_EOL . PHP_EOL;
+        $exception_log .= 'TIME: ' . Carbon::now()->toDateTimeString() . PHP_EOL . PHP_EOL;
         $exception_log .= str_repeat('-', 20) . ' LAST EXCEPTION LOG ' . str_repeat('-', 20);
 
         $filesystem->dumpFile(Application::createPath('storage:last_exception.txt'), $exception_log);
