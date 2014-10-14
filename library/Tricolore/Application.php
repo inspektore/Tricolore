@@ -11,14 +11,14 @@ class Application extends ServiceLocator
 {
     /**
      * Application options
-     * 
+     *
      * @var array
      */
     private static $options;
 
     /**
      * Routing object
-     * 
+     *
      * @var Tricolore\RoutingProvider\RoutingProvider
      */
     private static $routing;
@@ -44,7 +44,7 @@ class Application extends ServiceLocator
 
     /**
      * Setup error reporting
-     * 
+     *
      * @return void
      */
     private function setupErrorReporting()
@@ -66,7 +66,7 @@ class Application extends ServiceLocator
 
     /**
      * Application instance
-     * 
+     *
      * @return Tricolore\Application
      */
     public static function getInstance()
@@ -76,7 +76,7 @@ class Application extends ServiceLocator
 
     /**
      * Build URL address
-     * 
+     *
      * @param string $route_name
      * @param array $arguments
      * @return string
@@ -92,14 +92,14 @@ class Application extends ServiceLocator
         if(Config::key('router.use_httpd_rewrite') === true) {
             return $generator->generate($route_name, $arguments, $generator::ABSOLUTE_URL);
         }
-        
+
         return 'index.php?/' . $generator->generate($route_name, $arguments, $generator::RELATIVE_PATH);
     }
 
     /**
      * Create path
-     * 
-     * @param string $path 
+     *
+     * @param string $path
      * @return string
      */
     public static function createPath($path = null)
@@ -118,8 +118,8 @@ class Application extends ServiceLocator
     }
 
     /**
-     * Get application environment 
-     *  
+     * Get application environment
+     *
      * @return string
      */
     public function getEnv()
@@ -137,7 +137,7 @@ class Application extends ServiceLocator
 
     /**
      * Get application version
-     * 
+     *
      * @return string
      */
     public function getVersion()
@@ -151,7 +151,7 @@ class Application extends ServiceLocator
 
     /**
      * Get memory usage
-     * 
+     *
      * @return int
      */
     public function getUsageMemory()
@@ -161,7 +161,7 @@ class Application extends ServiceLocator
 
     /**
      * In travis
-     * 
+     *
      * @return bool
      */
     public function inTravis()

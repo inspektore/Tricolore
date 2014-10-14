@@ -5,7 +5,7 @@ class Autoloader
 {
     /**
      * Register autoload
-     * 
+     *
      * @return void
      */
     public static function register()
