@@ -4,6 +4,7 @@ namespace Tricolore\RoutingProvider;
 use Tricolore\Application;
 use Tricolore\Config\Config;
 use Tricolore\Services\ServiceLocator;
+use Tricolore\Exception\RuntimeException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Matcher\UrlMatcher;
 use Symfony\Component\Routing\RequestContext;
@@ -96,6 +97,7 @@ class RoutingProvider extends ServiceLocator
      * 
      * @param UrlMatcher $matcher
      * @param string $request
+     * @throws Tricolore\Exception\RuntimeException
      * @return void
      */
     private function controllerCall(UrlMatcher $matcher, $request)
@@ -104,6 +106,11 @@ class RoutingProvider extends ServiceLocator
             $parameters = $matcher->match($request);
 
             $controller = explode(':', $parameters['_controller']);
+
+            if(class_exists($controller[0]) === false) {
+                throw new RuntimeException(sprintf('Class "%s" does not exists.', $controller[0]));
+            }
+
             $call = new $controller[0]();
 
             $arguments = [];
@@ -114,6 +121,10 @@ class RoutingProvider extends ServiceLocator
                 }
 
                 $arguments[$key] = $value;
+            }
+
+            if(method_exists($call, $controller[1]) === false) {
+                throw new RuntimeException(sprintf('Action method "%s" in "%s" does not exists.', $controller[1], $controller[0]));
             }
 
             return call_user_func([$call, $controller[1]], (object)$arguments);
