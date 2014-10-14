@@ -17,7 +17,7 @@
   <body itemscope itemtype="http://schema.org/WebPage">
     <main class="container" role="main">
       <h1>
-        <i class="fa fa-exclamation-circle"></i> Exception detected! <small>{{ exception_name }}</small>
+        <i class="fa fa-exclamation-circle"></i> Tricolore has crashed <small>{{ exception_name }}</small>
 
         <div class="pull-right server-error">
           500 Internal Server Error
@@ -41,7 +41,7 @@
 
         <small>
           <em>
-            <b>Path:</b> {{ path_info }}<br />
+            <b>Location:</b> {{ path_info }}<br />
             <b>Server:</b> {{ server_os }}<br />
             <b>User-Agent:</b> {{ useragent }}<br /><br />
             
