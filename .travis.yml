@@ -8,8 +8,11 @@ php:
   - 5.6
   - hhvm
 
+matrix:
+  allow_failures:
+    - hhvm
+
 before_script:
-  - phpenv config-add library/Tricolore/Tests/php.ini
   - psql -c 'create database travis_ci_test;' -U postgres
 
 script: phpunit --configuration phpunit.xml.dist

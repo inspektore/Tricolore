@@ -12,6 +12,10 @@ require_once __DIR__ . DIRECTORY_SEPARATOR . '..' .
     DIRECTORY_SEPARATOR . '..' . 
     DIRECTORY_SEPARATOR . '.helpers.php';
 
+if(defined('HHVM_VERSION')) {
+    @ini_set('hhvm.libxml.ext_entity_whitelist', 'file,http');
+}
+
 Autoloader::register();
 
 Application::register([
