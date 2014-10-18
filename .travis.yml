@@ -3,9 +3,6 @@ language: php
 addons:
   postgresql: "9.3"
 
-before_install:
-  - echo 'hhvm.libxml.ext_entity_whitelist=file,http,https' > travis.hhvm.ini
-
 php:
   - 5.5
   - 5.6
@@ -21,7 +18,3 @@ before_script:
   - psql -c 'create database travis_ci_test;' -U postgres
 
 script: phpunit --configuration phpunit.xml.dist
-
-script:
-  - phpunit --configuration phpunit.xml.dist
-  - hhvm -c travis.hhvm.ini
