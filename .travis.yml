@@ -16,6 +16,7 @@ matrix:
 
 before_script:
   - ./library/Tricolore/Tests/Bootstrap/hhvm.sh
+  - chmod +x ./library/Tricolore/Tests/Bootstrap/hhvm.sh
   - psql -c 'create database travis_ci_test;' -U postgres
 
 script: phpunit --configuration phpunit.xml.dist
