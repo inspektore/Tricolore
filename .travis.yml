@@ -24,4 +24,4 @@ script: phpunit --configuration phpunit.xml.dist
 
 script:
   - phpunit --configuration phpunit.xml.dist
-  - hhvm -c travis.hhvm.ini phpunit --configuration phpunit.xml.dist
+  - hhvm -c travis.hhvm.ini
