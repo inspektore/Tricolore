@@ -1,4 +1,4 @@
-#Tricolore [![Build Status](http://img.shields.io/travis/Macsch15/Tricolore.svg?style=flat)](https://travis-ci.org/Macsch15/Tricolore) [![Unicorn](http://img.shields.io/badge/unicorn-on-ff69b4.svg?style=flat)](https://github.com/Macsch15/Tricolore) [![Licence](http://img.shields.io/badge/licence-gnu-red.svg?style=flat)](https://github.com/Macsch15/Tricolore/blob/master/LICENSE.md) [![HHVM](http://img.shields.io/badge/HHVM-compatibility-green.svg?style=flat)](https://github.com/Macsch15/Tricolore)
+#Tricolore [![Build Status](http://img.shields.io/travis/Macsch15/Tricolore.svg?style=flat)](https://travis-ci.org/Macsch15/Tricolore) [![Unicorn](http://img.shields.io/badge/unicorn-on-ff69b4.svg?style=flat)](https://github.com/Macsch15/Tricolore) [![Licence](http://img.shields.io/badge/licence-gnu-red.svg?style=flat)](https://github.com/Macsch15/Tricolore/blob/master/LICENSE.md)
 
 #####Open source bug tracker application
 *Work in progress...*
