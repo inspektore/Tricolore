@@ -21,4 +21,4 @@ before_script:
   - psql -c 'create database travis_ci_test;' -U postgres
 
 script:
-  - sh -c 'if [ "$TRAVIS_PHP_VERSION" = "hhvm" ]; then hhvm -c travis.hhvm.ini $HOME/.phpenv/versions/hhvm/bin/phpunit; else phpunit --verbose; fi;'
+  - sh -c 'if [ "$TRAVIS_PHP_VERSION" = "hhvm" or "$TRAVIS_PHP_VERSION" = "hhvm-nightly" ]; then hhvm -c travis.hhvm.ini $HOME/.phpenv/versions/hhvm/bin/phpunit --verbose; else phpunit --verbose; fi;'
