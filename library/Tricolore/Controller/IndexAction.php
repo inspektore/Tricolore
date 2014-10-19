@@ -6,9 +6,7 @@ use Tricolore\Services\ServiceLocator;
 class IndexAction extends ServiceLocator
 {
     /**
-     * Send index page
-     * 
-     * @return void
+     * @Route('/', name="home")
      */
     public function index()
     {

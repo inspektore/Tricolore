@@ -6,10 +6,7 @@ use Tricolore\Services\ServiceLocator;
 class HelloAction extends ServiceLocator
 {
     /**
-     * Example page with arguments
-     * 
-     * @param \stdClass $route
-     * @return void
+     * @Route('/hello/{name}', name="hello")
      */
     public function sayHello(\stdClass $route)
     {
