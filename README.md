@@ -1,9 +1,18 @@
-[![Build Status](https://travis-ci.org/Macsch15/Tricolore.svg)](https://travis-ci.org/Macsch15/Tricolore)
+#Tricolore [![Build Status](http://img.shields.io/travis/Macsch15/Tricolore.svg?style=flat)](https://travis-ci.org/Macsch15/Tricolore) [![Unicorn](http://img.shields.io/badge/unicorn-on-ff69b4.svg?style=flat)](https://github.com/Macsch15/Tricolore) [![Licence](http://img.shields.io/badge/licence-gnu-red.svg?style=flat)](https://github.com/Macsch15/Tricolore/blob/master/LICENSE.md)
 
-**Tricolore** - Work in progress
+#####Open source bug tracker application
+*Work in progress...*
 
-Licence
-======
+###Environment requirements
+- PHP 5.5 (5.6 recommended)
+- PostgreSQL 9.3 (or later)
+
+On HHVM 3.3 and later put in your **php.ini**:
+```
+hhvm.libxml.ext_entity_whitelist = file,http,https
+```
+
+###Licence
 
 Copyright (C) 2014 Maciej Schmidt
 
