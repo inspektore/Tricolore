@@ -5,3 +5,5 @@ base.charset: "utf-8"
 router.use_httpd_rewrite: false
 
 trans.locale: "en_EN"
+
+test.int: 5874
