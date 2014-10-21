@@ -9,6 +9,13 @@
          processIsolation="false"
          stopOnFailure="false"
          syntaxCheck="true">
+    <filter>
+        <blacklist>
+            <directory>library/Symfony</directory>
+            <directory>library/Carbon</directory>
+            <directory>library/Twig</directory>
+        </blacklist>
+    </filter>
     <testsuites>
         <testsuite name="Tricolore Test Suite">
             <directory>library/Tricolore/Tests</directory>
