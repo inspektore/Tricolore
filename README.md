@@ -11,6 +11,10 @@ On HHVM 3.3 and later put in your **php.ini**:
 ```
 hhvm.libxml.ext_entity_whitelist = file,http,https
 ```
+And restart HHVM
+```
+$ sudo service hhvm restart
+```
 
 ###Licence
 
