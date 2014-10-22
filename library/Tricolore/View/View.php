@@ -167,10 +167,11 @@ class View extends ServiceLocator
     /**
      * Handle exception
      * 
-     * @param $exception 
+     * @param \Exception $exception 
+     * @param bool $return
      * @return void
      */
-    public function handleException($exception)
+    public function handleException($exception, $return = false)
     {
         http_response_code(500);
 
@@ -203,10 +204,8 @@ class View extends ServiceLocator
             'error_line' => $error_line,
             'error_file' => $error_file,
             'exception_name' => $exception_name,
-            'path_info' => $request->getPathInfo(),
-            'useragent' => $request->server->all()['HTTP_USER_AGENT'],
-            'server_os' => $request->server->all()['SERVER_SOFTWARE']
-        ]);
+            'path_info' => $request->getPathInfo()
+        ], $return);
     }
 
     /**
@@ -226,6 +225,8 @@ class View extends ServiceLocator
         $exception_log .= 'TIME: ' . Carbon::now()->toDateTimeString() . PHP_EOL . PHP_EOL;
         $exception_log .= str_repeat('-', 20) . ' LAST EXCEPTION LOG ' . str_repeat('-', 20);
 
-        $filesystem->dumpFile(Application::createPath('storage:last_exception.txt'), $exception_log);
+        if(Application::getInstance()->getEnv() !== 'test') {
+            $filesystem->dumpFile(Application::createPath('storage:last_exception.txt'), $exception_log);
+        }
     }
 }
