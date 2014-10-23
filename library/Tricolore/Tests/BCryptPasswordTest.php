@@ -49,4 +49,22 @@ class BCryptPasswordTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals($expected, $actual);
     }
+
+    public function testNeedsRehash()
+    {
+        $my_password = 'Example super password!';
+        $old_password_hash = BCryptEncoder::passwordHash($my_password, [
+            'salt' => 'Duis non ut exercitation in reprehenderit',
+            'cost' => 11
+        ]);
+
+        $new_options = [
+            'salt' => 'Lorem ipsum Anim ullamco magna Duis non ut exercitation in reprehenderit',
+            'cost' => 10
+        ];
+
+        $actual = BCryptEncoder::passwordNeedsRehash($old_password_hash, $new_options);
+
+        $this->assertTrue($actual);
+    }
 }
