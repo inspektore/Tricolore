@@ -121,12 +121,10 @@ class Form implements \IteratorAggregate, FormInterface
     private $extraData = array();
 
     /**
-     * Whether the data in model, normalized and view format is
-     * synchronized. Data may not be synchronized if transformation errors
-     * occur.
-     * @var bool
+     * Returns the transformation failure generated during submission, if any
+     * @var TransformationFailedException|null
      */
-    private $synchronized = true;
+    private $transformationFailure;
 
     /**
      * Whether the form's data has been initialized.
@@ -351,20 +349,20 @@ class Form implements \IteratorAggregate, FormInterface
                 $expectedType = 'scalar, array or an instance of \ArrayAccess';
 
                 throw new LogicException(
-                    'The form\'s view data is expected to be of type '.$expectedType.', ' .
-                    'but is '.$actualType.'. You ' .
-                    'can avoid this error by setting the "data_class" option to ' .
-                    '"'.get_class($viewData).'" or by adding a view transformer ' .
+                    'The form\'s view data is expected to be of type '.$expectedType.', '.
+                    'but is '.$actualType.'. You '.
+                    'can avoid this error by setting the "data_class" option to '.
+                    '"'.get_class($viewData).'" or by adding a view transformer '.
                     'that transforms '.$actualType.' to '.$expectedType.'.'
                 );
             }
 
             if (null !== $dataClass && !$viewData instanceof $dataClass) {
                 throw new LogicException(
-                    'The form\'s view data is expected to be an instance of class ' .
-                    $dataClass.', but is '. $actualType.'. You can avoid this error ' .
-                    'by setting the "data_class" option to null or by adding a view ' .
-                    'transformer that transforms '.$actualType.' to an instance of ' .
+                    'The form\'s view data is expected to be an instance of class '.
+                    $dataClass.', but is '.$actualType.'. You can avoid this error '.
+                    'by setting the "data_class" option to null or by adding a view '.
+                    'transformer that transforms '.$actualType.' to an instance of '.
                     $dataClass.'.'
                 );
             }
@@ -634,7 +632,7 @@ class Form implements \IteratorAggregate, FormInterface
                 $viewData = $this->normToView($normData);
             }
         } catch (TransformationFailedException $e) {
-            $this->synchronized = false;
+            $this->transformationFailure = $e;
 
             // If $viewData was not yet set, set it to $submittedData so that
             // the erroneous data is accessible on the form.
@@ -711,7 +709,15 @@ class Form implements \IteratorAggregate, FormInterface
      */
     public function isSynchronized()
     {
-        return $this->synchronized;
+        return null === $this->transformationFailure;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getTransformationFailure()
+    {
+        return $this->transformationFailure;
     }
 
     /**
@@ -1061,7 +1067,7 @@ class Form implements \IteratorAggregate, FormInterface
             }
         } catch (TransformationFailedException $exception) {
             throw new TransformationFailedException(
-                'Unable to transform value for property path "' . $this->getPropertyPath() . '": ' . $exception->getMessage(),
+                'Unable to transform value for property path "'.$this->getPropertyPath().'": '.$exception->getMessage(),
                 $exception->getCode(),
                 $exception
             );
@@ -1089,7 +1095,7 @@ class Form implements \IteratorAggregate, FormInterface
             }
         } catch (TransformationFailedException $exception) {
             throw new TransformationFailedException(
-                'Unable to reverse value for property path "' . $this->getPropertyPath() . '": ' . $exception->getMessage(),
+                'Unable to reverse value for property path "'.$this->getPropertyPath().'": '.$exception->getMessage(),
                 $exception->getCode(),
                 $exception
             );
@@ -1124,7 +1130,7 @@ class Form implements \IteratorAggregate, FormInterface
             }
         } catch (TransformationFailedException $exception) {
             throw new TransformationFailedException(
-                'Unable to transform value for property path "' . $this->getPropertyPath() . '": ' . $exception->getMessage(),
+                'Unable to transform value for property path "'.$this->getPropertyPath().'": '.$exception->getMessage(),
                 $exception->getCode(),
                 $exception
             );
@@ -1156,7 +1162,7 @@ class Form implements \IteratorAggregate, FormInterface
             }
         } catch (TransformationFailedException $exception) {
             throw new TransformationFailedException(
-                'Unable to reverse value for property path "' . $this->getPropertyPath() . '": ' . $exception->getMessage(),
+                'Unable to reverse value for property path "'.$this->getPropertyPath().'": '.$exception->getMessage(),
                 $exception->getCode(),
                 $exception
             );

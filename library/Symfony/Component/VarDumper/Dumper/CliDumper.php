@@ -33,20 +33,15 @@ class CliDumper extends AbstractDumper
         'str'       => '1;38;5;37',
         'cchr'      => '7',
         'note'      => '38;5;178',
-        'ref'       => '38;5;245',
+        'ref'       => '38;5;240',
+        'solo-ref'  => '38;5;240',
         'public'    => '38;5;28',
         'protected' => '38;5;166',
         'private'   => '38;5;160',
         'meta'      => '38;5;27',
     );
 
-    protected static $controlChars = array(
-        "\x1B", // ESC must be the first
-        "\x00", "\x01", "\x02", "\x03", "\x04", "\x05", "\x06", "\x07",
-        "\x08", "\x09", "\x0A", "\x0B", "\x0C", "\x0D", "\x0E", "\x0F",
-        "\x10", "\x11", "\x12", "\x13", "\x14", "\x15", "\x16", "\x17",
-        "\x18", "\x19", "\x1A", "\x1C", "\x1D", "\x1E", "\x1F", "\x7F",
-    );
+    protected static $controlCharsRx = "/\\x00\x01\x02\x03\x04\x05\x06\x07\x08\x09\x0A\x0B\x0C\x0D\x0E\x0F\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1A\x1B\x1C\x1D\x1E\x1F\x7F/";
 
     /**
      * Enables/disables colored output.
@@ -83,15 +78,12 @@ class CliDumper extends AbstractDumper
     /**
      * {@inheritdoc}
      */
-    public function dumpScalar(Cursor $cursor, $type, $val)
+    public function dumpScalar(Cursor $cursor, $type, $value)
     {
-        if ('string' === $type) {
-            return $this->dumpString($cursor, $val, false, 0);
-        }
-
         $this->dumpKey($cursor);
 
         $style = 'const';
+        $attr = array();
 
         switch ($type) {
             case 'integer':
@@ -102,30 +94,35 @@ class CliDumper extends AbstractDumper
                 $style = 'num';
 
                 switch (true) {
-                    case INF === $val:  $val = 'INF';  break;
-                    case -INF === $val: $val = '-INF'; break;
-                    case is_nan($val):  $val = 'NAN';  break;
+                    case INF === $value:  $value = 'INF';  break;
+                    case -INF === $value: $value = '-INF'; break;
+                    case is_nan($value):  $value = 'NAN';  break;
                     default:
-                        $val = (string) $val;
-                        if (false === strpos($val, $this->decimalPoint)) {
-                            $val .= $this->decimalPoint.'0';
+                        $value = (string) $value;
+                        if (false === strpos($value, $this->decimalPoint)) {
+                            $value .= $this->decimalPoint.'0';
                         }
                         break;
                 }
                 break;
 
             case 'NULL':
-                $val = 'null';
+                $value = 'null';
                 break;
 
             case 'boolean':
-                $val = $val ? 'true' : 'false';
+                $value = $value ? 'true' : 'false';
+                break;
+
+            default:
+                $attr['value'] = isset($value[0]) && !preg_match('//u', $value) ? Data::utf8Encode($value) : $value;
+                $value = isset($type[0]) && !preg_match('//u', $type) ? Data::utf8Encode($type) : $type;
                 break;
         }
 
-        $this->line .= $this->style($style, $val);
+        $this->line .= $this->style($style, $value, $attr);
 
-        $this->endLine($cursor);
+        $this->dumpLine($cursor->depth);
     }
 
     /**
@@ -137,8 +134,12 @@ class CliDumper extends AbstractDumper
 
         if ('' === $str) {
             $this->line .= '""';
-            $this->endLine($cursor);
+            $this->dumpLine($cursor->depth);
         } else {
+            $attr = array(
+                'length' => function_exists('iconv_strlen') && 0 <= $cut ? iconv_strlen($str, 'UTF-8') + $cut : 0,
+                'binary' => $bin,
+            );
             $str = explode("\n", $str);
             $m = count($str) - 1;
             $i = $lineCut = 0;
@@ -149,7 +150,7 @@ class CliDumper extends AbstractDumper
 
             if ($m) {
                 $this->line .= '"""';
-                $this->endLine($cursor);
+                $this->dumpLine($cursor->depth);
             } else {
                 $this->line .= '"';
             }
@@ -163,7 +164,7 @@ class CliDumper extends AbstractDumper
                 if ($m) {
                     $this->line .= $this->indentPad;
                 }
-                $this->line .= $this->style('str', $str);
+                $this->line .= $this->style('str', $str, $attr);
 
                 if ($i++ == $m) {
                     $this->line .= '"';
@@ -182,7 +183,7 @@ class CliDumper extends AbstractDumper
                     $lineCut = 0;
                 }
 
-                $this->endLine($cursor, !$m);
+                $this->dumpLine($cursor->depth);
             }
         }
     }
@@ -190,93 +191,61 @@ class CliDumper extends AbstractDumper
     /**
      * {@inheritdoc}
      */
-    public function enterArray(Cursor $cursor, $count, $indexed, $hasChild)
-    {
-        $this->enterHash($cursor, $count ? $this->style('note', 'array:'.$count).' [' : '[', $hasChild);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function leaveArray(Cursor $cursor, $count, $indexed, $hasChild, $cut)
-    {
-        $this->leaveHash($cursor, ']', $hasChild, $cut);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function enterObject(Cursor $cursor, $class, $hasChild)
-    {
-        $this->enterHash($cursor, 'stdClass' !== $class ? $this->style('note', $class).' {' : '{', $hasChild);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function leaveObject(Cursor $cursor, $class, $hasChild, $cut)
-    {
-        $this->leaveHash($cursor, '}', $hasChild, $cut);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function enterResource(Cursor $cursor, $res, $hasChild)
-    {
-        $this->enterHash($cursor, 'resource:'.$this->style('note', $res).' {', $hasChild);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function leaveResource(Cursor $cursor, $res, $hasChild, $cut)
-    {
-        $this->leaveHash($cursor, '}', $hasChild, $cut);
-    }
-
-    /**
-     * Generic dumper used while entering any hash-style structure.
-     *
-     * @param Cursor $cursor   The Cursor position in the dump.
-     * @param string $prefix   The string that starts the next dumped line.
-     * @param bool   $hasChild When the dump of the hash has child item.
-     */
-    protected function enterHash(Cursor $cursor, $prefix, $hasChild)
+    public function enterHash(Cursor $cursor, $type, $class, $hasChild)
     {
         $this->dumpKey($cursor);
 
+        if (Cursor::HASH_OBJECT === $type) {
+            $prefix = 'stdClass' !== $class ? $this->style('note', $class).' {' : '{';
+        } elseif (Cursor::HASH_RESOURCE === $type) {
+            $prefix = $this->style('note', ':'.$class).' {';
+        } else {
+            $prefix = $class ? $this->style('note', 'array:'.$class).' [' : '[';
+        }
+
+        if ($cursor->softRefCount) {
+            $prefix .= $this->style('ref', (Cursor::HASH_RESOURCE === $type ? '@' : '#').(0 < $cursor->softRefHandle ? $cursor->softRefHandle : $cursor->softRefTo), array('count' => $cursor->softRefCount));
+        } elseif (0 < $cursor->softRefHandle) {
+            $prefix .= $this->style('solo-ref', (Cursor::HASH_RESOURCE === $type ? '@' : '#').$cursor->softRefHandle);
+        } elseif ($cursor->hardRefTo && !$cursor->refIndex && $class) {
+            $prefix .= $this->style('ref', '&'.$cursor->hardRefTo, array('count' => $cursor->hardRefCount));
+        }
+
         $this->line .= $prefix;
-        if (false !== $cursor->softRefTo) {
-            $this->line .= $this->style('ref', '@'.$cursor->softRefTo);
-        } elseif (false !== $cursor->hardRefTo) {
-            $this->line .= $this->style('ref', '@'.$cursor->hardRefTo);
-        } elseif ($hasChild) {
-            $this->endLine($cursor);
+
+        if ($hasChild) {
+            $this->dumpLine($cursor->depth);
         }
     }
 
     /**
-     * Generic dumper used while leaving any hash-style structure.
+     * {@inheritdoc}
+     */
+    public function leaveHash(Cursor $cursor, $type, $class, $hasChild, $cut)
+    {
+        $this->dumpEllipsis($cursor, $hasChild, $cut);
+        $this->line .= Cursor::HASH_OBJECT === $type || Cursor::HASH_RESOURCE === $type ? '}' : ']';
+        $this->dumpLine($cursor->depth);
+    }
+
+    /**
+     * Dumps an ellipsis for cut children.
      *
      * @param Cursor $cursor   The Cursor position in the dump.
-     * @param string $suffix   The string that ends the next dumped line.
      * @param bool   $hasChild When the dump of the hash has child item.
      * @param int    $cut      The number of items the hash has been cut by.
      */
-    protected function leaveHash(Cursor $cursor, $suffix, $hasChild, $cut)
+    protected function dumpEllipsis(Cursor $cursor, $hasChild, $cut)
     {
-        if ($cut && false === $cursor->softRefTo && false === $cursor->hardRefTo) {
-            $this->line .= '…';
+        if ($cut) {
+            $this->line .= ' …';
             if (0 < $cut) {
                 $this->line .= $cut;
             }
             if ($hasChild) {
-                $this->dumpLine($cursor->depth+1);
+                $this->dumpLine($cursor->depth + 1);
             }
         }
-        $this->line .= $suffix;
-        $this->endLine($cursor, !$hasChild);
     }
 
     /**
@@ -287,10 +256,8 @@ class CliDumper extends AbstractDumper
     protected function dumpKey(Cursor $cursor)
     {
         if (null !== $key = $cursor->hashKey) {
-            if ($bin = isset($key[0]) && !preg_match('//u', $key)) {
-                $key = Data::utf8Encode($key);
-                $bin = 'b';
-            }
+            $attr = array('binary' => $cursor->hashKeyIsBinary);
+            $bin = $cursor->hashKeyIsBinary ? 'b' : '';
             switch ($cursor->hashType) {
                 default:
                 case Cursor::HASH_INDEXED:
@@ -313,72 +280,58 @@ class CliDumper extends AbstractDumper
 
                         switch ($key[0]) {
                             case '+': // User inserted keys
-                                $this->line .= $bin.'"'.$this->style('public', $key[1]).'": ';
+                                $attr['dynamic'] = true;
+                                $this->line .= $bin.'"'.$this->style('public', $key[1], $attr).'": ';
                                 break 2;
 
                             case '~': $style = 'meta';      break;
                             case '*': $style = 'protected'; break;
-                            default:  $style = 'private';   break;
+                            default:
+                                $attr['class'] = $key[0];
+                                $style = 'private';
+                                break;
                         }
 
-                        $this->line .= $bin.$this->style($style, $key[1]).': ';
+                        $this->line .= $bin.$this->style($style, $key[1], $attr).': ';
                     } else {
                         // This case should not happen
-                        $this->line .= $bin.'"'.$this->style('private', $key).'": ';
+                        $this->line .= $bin.'"'.$this->style('private', $key, array('class' => '')).'": ';
                     }
                     break;
             }
 
-            if (false !== $cursor->hardRefTo) {
-                $this->line .= $this->style('ref', '&'.$cursor->hardRefTo).' ';
+            if ($cursor->hardRefTo) {
+                $this->line .= ($cursor->hardRefCount ? $this->style('ref', '&'.$cursor->hardRefTo, array('count' => $cursor->hardRefCount)) : $this->style('solo-ref', '&')).' ';
             }
         }
-    }
-
-    /**
-     * Finishes a line and dumps it.
-     *
-     * @param Cursor $cursor  The current Cursor position.
-     * @param bool   $showRef Show/hide the current ref index.
-     */
-    protected function endLine(Cursor $cursor, $showRef = true)
-    {
-        if ($showRef && false !== $cursor->refIndex) {
-            $this->line .= ' '.$this->style('ref', '#'.$cursor->refIndex);
-        }
-        $this->dumpLine($cursor->depth);
     }
 
     /**
      * Decorates a value with some style.
      *
      * @param string $style The type of style being applied.
-     * @param string $val   The value being styled.
+     * @param string $value The value being styled.
+     * @param array  $attr  Optional context information.
      *
      * @return string The value with style decoration.
      */
-    protected function style($style, $val)
+    protected function style($style, $value, $attr = array())
     {
         if (null === $this->colors) {
             $this->colors = $this->supportsColors($this->outputStream);
         }
 
-        if (!$this->colors || '' === $val) {
-            return $val;
+        if (!$this->colors || '' === $value) {
+            return $value;
         }
 
-        if ('str' === $style || 'meta' === $style || 'public' === $style) {
-            foreach (static::$controlChars as $c) {
-                if (false !== strpos($val, $c)) {
-                    $r = "\x7F" === $c ? '?' : chr(64 + ord($c));
-                    $r = "\033[{$this->styles[$style]};{$this->styles['cchr']}m{$r}\033[m";
-                    $r = "\033[m{$r}\033[{$this->styles[$style]}m";
-                    $val = str_replace($c, $r, $val);
-                }
-            }
-        }
+        $style = $this->styles[$style];
+        $cchr = "\033[m\033[{$style};{$this->styles['cchr']}m%s\033[m\033[{$style}m";
+        $value = preg_replace_callback(self::$controlCharsRx, function ($r) use ($cchr) {
+            return sprintf($cchr, "\x7F" === $r[0] ? '?' : chr(64 + ord($r[0])));
+        }, $value);
 
-        return sprintf("\033[%sm%s\033[m", $this->styles[$style], $val);
+        return sprintf("\033[%sm%s\033[m", $style, $value);
     }
 
     /**

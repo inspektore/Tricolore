@@ -34,9 +34,10 @@ class RangeValidator extends ConstraintValidator
         }
 
         if (!is_numeric($value) && !$value instanceof \DateTime && !$value instanceof \DateTimeInterface) {
-            $this->context->addViolation($constraint->invalidMessage, array(
-                '{{ value }}' => $this->formatValue($value),
-            ));
+            $this->buildViolation($constraint->invalidMessage)
+                ->setParameter('{{ value }}', $this->formatValue($value))
+                ->setCode(Range::INVALID_VALUE_ERROR)
+                ->addViolation();
 
             return;
         }
@@ -59,19 +60,21 @@ class RangeValidator extends ConstraintValidator
         }
 
         if (null !== $constraint->max && $value > $max) {
-            $this->context->addViolation($constraint->maxMessage, array(
-                '{{ value }}' => $value,
-                '{{ limit }}' => $this->formatValue($max, self::PRETTY_DATE),
-            ));
+            $this->buildViolation($constraint->maxMessage)
+                ->setParameter('{{ value }}', $value)
+                ->setParameter('{{ limit }}', $this->formatValue($max, self::PRETTY_DATE))
+                ->setCode(Range::BEYOND_RANGE_ERROR)
+                ->addViolation();
 
             return;
         }
 
         if (null !== $constraint->min && $value < $min) {
-            $this->context->addViolation($constraint->minMessage, array(
-                '{{ value }}' => $value,
-                '{{ limit }}' => $this->formatValue($min, self::PRETTY_DATE),
-            ));
+            $this->buildViolation($constraint->minMessage)
+                ->setParameter('{{ value }}', $value)
+                ->setParameter('{{ limit }}', $this->formatValue($min, self::PRETTY_DATE))
+                ->setCode(Range::BELOW_RANGE_ERROR)
+                ->addViolation();
         }
     }
 }

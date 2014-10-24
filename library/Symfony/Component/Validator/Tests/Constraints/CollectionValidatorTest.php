@@ -118,7 +118,7 @@ abstract class CollectionValidatorTest extends AbstractConstraintValidatorTest
             'fields' => array(
                 'foo' => $constraints,
                 'bar' => $constraints,
-            )
+            ),
         )));
 
         $this->assertNoViolation();
@@ -142,9 +142,12 @@ abstract class CollectionValidatorTest extends AbstractConstraintValidatorTest
             'extraFieldsMessage' => 'myMessage',
         )));
 
-        $this->assertViolation('myMessage', array(
-            '{{ field }}' => '"baz"'
-        ), 'property.path[baz]', 6);
+        $this->buildViolation('myMessage')
+            ->setParameter('{{ field }}', '"baz"')
+            ->atPath('property.path[baz]')
+            ->setInvalidValue(6)
+            ->setCode(Collection::NO_SUCH_FIELD_ERROR)
+            ->assertRaised();
     }
 
     // bug fix
@@ -201,9 +204,12 @@ abstract class CollectionValidatorTest extends AbstractConstraintValidatorTest
             'missingFieldsMessage' => 'myMessage',
         )));
 
-        $this->assertViolation('myMessage', array(
-            '{{ field }}' => '"foo"'
-        ), 'property.path[foo]', null);
+        $this->buildViolation('myMessage')
+            ->setParameter('{{ field }}', '"foo"')
+            ->atPath('property.path[foo]')
+            ->setInvalidValue(null)
+            ->setCode(Collection::MISSING_FIELD_ERROR)
+            ->assertRaised();
     }
 
     public function testMissingFieldsAllowed()
@@ -311,9 +317,12 @@ abstract class CollectionValidatorTest extends AbstractConstraintValidatorTest
             'missingFieldsMessage' => 'myMessage',
         )));
 
-        $this->assertViolation('myMessage', array(
-            '{{ field }}' => '"foo"'
-        ), 'property.path[foo]', null);
+        $this->buildViolation('myMessage')
+            ->setParameter('{{ field }}', '"foo"')
+            ->atPath('property.path[foo]')
+            ->setInvalidValue(null)
+            ->setCode(Collection::MISSING_FIELD_ERROR)
+            ->assertRaised();
     }
 
     public function testRequiredFieldSingleConstraint()
@@ -360,7 +369,7 @@ abstract class CollectionValidatorTest extends AbstractConstraintValidatorTest
     public function testObjectShouldBeLeftUnchanged()
     {
         $value = new \ArrayObject(array(
-            'foo' => 3
+            'foo' => 3,
         ));
 
         $constraint = new Range(array('min' => 2));
@@ -370,11 +379,11 @@ abstract class CollectionValidatorTest extends AbstractConstraintValidatorTest
         $this->validator->validate($value, new Collection(array(
             'fields' => array(
                 'foo' => $constraint,
-            )
+            ),
         )));
 
         $this->assertEquals(array(
-            'foo' => 3
+            'foo' => 3,
         ), (array) $value);
     }
 }

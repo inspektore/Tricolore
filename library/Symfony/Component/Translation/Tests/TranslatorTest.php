@@ -14,10 +14,10 @@ namespace Symfony\Component\Translation\Tests;
 use Symfony\Component\Translation\Translator;
 use Symfony\Component\Translation\MessageSelector;
 use Symfony\Component\Translation\Loader\ArrayLoader;
+use Symfony\Component\Translation\MessageCatalogue;
 
 class TranslatorTest extends \PHPUnit_Framework_TestCase
 {
-
     /**
      * @dataProvider      getInvalidLocalesTests
      * @expectedException \InvalidArgumentException
@@ -73,6 +73,16 @@ class TranslatorTest extends \PHPUnit_Framework_TestCase
         $translator->setLocale($locale);
 
         $this->assertEquals($locale, $translator->getLocale());
+    }
+
+    public function testGetCatalogue()
+    {
+        $translator = new Translator('en');
+
+        $this->assertEquals(new MessageCatalogue('en'), $translator->getCatalogue());
+
+        $translator->setLocale('fr');
+        $this->assertEquals(new MessageCatalogue('fr'), $translator->getCatalogue('fr'));
     }
 
     public function testSetFallbackLocales()
@@ -357,12 +367,12 @@ class TranslatorTest extends \PHPUnit_Framework_TestCase
         $messages = array(
             'symfony2' => array(
                 'is' => array(
-                    'great' => 'Symfony2 est super!'
-                )
+                    'great' => 'Symfony2 est super!',
+                ),
             ),
             'foo' => array(
                 'bar' => array(
-                    'baz' => 'Foo Bar Baz'
+                    'baz' => 'Foo Bar Baz',
                 ),
                 'baz' => 'Foo Baz',
             ),

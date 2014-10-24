@@ -11,6 +11,7 @@
 
 namespace Symfony\Component\Validator\Tests;
 
+use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Tests\Fixtures\ClassConstraint;
 use Symfony\Component\Validator\Tests\Fixtures\ConstraintA;
 use Symfony\Component\Validator\Tests\Fixtures\ConstraintB;
@@ -55,7 +56,7 @@ class ConstraintTest extends \PHPUnit_Framework_TestCase
 
         new ConstraintC(array(
             'option1' => 'default',
-            'foo' => 'bar'
+            'foo' => 'bar',
         ));
     }
 
@@ -196,5 +197,13 @@ class ConstraintTest extends \PHPUnit_Framework_TestCase
         $constraint = unserialize(serialize($constraint));
 
         $this->assertSame(array('MyGroup'), $constraint->groups);
+    }
+
+    /**
+     * @expectedException \Symfony\Component\Validator\Exception\InvalidArgumentException
+     */
+    public function testGetErrorNameForUnknownCode()
+    {
+        Constraint::getErrorName(1);
     }
 }

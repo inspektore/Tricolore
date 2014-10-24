@@ -114,10 +114,11 @@ class RangeValidatorTest extends AbstractConstraintValidatorTest
 
         $this->validator->validate($value, $constraint);
 
-        $this->assertViolation('myMessage', array(
-            '{{ value }}' => $value,
-            '{{ limit }}' => 10,
-        ));
+        $this->buildViolation('myMessage')
+            ->setParameter('{{ value }}', $value)
+            ->setParameter('{{ limit }}', 10)
+            ->setCode(Range::BELOW_RANGE_ERROR)
+            ->assertRaised();
     }
 
     /**
@@ -132,10 +133,11 @@ class RangeValidatorTest extends AbstractConstraintValidatorTest
 
         $this->validator->validate($value, $constraint);
 
-        $this->assertViolation('myMessage', array(
-            '{{ value }}' => $value,
-            '{{ limit }}' => 20,
-        ));
+        $this->buildViolation('myMessage')
+            ->setParameter('{{ value }}', $value)
+            ->setParameter('{{ limit }}', 20)
+            ->setCode(Range::BEYOND_RANGE_ERROR)
+            ->assertRaised();
     }
 
     /**
@@ -152,10 +154,11 @@ class RangeValidatorTest extends AbstractConstraintValidatorTest
 
         $this->validator->validate($value, $constraint);
 
-        $this->assertViolation('myMaxMessage', array(
-            '{{ value }}' => $value,
-            '{{ limit }}' => 20,
-        ));
+        $this->buildViolation('myMaxMessage')
+            ->setParameter('{{ value }}', $value)
+            ->setParameter('{{ limit }}', 20)
+            ->setCode(Range::BEYOND_RANGE_ERROR)
+            ->assertRaised();
     }
 
     /**
@@ -172,10 +175,11 @@ class RangeValidatorTest extends AbstractConstraintValidatorTest
 
         $this->validator->validate($value, $constraint);
 
-        $this->assertViolation('myMinMessage', array(
-            '{{ value }}' => $value,
-            '{{ limit }}' => 10,
-        ));
+        $this->buildViolation('myMinMessage')
+            ->setParameter('{{ value }}', $value)
+            ->setParameter('{{ limit }}', 10)
+            ->setCode(Range::BELOW_RANGE_ERROR)
+            ->assertRaised();
     }
 
     public function getTenthToTwentiethMarch2014()
@@ -292,10 +296,11 @@ class RangeValidatorTest extends AbstractConstraintValidatorTest
 
         $this->validator->validate($value, $constraint);
 
-        $this->assertViolation('myMessage', array(
-            '{{ value }}' => $value,
-            '{{ limit }}' => 'Mar 10, 2014, 12:00 AM',
-        ));
+        $this->buildViolation('myMessage')
+            ->setParameter('{{ value }}', $value)
+            ->setParameter('{{ limit }}', 'Mar 10, 2014, 12:00 AM')
+            ->setCode(Range::BELOW_RANGE_ERROR)
+            ->assertRaised();
     }
 
     /**
@@ -314,10 +319,11 @@ class RangeValidatorTest extends AbstractConstraintValidatorTest
 
         $this->validator->validate($value, $constraint);
 
-        $this->assertViolation('myMessage', array(
-            '{{ value }}' => $value,
-            '{{ limit }}' => 'Mar 20, 2014, 12:00 AM',
-        ));
+        $this->buildViolation('myMessage')
+            ->setParameter('{{ value }}', $value)
+            ->setParameter('{{ limit }}', 'Mar 20, 2014, 12:00 AM')
+            ->setCode(Range::BEYOND_RANGE_ERROR)
+            ->assertRaised();
     }
 
     /**
@@ -338,10 +344,11 @@ class RangeValidatorTest extends AbstractConstraintValidatorTest
 
         $this->validator->validate($value, $constraint);
 
-        $this->assertViolation('myMaxMessage', array(
-            '{{ value }}' => $value,
-            '{{ limit }}' => 'Mar 20, 2014, 12:00 AM',
-        ));
+        $this->buildViolation('myMaxMessage')
+            ->setParameter('{{ value }}', $value)
+            ->setParameter('{{ limit }}', 'Mar 20, 2014, 12:00 AM')
+            ->setCode(Range::BEYOND_RANGE_ERROR)
+            ->assertRaised();
     }
 
     /**
@@ -362,10 +369,11 @@ class RangeValidatorTest extends AbstractConstraintValidatorTest
 
         $this->validator->validate($value, $constraint);
 
-        $this->assertViolation('myMinMessage', array(
-            '{{ value }}' => $value,
-            '{{ limit }}' => 'Mar 10, 2014, 12:00 AM',
-        ));
+        $this->buildViolation('myMinMessage')
+            ->setParameter('{{ value }}', $value)
+            ->setParameter('{{ limit }}', 'Mar 10, 2014, 12:00 AM')
+            ->setCode(Range::BELOW_RANGE_ERROR)
+            ->assertRaised();
     }
 
     public function getInvalidValues()
@@ -379,38 +387,6 @@ class RangeValidatorTest extends AbstractConstraintValidatorTest
         );
     }
 
-    public function testMinMessageIsSet()
-    {
-        $constraint = new Range(array(
-            'min' => 10,
-            'max' => 20,
-            'minMessage' => 'myMessage',
-        ));
-
-        $this->validator->validate(9, $constraint);
-
-        $this->assertViolation('myMessage', array(
-            '{{ value }}' => 9,
-            '{{ limit }}' => 10,
-        ));
-    }
-
-    public function testMaxMessageIsSet()
-    {
-        $constraint = new Range(array(
-            'min' => 10,
-            'max' => 20,
-            'maxMessage' => 'myMessage',
-        ));
-
-        $this->validator->validate(21, $constraint);
-
-        $this->assertViolation('myMessage', array(
-            '{{ value }}' => 21,
-            '{{ limit }}' => 20,
-        ));
-    }
-
     public function testNonNumeric()
     {
         $this->validator->validate('abcd', new Range(array(
@@ -419,8 +395,9 @@ class RangeValidatorTest extends AbstractConstraintValidatorTest
             'invalidMessage' => 'myMessage',
         )));
 
-        $this->assertViolation('myMessage', array(
-            '{{ value }}' => '"abcd"',
-        ));
+        $this->buildViolation('myMessage')
+            ->setParameter('{{ value }}', '"abcd"')
+            ->setCode(Range::INVALID_VALUE_ERROR)
+            ->assertRaised();
     }
 }
