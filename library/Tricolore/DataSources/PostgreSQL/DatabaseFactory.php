@@ -135,10 +135,104 @@ class DatabaseFactory
      * Execute query
      * 
      * @param $query 
-     * @return mixed
+     * @return int
      */
     public function exec($query)
     {
         return $this->pdo->exec($query);
+    }
+
+    /**
+     * Drop table
+     * 
+     * @param string|array $table_name 
+     * @return int
+     */
+    public function dropTable($table_name)
+    {
+        if(is_array($table_name) && count($table_name)) {
+            foreach($table_name as $table) {
+                $this->exec(sprintf('drop table %s%s', $this->table_prefix, $table));
+            }
+
+            return count($table_name);
+        }
+
+        return $this->exec(sprintf('drop table %s%s', $this->table_prefix, $table_name));
+    }
+
+    /**
+     * Drop field
+     * 
+     * @param string $from_table
+     * @param string|array $field_name
+     * @return int
+     */
+    public function dropField($from_table, $field_name)
+    {
+        if(is_array($field_name) && count($field_name)) {
+            foreach($field_name as $field) {
+                $this->exec(sprintf('alter table %s drop column if exists %s', $from_table, $field));
+            }
+
+            return count($field_name);
+        }
+
+        return $this->exec(sprintf('alter table %s drop column %s', $from_table, $field_name));
+    }
+
+    /**
+     * Field exists
+     * 
+     * @param string $field_name
+     * @param string $in_table
+     * @return bool
+     */
+    public function fieldExists($field_name, $in_table)
+    {
+        $query = $this->buildQuery('select')
+        ->select('column_name')
+        ->from('information_schema.columns')
+        ->where('table_name=? and column_name=?', [
+            1 => [
+                'value' => $in_table
+            ],
+
+            2 => [
+                'value' => $field_name
+            ]
+        ])
+        ->execute();
+
+        return count($query) ? true : false;
+    }
+
+    /**
+     * Table exists
+     * 
+     * @param $table_name 
+     * @return bool
+     */
+    public function tableExists($table_name)
+    {
+        $query = $this->buildQuery('select')
+        ->select('*')
+        ->from('pg_tables')
+        ->where('schemaname=?', [
+            1 => [
+                'value' => 'public'
+            ]
+        ])
+        ->execute();
+
+        if(count($query)) {
+            foreach($query as $key => $schema) {
+                if($schema['tablename'] === $table_name) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 }
