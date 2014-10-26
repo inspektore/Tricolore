@@ -179,10 +179,14 @@
 {# Rows #}
 
 {% block form_row -%}
-    <div class="form-group{% if (not compound or force_error|default(false)) and not valid %} has-error{% endif %}">
+    <div class="form-group{% if (not compound or force_error|default(false)) and not valid %} has-error has-feedback{% endif %}">
         {{ form_label(form) }}
         {{ form_widget(form) }}
         {{ form_errors(form) }}
+
+        {% if (not compound or force_error|default(false)) and not valid %}
+            <span class="glyphicon glyphicon-remove form-control-feedback"></span>
+        {% endif %}
     </div>
 {%- endblock form_row %}
 
