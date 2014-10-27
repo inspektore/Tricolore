@@ -177,21 +177,21 @@ class Select
             $this->collection['from'] = implode(',', $this->collection['from']);
         }
 
-        $query = 'select ' . $this->collection['select'];
-        $query .= ' from ' . $this->collection['from'];
+        $query = sprintf('select %s ', $this->collection['select']);
+        $query .= sprintf('from %s ', $this->collection['from']);
 
         if(isset($this->collection['left_join']) === true 
             && isset($this->collection['left_join_on']) === true
         ) {
-            $query .= ' left join ' . $this->collection['left_join'] . ' on ' . $this->collection['left_join_on'];
+            $query .= sprintf('left join %s on %s ', $this->collection['left_join'], $this->collection['left_join_on']);
         }
 
         if(isset($this->collection['where']) === true) {
-            $query .= ' where ' . $this->collection['where'];            
+            $query .= sprintf('where %s ', $this->collection['where']);
         }
 
         if(isset($this->collection['group_by']) === true) {
-            $query .= ' group by ' . $this->collection['group_by'];
+            $query .= sprintf('group by %s ', $this->collection['group_by']);
         }
 
         if(isset($this->collection['order_by']) === true) {
@@ -199,11 +199,11 @@ class Select
                 $this->collection['order_by'] = implode(',', $this->collection['order_by']);
             }
 
-            $query .= ' order by ' . $this->collection['order_by'] . ' ' . $this->collection['order_by_sorting'];
+            $query .= sprintf('order by %s %s ', $this->collection['order_by'], $this->collection['order_by_sorting']);
         }
 
         if(isset($this->collection['limit']) === true) {
-            $query .= ' limit ' . $this->collection['limit'];
+            $query .= sprintf('limit %d', $this->collection['limit']);
         }
 
         $prepare = $this->pdo->prepare($query);

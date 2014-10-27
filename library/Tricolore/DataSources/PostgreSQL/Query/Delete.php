@@ -93,8 +93,7 @@ class Delete
             throw new DatabaseException('"Where" in query is required. Add where() method to your query builder.');
         }
 
-        $query = 'delete from ' . $this->collection['delete_from'];
-        $query .= ' where ' . $this->collection['delete_where'];
+        $query = sprintf('delete from %s where %s', $this->collection['delete_from'], $this->collection['delete_where']);
 
         $prepare = $this->pdo->prepare($query);
 
