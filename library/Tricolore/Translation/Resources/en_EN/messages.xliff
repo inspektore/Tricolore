@@ -22,6 +22,22 @@
                 <source>Toggle navigation</source>
                 <target>Toggle navigation</target>
             </trans-unit>
+            <trans-unit id="6">
+                <source>Login</source>
+                <target>Login</target>
+            </trans-unit>
+            <trans-unit id="7">
+                <source>Password</source>
+                <target>Password</target>
+            </trans-unit>
+            <trans-unit id="8">
+                <source>Email address or username</source>
+                <target>Email address or username</target>
+            </trans-unit>
+            <trans-unit id="9">
+                <source>Continue</source>
+                <target>Continue</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
