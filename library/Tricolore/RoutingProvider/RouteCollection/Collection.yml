@@ -1,11 +1,16 @@
 home:
     path: /
     defaults: 
-        _controller: Tricolore\Controller\IndexAction:index
+        _controller: Tricolore\Controller\Frontend\IndexAction:index
 
 hello:
     path: /hello/{name}
     requirements: 
         name: "[A-Za-z0-9-_]+"
     defaults: 
-        _controller: Tricolore\Controller\HelloAction:sayHello
+        _controller: Tricolore\Controller\Frontend\HelloAction:sayHello
+
+admincp_auth:
+    path: /admincp/auth
+    defaults:
+        _controller: Tricolore\Controller\Backend\Auth:process

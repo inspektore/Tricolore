@@ -1,5 +1,5 @@
 <?php
-namespace Tricolore\Controller;
+namespace Tricolore\Controller\Frontend;
 
 use Tricolore\Services\ServiceLocator;
 
@@ -14,6 +14,6 @@ class HelloAction extends ServiceLocator
             'name' => $route->name
         ];
 
-        return $this->get('view')->display('Actions', 'HelloAction', $render);
+        return $this->get('view')->display('Actions/Frontend', 'HelloAction', $render);
     }
 }

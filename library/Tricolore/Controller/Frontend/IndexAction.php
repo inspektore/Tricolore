@@ -1,5 +1,5 @@
 <?php
-namespace Tricolore\Controller;
+namespace Tricolore\Controller\Frontend;
 
 use Tricolore\Services\ServiceLocator;
 
@@ -10,6 +10,6 @@ class IndexAction extends ServiceLocator
      */
     public function index()
     {
-        return $this->get('view')->display('Actions', 'IndexAction');
+        return $this->get('view')->display('Actions/Frontend', 'IndexAction');
     }
 }
