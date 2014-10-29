@@ -17,3 +17,6 @@ service-locator:
     datasource:
         class: Tricolore\DataSources\DatabaseAdapter
         function: getDatabaseFactory
+
+    cookiejar:
+        class: Tricolore\HttpExtension\CookieJar\CookieJar
