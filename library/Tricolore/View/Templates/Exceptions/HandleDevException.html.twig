@@ -48,10 +48,16 @@
         </small>
 
         <pre class="exception-code"><code class="php">
-          {%- for line in file_array|slice(error_line - 14, 25) -%}
-            <div {{ loop.index0 == 13 ? 'class="red"' : null }}><div class="pull-left line-number">{{ loop.index + error_line - 14 }}. </div> {{ line|raw }}</div>
-          {%- endfor -%}
-        </code></pre>
+          {%- if file_array|length >= 20 -%}
+            {%- for line in file_array|slice(error_line - 14, 25) -%}
+              <div {{ loop.index0 == 13 ? 'class="red"' : null }}><div class="pull-left line-number">{{ loop.index + error_line - 14 }}. </div> {{ line|e }}</div>
+            {%- endfor -%}
+          {%- else -%}
+            {%- for line in file_array -%}
+              <div {{ loop.index0 == error_line - 1 ? 'class="red"' : null }}><div class="pull-left line-number">{{ loop.index }}. </div> {{ line|e }}</div>
+            {%- endfor -%}
+          {%- endif -%}
+        </code></pre>        
       </div>
 
       <div class="jumbotron jumbotron-exception">

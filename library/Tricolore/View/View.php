@@ -200,7 +200,7 @@ class View extends ServiceLocator
 
         return $this->display('Exceptions', 'HandleDevException', [
             'exception' => $exception,
-            'file_array' => $file_array,
+            'file_array' => iterator_to_array($file_array),
             'error_line' => $error_line,
             'error_file' => $error_file,
             'exception_name' => $exception_name,
