@@ -20,3 +20,8 @@ service-locator:
 
     cookiejar:
         class: Tricolore\HttpExtension\CookieJar\CookieJar
+
+    validator:
+        class: Symfony\Component\Validator\Validation
+        function: createValidator
+        static: true
