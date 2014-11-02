@@ -312,7 +312,7 @@
             </trans-unit>
             <trans-unit id="81">
                 <source>The CSRF token is invalid. Please try to resubmit the form.</source>
-                <target>The CSRF token is invalid. Please try to resubmit the form.</target>
+                <target>Request authorization is invalid. Please try to resubmit the form.</target>
             </trans-unit>
         </body>
     </file>
