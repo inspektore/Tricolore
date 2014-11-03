@@ -15,8 +15,8 @@
                 <target>Home</target>
             </trans-unit>
             <trans-unit id="4">
-                <source>Return to index</source>
-                <target>Return to index</target>
+                <source>Return to homepage</source>
+                <target>Return to homepage</target>
             </trans-unit>
             <trans-unit id="5">
                 <source>Toggle navigation</source>
@@ -35,9 +35,17 @@
                 <target>Email address or username</target>
             </trans-unit>
             <trans-unit id="9">
-                <source>Continue</source>
-                <target>Continue</target>
+                <source>Log in</source>
+                <target>Log in</target>
             </trans-unit>
+            <trans-unit id="10">
+                <source>AdminCP Authorization</source>
+                <target>AdminCP Authorization</target>
+            </trans-unit>
+            <trans-unit id="11">
+                <source>Homepage</source>
+                <target>Homepage</target>
+            </trans-unit>  
         </body>
     </file>
 </xliff>
