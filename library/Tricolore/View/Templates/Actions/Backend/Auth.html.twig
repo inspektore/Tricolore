@@ -1,12 +1,12 @@
 {% extends "BaseBlockOnlyAssets.html.twig" %}
 
-{% block head_title %}AdminCP Authorization{% endblock %}
+{% block head_title %}{% trans %}AdminCP Authorization{% endtrans %}{% endblock %}
 {% block container_class %}auth-panel-width{% endblock %}
 
 {% block body_content %}
   <div class="auth-panel-top-space">
     <div class="auth-panel-title">
-      <h1>AdminCP Authorization</h1>
+      <h1>{% trans %}AdminCP Authorization{% endtrans %}</h1>
     </div>
 
     <div class="auth-panel-background">
@@ -16,7 +16,7 @@
 
       <form action="{{ url('admincp_auth') }}" method="post" {{ form_enctype(form) }}>
           {{ form_widget(form) }}<br />
-          <button type="submit" class="btn btn-primary auth-button-continue full-width">{% trans %}Continue{% endtrans %}</button>
+          <button type="submit" class="btn btn-primary auth-button-continue full-width">{% trans %}Log in{% endtrans %}</button>
       </form>
       <br />
       <a href="{{ url('home') }}"><span class="ion-arrow-return-left"></span> Return to homepage</a>
