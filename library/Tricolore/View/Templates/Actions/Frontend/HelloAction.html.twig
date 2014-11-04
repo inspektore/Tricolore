@@ -2,6 +2,10 @@
 
 {% block head_title %}Hello World!{% endblock %}
 
+{% block breadcrumb %}
+  {{ breadcrumb.addChild("Hello " ~ name, url('hello', {'name': 'Jurij'})) }}
+{% endblock %}
+
 {% block body_content %}
   <div class="jumbotron">
     <h1>Hello {{ name }}</h1>

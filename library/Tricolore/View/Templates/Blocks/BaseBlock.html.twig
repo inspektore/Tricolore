@@ -17,6 +17,17 @@
   <body itemscope itemtype="http://schema.org/WebPage">
     {% include "NavbarBlock.html.twig" %}
 
+    {% import "Macros/Breadcrumb.html.twig" as breadcrumb %}
+
+    <div class="breadcrumb">
+      <div class="container">
+        <ul class="list-inline fa">
+          {{ breadcrumb.addChild("Homepage"|trans, url('home')) }}
+          {% block breadcrumb %}{% endblock %}
+        </ul>
+      </div>
+    </div>
+
     <main class="container" role="main">
       {% block body_content %}{% endblock %}
     </main>
