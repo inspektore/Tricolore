@@ -1,24 +1,24 @@
 .breadcrumb {
-  background: #EEEEEE;
+  background: @breadcrumb-background;
   border-radius: 0;
   padding: 0;
-  color: #5E5E5E;
+  color: @breadcrumb-color-inactive;
   font-weight: bold;
 }
 
 .breadcrumb li {
-  padding: 10px 0 0 0;
-  font-size: 12px;
-  color: #919191;
+  padding: @breadcrumb-list-padding;
+  font-size: @breadcrumb-list-font-size;
+  color: @breadcrumb-list-color;
 }
 
 .breadcrumb li a {
-  color: #5E5E5E;
+  color: @breadcrumb-list-color;
   text-decoration: none;
 }
 
 .breadcrumb li:after {
-  content: "\00a0\f105";
+  content: @breadcrumb-fontawesome-icon;
 }
 
 .breadcrumb li:last-child:after {
@@ -26,5 +26,5 @@
 }
 
 .breadcrumb li:first-child:before {
-  content: "\f015\00a0";
+  content: @breadcrumb-fontawesome-first-child-icon;
 }
