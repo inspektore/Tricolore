@@ -16,6 +16,14 @@ And restart HHVM
 $ sudo service hhvm restart
 ```
 
+###3-rd party libraries
+- [Symfony](https://github.com/symfony/symfony)
+- [Twig](https://github.com/twigphp/Twig)
+- [jQuery](https://github.com/jquery/jquery)
+- [Carbon](https://github.com/briannesbitt/Carbon)
+- [Bootstrap](https://github.com/twbs/bootstrap)
+- [highlight.js](https://github.com/isagalaev/highlight.js)
+
 ###Licence
 
 Copyright (C) 2014 Maciej Schmidt
