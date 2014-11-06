@@ -18,6 +18,20 @@ $ sudo service hhvm restart
 
 ###3-rd party libraries
 - [Symfony](https://github.com/symfony/symfony)
+  - Config
+  - EventDispatcher
+  - Filesystem
+  - Finder
+  - Form
+  - HttpFoundation
+  - OptionsResolver
+  - PropertyAccess
+  - Routing
+  - Security
+  - Translation
+  - Validator
+  - VarDumper
+  - Yaml
 - [Twig](https://github.com/twigphp/Twig)
 - [jQuery](https://github.com/jquery/jquery)
 - [Carbon](https://github.com/briannesbitt/Carbon)
