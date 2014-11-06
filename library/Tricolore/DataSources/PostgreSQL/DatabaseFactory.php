@@ -235,4 +235,32 @@ class DatabaseFactory
 
         return false;
     }
+
+    /**
+     * Get all tables from database
+     *  
+     * @return array
+     */
+    public function getAllTables()
+    {
+        $query = $this->buildQuery('select')
+        ->select('*')
+        ->from('information_schema.tables')
+        ->where('table_schema = ?', [
+            1 => [
+                'value' => 'public'
+            ]
+        ])
+        ->execute();
+
+        $tables = [];
+
+        if(count($query)) {
+            foreach($query as $table) {
+                $tables[] = $table['table_name'];
+            }
+        }
+
+        return $tables;
+    }
 }
