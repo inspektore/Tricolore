@@ -57,7 +57,7 @@ class Delete
      */
     public function deteleFrom($table_name)
     {
-        $this->collection['delete_from'] = $table_name;
+        $this->collection['delete_from'] = $this->table_prefix . $table_name;
 
         return $this;
     }
