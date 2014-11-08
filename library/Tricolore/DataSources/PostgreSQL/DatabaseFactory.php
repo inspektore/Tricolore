@@ -79,7 +79,7 @@ class DatabaseFactory
     {
         $type = ucfirst($type);
 
-        $allowed_types = ['Select', 'Delete'];
+        $allowed_types = ['Select', 'Delete', 'Update'];
 
         if(in_array($type, $allowed_types, true) === false) {
             throw new InvalidArgumentException(
