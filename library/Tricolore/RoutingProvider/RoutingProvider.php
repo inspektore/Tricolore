@@ -129,6 +129,8 @@ class RoutingProvider extends ServiceLocator
 
             return call_user_func([$call, $controller[1]], (object)$arguments);
         } catch(ResourceNotFoundException $exception) {
+            http_response_code(404);
+
             $this->get('view')->display('Errors', 'ResourceNotFound');
         }
     }
