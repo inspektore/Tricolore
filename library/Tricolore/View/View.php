@@ -77,7 +77,7 @@ class View extends ServiceLocator
      * @param string $template_name
      * @param array $variables
      * @param bool $return
-     * @return void
+     * @return mixed
      */
     public function display($template_section, $template_name, array $variables = [], $return = false)
     {
@@ -86,6 +86,22 @@ class View extends ServiceLocator
         }
 
         $combined_template_path = ($template_section != null ? $template_section . '/' : null) . $template_name;
+
+        if(Config::key('gzip.enabled') === true && extension_loaded('zlib') === true) {
+            ob_start('ob_gzhandler');
+
+            if($return === true) {
+                $this->environment->loadTemplate($combined_template_path)->render($variables);
+            } else {
+                $this->environment->loadTemplate($combined_template_path)->display($variables);
+            }
+
+            header('Connection: close');
+
+            ob_end_flush();
+
+            return true;
+        }
 
         if($return === true) {
             return $this->environment->loadTemplate($combined_template_path)->render($variables);

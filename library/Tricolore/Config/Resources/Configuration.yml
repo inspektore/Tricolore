@@ -11,3 +11,5 @@ cookie.domain: ~
 cookie.secure: false
 
 trans.locale: "en_EN"
+
+gzip.enabled: false
