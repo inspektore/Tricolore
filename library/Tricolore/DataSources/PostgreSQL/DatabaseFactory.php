@@ -21,6 +21,13 @@ class DatabaseFactory
     private $table_prefix;
 
     /**
+     * Number of queries
+     * 
+     * @var int
+     */
+    private static $queries = 0;
+
+    /**
      * Connection
      * 
      * @param array $config
@@ -77,6 +84,8 @@ class DatabaseFactory
      */
     public function buildQuery($type)
     {
+        self::$queries++;
+
         $type = ucfirst($type);
 
         $allowed_types = ['Select', 'Delete', 'Update'];
@@ -139,6 +148,8 @@ class DatabaseFactory
      */
     public function exec($query)
     {
+        self::$queries++;
+
         return $this->pdo->exec($query);
     }
 
@@ -150,6 +161,8 @@ class DatabaseFactory
      */
     public function dropTable($table_name)
     {
+        self::$queries++;
+
         if(is_array($table_name) && count($table_name)) {
             foreach($table_name as $table) {
                 $this->exec(sprintf('drop table %s%s', $this->table_prefix, $table));
@@ -170,6 +183,8 @@ class DatabaseFactory
      */
     public function dropField($from_table, $field_name)
     {
+        self::$queries++;
+
         if(is_array($field_name) && count($field_name)) {
             foreach($field_name as $field) {
                 $this->exec(sprintf('alter table %s drop column if exists %s', $from_table, $field));
@@ -190,6 +205,8 @@ class DatabaseFactory
      */
     public function fieldExists($field_name, $in_table)
     {
+        self::$queries++;
+
         $query = $this->buildQuery('select')
         ->select('column_name')
         ->from('information_schema.columns')
@@ -215,6 +232,8 @@ class DatabaseFactory
      */
     public function tableExists($table_name)
     {
+        self::$queries++;
+
         $query = $this->buildQuery('select')
         ->select('*')
         ->from('pg_tables')
@@ -243,6 +262,8 @@ class DatabaseFactory
      */
     public function getAllTables()
     {
+        self::$queries++;
+        
         $query = $this->buildQuery('select')
         ->select('*')
         ->from('information_schema.tables')
@@ -262,5 +283,15 @@ class DatabaseFactory
         }
 
         return $tables;
+    }
+
+    /**
+     * Get number of queries
+     * 
+     * @return int
+     */
+    public function getQueriesNumber()
+    {
+        return self::$queries;
     }
 }

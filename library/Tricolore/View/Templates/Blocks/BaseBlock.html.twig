@@ -32,10 +32,20 @@
       {% block body_content %}{% endblock %}
     </main>
 
-    <footer class="container">
-      <div class="pull-right footer">
+    <footer class="container footer">
+      <div class="pull-right">
         Powered by Tricolore {{ app.getEnv() == 'dev' ? app.getVersion() : null }} by <a href="http://www.macsch15.pl">Macsch15</a>
       </div>
+
+      {% if app.getEnv() == 'dev' %}
+        <br />
+
+        <ul class="pull-right list-inline">
+          <li><span class="glyphicon glyphicon-compressed"></span> GZip: {{ config('gzip.enabled') == true ? 'On' : 'Off' }}</li>
+          <li><span class="glyphicon glyphicon-tasks"></span> Memory: {{ app.getUsageMemory() / 1024 }}KB</li>
+          <li style="padding-right: 0"><i class="fa fa-database"></i> Queries: {{ app.dataSourceQueries() }}</li>
+        </ul>
+      {% endif %}
     </footer>
 
     <script src="{{ assets('js', 'jquery.min.js') }}"></script>

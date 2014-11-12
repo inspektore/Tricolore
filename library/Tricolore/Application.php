@@ -168,4 +168,14 @@ class Application extends ServiceLocator
     {
         return getenv('TRAVIS') ? true : false;
     }
+
+    /**
+     * Get all datasource queries 
+     * 
+     * @return int
+     */
+    public function dataSourceQueries()
+    {
+        return self::getInstance()->get('datasource')->getQueriesNumber();
+    }
 }
