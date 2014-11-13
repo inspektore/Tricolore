@@ -18,17 +18,13 @@ class Config
             return false;
         }
 
-        if(Application::getInstance()->getEnv() === 'test') {
-            $collection = 'TestConfiguration';
-        }
-
         $collection_parsed = Yaml::parse(sprintf(Application::createPath('library:Tricolore:Config:Resources:%s.yml'), $collection));
 
-        if(isset($collection_parsed[$key]) === false) {
+        if(isset($collection_parsed[Application::getInstance()->getEnv()][$key]) === false) {
             return false;
         }
 
-        return $collection_parsed[$key];
+        return $collection_parsed[Application::getInstance()->getEnv()][$key];
     }
 
     /**

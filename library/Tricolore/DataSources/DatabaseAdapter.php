@@ -19,22 +19,16 @@ class DatabaseAdapter
 
         $allowed_adapters = ['PostgreSQL'];
 
-        if(in_array($database_config['Adapter'], $allowed_adapters, true) === false) {
+        if(in_array($database_config['adapter'], $allowed_adapters, true) === false) {
             throw new DatabaseException(
-                sprintf('Adapter "%s" not found. Known adapters: %s', $database_config['Adapter'], implode(', ', $allowed_adapters)));
+                sprintf('Adapter "%s" not found. Known adapters: %s', $database_config['adapter'], implode(', ', $allowed_adapters)));
         }
 
-        $driver_class = __NAMESPACE__ . '\\' . $database_config['Adapter'] . '\\DatabaseFactory';
+        $driver_class = __NAMESPACE__ . '\\' . $database_config['adapter'] . '\\DatabaseFactory';
         $driver_class = new $driver_class;
 
-        if(Application::getInstance()->getEnv() === 'test') {
-            if(Application::getInstance()->inTravis() === true) {
-                $database_config['Adapter'] = 'Travis';
-            } else {
-                $database_config['Adapter'] = 'Tests';
-            }
-        }
+        $config_key = (Application::getInstance()->inTravis() === true) ? 'travis' : 'default';
 
-        return $driver_class->connection($database_config['Configuration'][$database_config['Adapter']]);
+        return $driver_class->connection($database_config[Application::getInstance()->getEnv()][$config_key]);
     }
 }

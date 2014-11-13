@@ -33,7 +33,7 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
             'trans.locale' => 'en_EN',
             'test.int' => 5874
         ];
-        $actual = Config::all('TestConfiguration');
+        $actual = Config::all('Configuration')['test'];
 
         $this->assertEquals($expected, $actual);
     }
