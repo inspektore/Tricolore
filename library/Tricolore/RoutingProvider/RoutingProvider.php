@@ -58,7 +58,6 @@ class RoutingProvider extends ServiceLocator
         }
 
         $this->collection = $loader->load(sprintf('RouteCollection/%s.yml', $collection_filename));
-        $this->collection->addPrefix(Config::key('router.prefix'));
         $this->collection->setHost(Config::key('router.host'));
 
         $this->context = new RequestContext();
