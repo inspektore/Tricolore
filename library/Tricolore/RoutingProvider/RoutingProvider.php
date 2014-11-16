@@ -40,11 +40,11 @@ class RoutingProvider extends ServiceLocator
     {
         $request = getenv('QUERY_STRING');
         
-        if(endsWith('/', $request) === true) {
+        if (endsWith('/', $request) === true) {
             $request = substr($request, 0, -1);
         }
 
-        if($request == null) {
+        if ($request == null) {
             $request = '/';
         }
 
@@ -53,7 +53,7 @@ class RoutingProvider extends ServiceLocator
 
         $collection_filename = 'Collection';
 
-        if(Application::getInstance()->getEnv() === 'test') {
+        if (Application::getInstance()->getEnv() === 'test') {
             $collection_filename = 'TestCollection';
         }
 
@@ -66,7 +66,7 @@ class RoutingProvider extends ServiceLocator
 
         $matcher = new UrlMatcher($this->collection, $this->context);
 
-        if(Application::getInstance()->getEnv() !== 'test') {
+        if (Application::getInstance()->getEnv() !== 'test') {
             $this->controllerCall($matcher, $request);
         }
     }
@@ -106,7 +106,7 @@ class RoutingProvider extends ServiceLocator
 
             $controller = explode(':', $parameters['_controller']);
 
-            if(class_exists($controller[0]) === false) {
+            if (class_exists($controller[0]) === false) {
                 throw new RuntimeException(sprintf('Class "%s" does not exists.', $controller[0]));
             }
 
@@ -114,15 +114,15 @@ class RoutingProvider extends ServiceLocator
 
             $arguments = [];
             
-            foreach($parameters as $key => $value) {
-                if($key[0] === '_') {
+            foreach ($parameters as $key => $value) {
+                if ($key[0] === '_') {
                     continue;
                 }
 
                 $arguments[$key] = $value;
             }
 
-            if(method_exists($call, $controller[1]) === false) {
+            if (method_exists($call, $controller[1]) === false) {
                 throw new RuntimeException(sprintf('Action method "%s" in "%s" does not exists.', $controller[1], $controller[0]));
             }
 

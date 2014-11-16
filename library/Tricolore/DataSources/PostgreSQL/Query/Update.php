@@ -100,27 +100,27 @@ class Update
      */
     public function execute()
     {
-        if(isset($this->collection['table_name']) === false) {
+        if (isset($this->collection['table_name']) === false) {
             throw new DatabaseException('"Table" in query is required. Add table() method to your query builder.');
         }
 
-        if(isset($this->collection['set']) === false) {
+        if (isset($this->collection['set']) === false) {
             throw new DatabaseException('"Set" in query is required. Add set() method to your query builder.');
         }
 
         $query = sprintf('update %s set %s ', $this->collection['table_name'], $this->collection['set']);
 
-        if(isset($this->collection['where']) === true) {
+        if (isset($this->collection['where']) === true) {
             $query .= sprintf('where %s', $this->collection['where']);
         }
 
         $prepare = $this->pdo->prepare($query);
         
-        if(isset($this->collection['where_binding']) === true) {
+        if (isset($this->collection['where_binding']) === true) {
             $this->factory->binding($this->collection['where_binding'], $prepare);
         }
 
-        if(isset($this->collection['set_binding']) === true) {
+        if (isset($this->collection['set_binding']) === true) {
             $this->factory->binding($this->collection['set_binding'], $prepare);
         }
 

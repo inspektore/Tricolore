@@ -24,13 +24,13 @@ class Translation
         $translator = new Translator($locale, new MessageSelector());
         $translator->addLoader('xliff', new XliffFileLoader());
 
-        if($resource === null) {
+        if ($resource === null) {
             $translator->addResource('xliff', 
                 Application::getInstance()->createPath(
                     sprintf('library:Tricolore:Translation:Resources:%s:messages.xliff', $locale)), 
                 $locale);           
         } else {
-            if(file_exists($resource) === false) {
+            if (file_exists($resource) === false) {
                 throw new AssetNotFound(sprintf('Translation resource "%s" not found.', $resource));
             }
 

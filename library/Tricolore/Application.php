@@ -49,14 +49,14 @@ class Application extends ServiceLocator
      */
     private function setupErrorReporting()
     {
-        if(self::getInstance()->getEnv() === 'prod') {
+        if (self::getInstance()->getEnv() === 'prod') {
             error_reporting(0);
-        } elseif(self::getInstance()->getEnv() === 'dev') {
+        } elseif (self::getInstance()->getEnv() === 'dev') {
             error_reporting(E_ALL);
         }
 
         set_error_handler(function ($errno, $errstr, $errfile, $errline, $errcontext) {
-            if(error_reporting() === 0) {
+            if (error_reporting() === 0) {
                 return false;
             }
 
@@ -83,13 +83,13 @@ class Application extends ServiceLocator
      */
     public static function buildUrl($route_name = null, array $arguments = [])
     {
-        if($route_name == null) {
+        if ($route_name == null) {
             return Config::key('base.full_url');
         }
 
         $generator = new UrlGenerator(self::$routing->getRouteCollection(), self::$routing->getContext());
 
-        if(Config::key('router.use_httpd_rewrite') === true) {
+        if (Config::key('router.use_httpd_rewrite') === true) {
             return $generator->generate($route_name, $arguments, $generator::ABSOLUTE_URL);
         }
 
@@ -104,11 +104,11 @@ class Application extends ServiceLocator
      */
     public static function createPath($path = null)
     {
-        if(isset(self::$options['directory']) === false || self::$options['directory'] == null) {
+        if (isset(self::$options['directory']) === false || self::$options['directory'] == null) {
             return false;
         }
 
-        if($path === null) {
+        if ($path === null) {
             return self::$options['directory'];
         }
 
@@ -126,7 +126,7 @@ class Application extends ServiceLocator
     {
         $available_environments = ['dev', 'prod', 'test'];
 
-        if(isset(self::$options['environment']) === false || self::$options['environment'] == null
+        if (isset(self::$options['environment']) === false || self::$options['environment'] == null
             || in_array(self::$options['environment'], $available_environments, true) === false
         ) {
             return 'prod';
@@ -142,7 +142,7 @@ class Application extends ServiceLocator
      */
     public function getVersion()
     {
-        if(isset(self::$options['version']) === false || self::$options['version'] == null) {
+        if (isset(self::$options['version']) === false || self::$options['version'] == null) {
             return 'undefined';
         }
 

@@ -20,7 +20,7 @@ class Auth extends ServiceLocator
 
         $validated = false;
 
-        if($form->isSubmitted() === true && $form->isValid() === true) {
+        if ($form->isSubmitted() === true && $form->isValid() === true) {
             $validated = true;
         }
 

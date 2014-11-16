@@ -35,7 +35,7 @@ class View extends ServiceLocator
         ->directories()
         ->in(Application::createPath('library:Tricolore:View:Templates'));
 
-        foreach($finder as $file) {
+        foreach ($finder as $file) {
             $directories[] = $file->getRealpath();
         }
 
@@ -43,7 +43,7 @@ class View extends ServiceLocator
             Application::createPath('library:Tricolore:View:Templates')
         ]);
 
-        if(Application::getInstance()->getEnv() === 'test') {
+        if (Application::getInstance()->getEnv() === 'test') {
             $directories = array_merge($directories, [
                 Application::createPath('library:Tricolore:Tests:Fixtures:Templates') 
             ]);
@@ -62,7 +62,7 @@ class View extends ServiceLocator
         $this->registerGlobals();
         $this->registerFunctions();
 
-        if($safe_mode === false) {
+        if ($safe_mode === false) {
             $this->formIntegration();
             $this->transIntegration();
         }
@@ -81,16 +81,16 @@ class View extends ServiceLocator
      */
     public function display($template_section, $template_name, array $variables = [], $return = false)
     {
-        if(endsWith('.html.twig', $template_name, 10) === false) {
+        if (endsWith('.html.twig', $template_name, 10) === false) {
             $template_name .= '.html.twig';
         }
 
         $combined_template_path = ($template_section != null ? $template_section . '/' : null) . $template_name;
 
-        if(Config::key('gzip.enabled') === true && extension_loaded('zlib') === true) {
+        if (Config::key('gzip.enabled') === true && extension_loaded('zlib') === true) {
             ob_start('ob_gzhandler');
 
-            if($return === true) {
+            if ($return === true) {
                 $this->environment->loadTemplate($combined_template_path)->render($variables);
             } else {
                 $this->environment->loadTemplate($combined_template_path)->display($variables);
@@ -103,7 +103,7 @@ class View extends ServiceLocator
             return true;
         }
 
-        if($return === true) {
+        if ($return === true) {
             return $this->environment->loadTemplate($combined_template_path)->render($variables);
         }
 
@@ -160,7 +160,7 @@ class View extends ServiceLocator
      */
     private function transIntegration()
     {
-        if(Application::getInstance()->getEnv() === 'test') {
+        if (Application::getInstance()->getEnv() === 'test') {
             $this->environment->addExtension(new TranslationExtension($this->get('translator', [
                 Application::createPath('library:Tricolore:Tests:Fixtures:Translation_enEN.xliff'),
                 'en_EN'
@@ -194,14 +194,14 @@ class View extends ServiceLocator
         $reflection = new \ReflectionClass(get_class($exception));
         $exception_name = $reflection->getShortName();
 
-        if(Application::getInstance()->getEnv() === 'prod') {
+        if (Application::getInstance()->getEnv() === 'prod') {
             return $this->display('Exceptions', 'HandleClientException');
         }
 
         $error_file = $exception->getFile();
         $error_line = $exception->getLine();
 
-        if($reflection->getName() === 'Tricolore\Exception\ErrorException') {
+        if ($reflection->getName() === 'Tricolore\Exception\ErrorException') {
             $error_file = $exception->getErrorFile();
             $error_line = $exception->getErrorLine();
         }
@@ -210,7 +210,7 @@ class View extends ServiceLocator
 
         $request = Request::createFromGlobals();
 
-        if($reflection->getName() !== 'Tricolore\Exception\ErrorException') {
+        if ($reflection->getName() !== 'Tricolore\Exception\ErrorException') {
             $this->logException($exception);
         }
 
@@ -241,7 +241,7 @@ class View extends ServiceLocator
         $exception_log .= 'TIME: ' . Carbon::now()->toDateTimeString() . PHP_EOL . PHP_EOL;
         $exception_log .= str_repeat('-', 20) . ' LAST EXCEPTION LOG ' . str_repeat('-', 20);
 
-        if(Application::getInstance()->getEnv() !== 'test') {
+        if (Application::getInstance()->getEnv() !== 'test') {
             $filesystem->dumpFile(Application::createPath('storage:last_exception.txt'), $exception_log);
         }
     }

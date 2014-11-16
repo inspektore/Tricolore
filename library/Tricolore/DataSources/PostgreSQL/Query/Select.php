@@ -131,7 +131,7 @@ class Select
 
         $sorting = strtoupper($sorting);
 
-        if(in_array($sorting, ['ASC', 'DESC'], true) === false) {
+        if (in_array($sorting, ['ASC', 'DESC'], true) === false) {
             $this->collection['order_by_sorting'] = 'ASC';
         } else {
             $this->collection['order_by_sorting'] = $sorting;
@@ -161,54 +161,54 @@ class Select
      */
     public function execute()
     {
-        if(isset($this->collection['select']) === false) {
+        if (isset($this->collection['select']) === false) {
             throw new DatabaseException('"Select" in query is required. Add select() method to your query builder.');
         }
 
-        if(isset($this->collection['from']) === false) {
+        if (isset($this->collection['from']) === false) {
             throw new DatabaseException('"From" in query is required. Add from() method to your query builder.');
         }
 
-        if(is_array($this->collection['select']) === true) {
+        if (is_array($this->collection['select']) === true) {
             $this->collection['select'] = implode(',', $this->collection['select']);
         }
 
-        if(is_array($this->collection['from']) === true) {
+        if (is_array($this->collection['from']) === true) {
             $this->collection['from'] = implode(',', $this->collection['from']);
         }
 
         $query = sprintf('select %s ', $this->collection['select']);
         $query .= sprintf('from %s ', $this->collection['from']);
 
-        if(isset($this->collection['left_join']) === true 
+        if (isset($this->collection['left_join']) === true 
             && isset($this->collection['left_join_on']) === true
         ) {
             $query .= sprintf('left join %s on %s ', $this->collection['left_join'], $this->collection['left_join_on']);
         }
 
-        if(isset($this->collection['where']) === true) {
+        if (isset($this->collection['where']) === true) {
             $query .= sprintf('where %s ', $this->collection['where']);
         }
 
-        if(isset($this->collection['group_by']) === true) {
+        if (isset($this->collection['group_by']) === true) {
             $query .= sprintf('group by %s ', $this->collection['group_by']);
         }
 
-        if(isset($this->collection['order_by']) === true) {
-            if(is_array($this->collection['order_by']) === true) {
+        if (isset($this->collection['order_by']) === true) {
+            if (is_array($this->collection['order_by']) === true) {
                 $this->collection['order_by'] = implode(',', $this->collection['order_by']);
             }
 
             $query .= sprintf('order by %s %s ', $this->collection['order_by'], $this->collection['order_by_sorting']);
         }
 
-        if(isset($this->collection['limit']) === true) {
+        if (isset($this->collection['limit']) === true) {
             $query .= sprintf('limit %d', $this->collection['limit']);
         }
 
         $prepare = $this->pdo->prepare($query);
 
-        if(isset($this->collection['where_binding']) === true) {
+        if (isset($this->collection['where_binding']) === true) {
            $this->factory->binding($this->collection['where_binding'], $prepare); 
         }
         

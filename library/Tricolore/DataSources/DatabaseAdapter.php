@@ -19,7 +19,7 @@ class DatabaseAdapter
 
         $allowed_adapters = ['PostgreSQL'];
 
-        if(in_array($database_config['adapter'], $allowed_adapters, true) === false) {
+        if (in_array($database_config['adapter'], $allowed_adapters, true) === false) {
             throw new DatabaseException(
                 sprintf('Adapter "%s" not found. Known adapters: %s', $database_config['adapter'], implode(', ', $allowed_adapters)));
         }

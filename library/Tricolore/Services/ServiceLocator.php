@@ -22,26 +22,26 @@ abstract class ServiceLocator
     {
         $service_map = $this->parseServicesMap($service_file);
         
-        if(isset($service_map['service-locator'][$key]) === false) {
+        if (isset($service_map['service-locator'][$key]) === false) {
             throw new ServicesException(sprintf('Service "%s" not exists.', $key));
         }
 
-        if(class_exists($service_map['service-locator'][$key]['class']) === false) {
+        if (class_exists($service_map['service-locator'][$key]['class']) === false) {
             throw new ServicesException(sprintf('Class "%s" not exists.', $service_map['service-locator'][$key]['class']));
         }
 
         $service_load = $this->serviceClassLoad($service_map, $key);
 
-        if(isset($service_map['service-locator'][$key]['function']) === false) {
+        if (isset($service_map['service-locator'][$key]['function']) === false) {
             return $service_load;
         }
 
-        if(method_exists($service_load, $service_map['service-locator'][$key]['function']) === false) {
+        if (method_exists($service_load, $service_map['service-locator'][$key]['function']) === false) {
             throw new ServicesException(sprintf('Method "%s" in class "%s" not exists.', 
                 $service_map['service-locator'][$key]['function'], $service_map['service-locator'][$key]['class']));
         }
 
-        if($this->isStatic($service_map, $key) === true) {
+        if ($this->isStatic($service_map, $key) === true) {
             return $this->callStatic([$service_load, $service_map['service-locator'][$key]['function']], $arguments);
         }
 
@@ -93,7 +93,7 @@ abstract class ServiceLocator
      */
     final private function serviceClassLoad(array $service_map, $key)
     {
-        if($this->isStatic($service_map, $key) === true) {
+        if ($this->isStatic($service_map, $key) === true) {
             return $service_map['service-locator'][$key]['class'];
         }
 
@@ -108,10 +108,10 @@ abstract class ServiceLocator
      */
     final private function parseServicesMap($service_file)
     {
-        if($service_file === null) {
+        if ($service_file === null) {
             $service_map = Yaml::parse(Application::createPath('library:Tricolore:Services:ServicesMap:Map.yml'));
         } else {
-            if(file_exists($service_file) === false) {
+            if (file_exists($service_file) === false) {
                 throw new AssetNotFound(sprintf('File: %s does not exists.', $service_file));
             }
 

@@ -63,7 +63,7 @@ class CookieJar
      */
     public function get($name)
     {
-        if($this->request->cookies->get($name) !== null) {
+        if ($this->request->cookies->get($name) !== null) {
             return trim(str_replace(["\0", "\n", "\t", "\s"], '', $this->request->cookies->get($name)));
         }
 
@@ -78,7 +78,7 @@ class CookieJar
      */
     public function destroy($name)
     {
-        if($this->request->cookies->get($name) !== null) {
+        if ($this->request->cookies->get($name) !== null) {
             $this->request->cookies->remove($name);
         }
 

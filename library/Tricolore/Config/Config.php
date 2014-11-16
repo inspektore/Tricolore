@@ -14,13 +14,13 @@ class Config
      */
     public static function key($key, $collection = 'Configuration')
     {
-        if(self::collectionExists($collection) === false) {
+        if (self::collectionExists($collection) === false) {
             return false;
         }
 
         $collection_parsed = Yaml::parse(sprintf(Application::createPath('library:Tricolore:Config:Resources:%s.yml'), $collection));
 
-        if(isset($collection_parsed[Application::getInstance()->getEnv()][$key]) === false) {
+        if (isset($collection_parsed[Application::getInstance()->getEnv()][$key]) === false) {
             return false;
         }
 
@@ -35,7 +35,7 @@ class Config
      */
     public static function all($collection)
     {
-        if(self::collectionExists($collection) === false ||
+        if (self::collectionExists($collection) === false ||
             !count($collection_parsed = Yaml::parse(
                 sprintf(Application::createPath('library:Tricolore:Config:Resources:%s.yml'), $collection)))
         ) {

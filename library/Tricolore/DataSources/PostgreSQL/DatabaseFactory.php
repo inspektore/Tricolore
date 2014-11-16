@@ -36,27 +36,27 @@ class DatabaseFactory
      */
     public function connection(array $config)
     {
-        if(isset($config['server']) === false) {
+        if (isset($config['server']) === false) {
             $config['server'] = 'localhost';
         }
 
-        if(isset($config['port']) === false) {
+        if (isset($config['port']) === false) {
             $config['port'] = 5432;
         }
 
-        if(isset($config['database_name']) === false) {
+        if (isset($config['database_name']) === false) {
             $config['database_name'] = 'tricolore';
         }
 
-        if(isset($config['username']) === false) {
+        if (isset($config['username']) === false) {
             $config['username'] = 'root';
         }
 
-        if(isset($config['password']) === false) {
+        if (isset($config['password']) === false) {
             $config['password'] = null;
         }
 
-        if(isset($config['table_prefix']) === false) {
+        if (isset($config['table_prefix']) === false) {
             $config['table_prefix'] = null;
         }
 
@@ -90,7 +90,7 @@ class DatabaseFactory
 
         $allowed_types = ['Select', 'Delete', 'Update'];
 
-        if(in_array($type, $allowed_types, true) === false) {
+        if (in_array($type, $allowed_types, true) === false) {
             throw new InvalidArgumentException(
                 sprintf('Type "%s" is not allowed. Known types: %s', $type, implode(', ', $allowed_types)));
         }
@@ -110,28 +110,28 @@ class DatabaseFactory
      */
     public function binding(array $binding_container, \PDOStatement $prepare)
     {
-        if(!count($binding_container)) {
+        if (! count($binding_container)) {
             return false;
         }
 
-        if($prepare->queryString == null) {
+        if ($prepare->queryString == null) {
             return false;
         }
 
-        foreach($binding_container as $key => $binding) {
-            if(isset($binding['value']) === false) {
+        foreach ($binding_container as $key => $binding) {
+            if (isset($binding['value']) === false) {
                 throw new DatabaseException('Missing "value" in parameters.');
             }
 
             $allowed_types = ['BOOL', 'NULL', 'INT', 'STR', 'LOB', 'STMT'];
 
-            if(isset($binding['type']) === false) {
+            if (isset($binding['type']) === false) {
                 $binding['type'] = 'STR';
             }
 
             $binding['type'] = strtoupper($binding['type']);
 
-            if(in_array($binding['type'], $allowed_types, true) === false) {
+            if (in_array($binding['type'], $allowed_types, true) === false) {
                 throw new DatabaseException(
                     sprintf('Unknown data type "%s". Known types: %s', $binding['type'], implode(', ', $allowed_types)));
             }
@@ -161,8 +161,8 @@ class DatabaseFactory
      */
     public function dropTable($table_name)
     {
-        if(is_array($table_name) && count($table_name)) {
-            foreach($table_name as $table) {
+        if (is_array($table_name) && count($table_name)) {
+            foreach ($table_name as $table) {
                 $this->exec(sprintf('drop table %s%s', $this->table_prefix, $table));
             }
 
@@ -181,8 +181,8 @@ class DatabaseFactory
      */
     public function dropField($from_table, $field_name)
     {
-        if(is_array($field_name) && count($field_name)) {
-            foreach($field_name as $field) {
+        if (is_array($field_name) && count($field_name)) {
+            foreach ($field_name as $field) {
                 $this->exec(sprintf('alter table %s drop column if exists %s', $from_table, $field));
             }
 
@@ -236,9 +236,9 @@ class DatabaseFactory
         ])
         ->execute();
 
-        if(count($query)) {
-            foreach($query as $key => $schema) {
-                if($schema['tablename'] === $table_name) {
+        if (count($query)) {
+            foreach ($query as $key => $schema) {
+                if ($schema['tablename'] === $table_name) {
                     return true;
                 }
             }
@@ -266,8 +266,8 @@ class DatabaseFactory
 
         $tables = [];
 
-        if(count($query)) {
-            foreach($query as $table) {
+        if (count($query)) {
+            foreach ($query as $table) {
                 $tables[] = $table['table_name'];
             }
         }
