@@ -229,7 +229,7 @@ class DatabaseFactory
         $query = $this->buildQuery('select')
         ->select('*')
         ->from('pg_tables')
-        ->where('schemaname=?', [
+        ->where('schemaname = ?', [
             1 => [
                 'value' => 'public'
             ]
@@ -256,8 +256,8 @@ class DatabaseFactory
     {
         $query = $this->buildQuery('select')
         ->select('*')
-        ->from('information_schema.tables')
-        ->where('table_schema = ?', [
+        ->from('pg_tables')
+        ->where('schemaname = ?', [
             1 => [
                 'value' => 'public'
             ]
@@ -268,7 +268,7 @@ class DatabaseFactory
 
         if (count($query)) {
             foreach ($query as $table) {
-                $tables[] = $table['table_name'];
+                $tables[] = $table['tablename'];
             }
         }
 
