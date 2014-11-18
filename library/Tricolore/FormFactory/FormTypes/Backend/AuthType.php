@@ -1,5 +1,5 @@
 <?php
-namespace Tricolore\Controller\FormTypes\Backend;
+namespace Tricolore\FormFactory\FormTypes\Backend;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;

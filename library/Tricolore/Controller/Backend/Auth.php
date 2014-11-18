@@ -1,7 +1,7 @@
 <?php
 namespace Tricolore\Controller\Backend;
 
-use Tricolore\Controller\FormTypes\Backend\AuthType;
+use Tricolore\FormFactory\FormTypes\Backend\AuthType;
 use Tricolore\Services\ServiceLocator;
 use Symfony\Component\HttpFoundation\Request;
 
