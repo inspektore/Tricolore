@@ -45,7 +45,19 @@
             <trans-unit id="11">
                 <source>Homepage</source>
                 <target>Homepage</target>
-            </trans-unit>  
+            </trans-unit>
+            <trans-unit id="12">
+                <source>GZip compression</source>
+                <target>GZip compression</target>
+            </trans-unit>
+            <trans-unit id="13">
+                <source>Used memory</source>
+                <target>Used memory</target>
+            </trans-unit>
+            <trans-unit id="14">
+                <source>Database queries</source>
+                <target>Database queries</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
