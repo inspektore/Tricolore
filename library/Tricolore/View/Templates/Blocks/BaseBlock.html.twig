@@ -4,7 +4,7 @@
     <meta charset="{{ config('base.charset') }}">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{% block head_title %}{% endblock %} - DEV</title>
+    <title>{{ app.getEnv() == 'dev' ? '(Dev mode) ' : null }}{% block head_title %}{% endblock %}</title>
     <link href="{{ assets('css', 'ui.css') }}" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -34,16 +34,16 @@
 
     <footer class="container footer">
       <div class="pull-right">
-        Powered by Tricolore {{ app.getEnv() == 'dev' ? app.getVersion() : null }} by <a href="http://www.macsch15.pl">Macsch15</a>
+        Powered by <a href="https://github.com/Macsch15/Tricolore">Tricolore</a> {{ app.getEnv() == 'dev' ? app.getVersion() : null }}
       </div>
 
       {% if app.getEnv() == 'dev' %}
         <br />
 
         <ul class="pull-right list-inline">
-          <li><span class="glyphicon glyphicon-compressed"></span> GZip: {{ config('gzip.enabled') == true ? 'On' : 'Off' }}</li>
-          <li><span class="glyphicon glyphicon-tasks"></span> Memory: {{ app.getUsageMemory() / 1024 }}KB</li>
-          <li style="padding-right: 0"><i class="fa fa-database"></i> Queries: {{ app.dataSourceQueries() }}</li>
+          <li><span class="glyphicon glyphicon-compressed"></span> {% trans %}GZip compression{% endtrans %}: {{ config('gzip.enabled') == true ? 'On' : 'Off' }}</li>
+          <li><span class="glyphicon glyphicon-tasks"></span> {% trans %}Used memory{% endtrans %}: {{ app.getUsageMemory() / 1024 }}KB</li>
+          <li style="padding-right: 0"><i class="fa fa-database"></i> {% trans %}Database queries{% endtrans %}: {{ app.dataSourceQueries() }}</li>
         </ul>
       {% endif %}
     </footer>
