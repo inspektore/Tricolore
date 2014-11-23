@@ -276,6 +276,47 @@ class DatabaseFactory
     }
 
     /**
+     * Database exists
+     *
+     * @param string $database_name
+     * @return bool
+     */
+    public function databaseExists($database_name)
+    {
+        $query = $this->buildQuery('select')
+        ->select('*')
+        ->from('pg_catalog.pg_database')
+        ->where('datname = ?', [
+            1 => [
+                'value' => $database_name
+            ]
+        ])
+        ->execute();
+
+        if (count($query)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Create database
+     *
+     * @param string $database_name
+     * @throws Tricolore\Exception\InvalidArgumentException
+     * @return int
+     */
+    public function createDatabase($database_name)
+    {
+        if (preg_match('/[^A-Za-z0-9_-]/', $database_name)) {
+            throw new InvalidArgumentException('Database name contains prohibited characters.');
+        }
+
+        return $this->exec(sprintf('CREATE DATABASE %s', $database_name));
+    }
+
+    /**
      * Get number of queries
      * 
      * @return int
