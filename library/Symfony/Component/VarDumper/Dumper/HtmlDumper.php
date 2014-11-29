@@ -21,7 +21,7 @@ use Symfony\Component\VarDumper\Cloner\Data;
  */
 class HtmlDumper extends CliDumper
 {
-    public static $defaultOutputStream = 'php://output';
+    public static $defaultOutput = 'php://output';
 
     protected $dumpHeader;
     protected $dumpPrefix = '<pre class=sf-dump id=%s data-indent-pad="%s">';
@@ -31,27 +31,31 @@ class HtmlDumper extends CliDumper
     protected $headerIsDumped = false;
     protected $lastDepth = -1;
     protected $styles = array(
-        'num'       => 'font-weight:bold;color:#0087FF',
-        'const'     => 'font-weight:bold;color:#0087FF',
-        'str'       => 'font-weight:bold;color:#00D7FF',
-        'cchr'      => 'font-style: italic',
-        'note'      => 'color:#D7AF00',
-        'ref'       => 'color:#585858',
-        'solo-ref'  => 'color:#585858',
-        'public'    => 'color:#008700',
-        'protected' => 'color:#D75F00',
-        'private'   => 'color:#D70000',
-        'meta'      => 'color:#005FFF',
+        'default' => 'background-color:#18171B; color:#FF8400; line-height:1.2em; font:12px Menlo, Monaco, Consolas, monospace',
+        'num' => 'font-weight:bold; color:#1299DA',
+        'const' => 'font-weight:bold',
+        'str' => 'font-weight:bold; color:#56DB3A',
+        'cchr' => 'color:#FF8400',
+        'note' => 'color:#1299DA',
+        'ref' => 'color:#A0A0A0',
+        'public' => 'color:#FFFFFF',
+        'protected' => 'color:#FFFFFF',
+        'private' => 'color:#FFFFFF',
+        'meta' => 'color:#B729D9',
+        'key' => 'color:#56DB3A',
+        'index' => 'color:#1299DA',
     );
 
     /**
      * {@inheritdoc}
      */
-    public function setLineDumper($callback)
+    public function setOutput($output)
     {
-        $this->headerIsDumped = false;
+        if ($output !== $prev = parent::setOutput($output)) {
+            $this->headerIsDumped = false;
+        }
 
-        return parent::setLineDumper($callback);
+        return $prev;
     }
 
     /**
@@ -88,10 +92,10 @@ class HtmlDumper extends CliDumper
     /**
      * {@inheritdoc}
      */
-    public function dump(Data $data, $lineDumper = null)
+    public function dump(Data $data, $output = null)
     {
         $this->dumpId = 'sf-dump-'.mt_rand();
-        parent::dump($data, $lineDumper);
+        parent::dump($data, $output);
     }
 
     /**
@@ -150,7 +154,7 @@ return function (root) {
     });
     a('mouseover', function (a) {
         if (a = idRx.exec(a.className)) {
-            refStyle.innerHTML = 'pre.sf-dump .'+a[0]+'{background-color: yellow; border-radius: 2px}';
+            refStyle.innerHTML = 'pre.sf-dump .'+a[0]+'{background-color: #B729D9; color: #FFF !important; border-radius: 2px}';
         }
     });
     a('click', function (a, e) {
@@ -211,8 +215,8 @@ return function (root) {
             if ('sf-dump' != elt.parentNode.className) {
                 toggle(a);
             }
-        } else if ("sf-dump-ref" == elt.className) {
-            a = elt.getAttribute('href').substr(1);
+        } else if ("sf-dump-ref" == elt.className && (a = elt.getAttribute('href'))) {
+            a = a.substr(1);
             elt.className += ' '+a;
 
             if (/[\[{]$/.test(elt.previousSibling.nodeValue)) {
@@ -245,13 +249,8 @@ return function (root) {
 <style>
 pre.sf-dump {
     display: block;
-    background-color: #300a24;
     white-space: pre;
-    line-height: 1.2em;
-    color: #eee8d5;
-    font: 12px monospace, sans-serif;
     padding: 5px;
-    border-radius: 5px;
 }
 pre.sf-dump span {
     display: inline;
@@ -265,7 +264,6 @@ pre.sf-dump abbr {
     cursor: help;
 }
 pre.sf-dump a {
-    color: #eee8d5;
     text-decoration: none;
     cursor: pointer;
     border: 0;
@@ -274,7 +272,7 @@ pre.sf-dump a {
 EOHTML;
 
         foreach ($this->styles as $class => $style) {
-            $line .= "pre.sf-dump .sf-dump-$class {{$style}}";
+            $line .= 'pre.sf-dump'.('default' !== $class ? ' .sf-dump-'.$class : '').'{'.$style.'}';
         }
 
         return $this->dumpHeader = preg_replace('/\s+/', ' ', $line).'</style>'.$this->dumpHeader;
@@ -323,13 +321,14 @@ EOHTML;
 
         $v = htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
         $v = preg_replace_callback(self::$controlCharsRx, function ($r) {
-            return sprintf('<span class=sf-dump-cchr title=\\x%02X>%s</span>', ord($r[0]), "\x7F" === $r[0] ? '?' : chr(64 + ord($r[0])));
+            // Use Unicode Control Pictures - see http://www.unicode.org/charts/PDF/U2400.pdf
+            return sprintf('<span class=sf-dump-cchr title=\\x%02X>&#%d;</span>', ord($r[0]), "\x7F" !== $r[0] ? 0x2400 + ord($r[0]) : 0x2421);
         }, $v);
 
-        if ('solo-ref' === $style) {
-            return sprintf('<a class=sf-dump-solo-ref>%s</a>', $v);
-        }
         if ('ref' === $style) {
+            if (empty($attr['count'])) {
+                return sprintf('<a class=sf-dump-ref>%s</a>', $v);
+            }
             $r = ('#' !== $v[0] ? 1 - ('@' !== $v[0]) : 2).substr($value, 1);
 
             return sprintf('<a class=sf-dump-ref href=#%s-ref%s title="%d occurrences">%s</a>', $this->dumpId, $r, 1 + $attr['count'], $v);
@@ -337,8 +336,8 @@ EOHTML;
 
         if ('const' === $style && array_key_exists('value', $attr)) {
             $style .= sprintf(' title="%s"', htmlspecialchars(json_encode($attr['value']), ENT_QUOTES, 'UTF-8'));
-        } elseif ('public' === $style && !empty($attr['dynamic'])) {
-            $style .= ' title="Runtime added dynamic property"';
+        } elseif ('public' === $style) {
+            $style .= sprintf(' title="%s"', empty($attr['dynamic']) ? 'Public property' : 'Runtime added dynamic property');
         } elseif ('str' === $style && 1 < $attr['length']) {
             $style .= sprintf(' title="%s%s characters"', $attr['length'], $attr['binary'] ? ' binary or non-UTF-8' : '');
         } elseif ('note' === $style) {
@@ -347,8 +346,10 @@ EOHTML;
             } elseif (':' === $v[0]) {
                 return sprintf('<abbr title="`%s` resource" class=sf-dump-%s>%s</abbr>', substr($v, 1), $style, $v);
             }
+        } elseif ('protected' === $style) {
+            $style .= ' title="Protected property"';
         } elseif ('private' === $style) {
-            $style .= sprintf(' title="%s::%s"', $attr['class'], $v);
+            $style .= sprintf(' title="Private property defined in class:&#10;`%s`"', $attr['class']);
         }
 
         return "<span class=sf-dump-$style>$v</span>";
@@ -397,8 +398,8 @@ EOHTML;
         );
 
         if (-1 === $depth) {
-            parent::dumpLine(0);
+            AbstractDumper::dumpLine(0);
         }
-        parent::dumpLine($depth);
+        AbstractDumper::dumpLine($depth);
     }
 }

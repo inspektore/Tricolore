@@ -57,8 +57,8 @@ class DateType extends AbstractType
 
         if ('single_text' === $options['widget']) {
             $builder->addViewTransformer(new DateTimeToLocalizedStringTransformer(
-                $options['model_timezone'],
-                $options['view_timezone'],
+                'UTC',
+                'UTC',
                 $dateFormat,
                 $timeFormat,
                 $calendar,
@@ -105,7 +105,7 @@ class DateType extends AbstractType
                 ->add('month', $options['widget'], $monthOptions)
                 ->add('day', $options['widget'], $dayOptions)
                 ->addViewTransformer(new DateTimeToArrayTransformer(
-                    $options['model_timezone'], $options['view_timezone'], array('year', 'month', 'day')
+                    'UTC', 'UTC', array('year', 'month', 'day')
                 ))
                 ->setAttribute('formatter', $formatter)
             ;
@@ -113,15 +113,15 @@ class DateType extends AbstractType
 
         if ('string' === $options['input']) {
             $builder->addModelTransformer(new ReversedTransformer(
-                new DateTimeToStringTransformer($options['model_timezone'], $options['model_timezone'], 'Y-m-d')
+                new DateTimeToStringTransformer('UTC', 'UTC', 'Y-m-d')
             ));
         } elseif ('timestamp' === $options['input']) {
             $builder->addModelTransformer(new ReversedTransformer(
-                new DateTimeToTimestampTransformer($options['model_timezone'], $options['model_timezone'])
+                new DateTimeToTimestampTransformer('UTC', 'UTC')
             ));
         } elseif ('array' === $options['input']) {
             $builder->addModelTransformer(new ReversedTransformer(
-                new DateTimeToArrayTransformer($options['model_timezone'], $options['model_timezone'], array('year', 'month', 'day'))
+                new DateTimeToArrayTransformer('UTC', 'UTC', array('year', 'month', 'day'))
             ));
         }
     }
@@ -201,27 +201,27 @@ class DateType extends AbstractType
         };
 
         $resolver->setDefaults(array(
-            'years'          => range(date('Y') - 5, date('Y') + 5),
-            'months'         => range(1, 12),
-            'days'           => range(1, 31),
-            'widget'         => 'choice',
-            'input'          => 'datetime',
-            'format'         => $format,
+            'years' => range(date('Y') - 5, date('Y') + 5),
+            'months' => range(1, 12),
+            'days' => range(1, 31),
+            'widget' => 'choice',
+            'input' => 'datetime',
+            'format' => $format,
             'model_timezone' => null,
-            'view_timezone'  => null,
-            'empty_value'    => $emptyValue, // deprecated
-            'placeholder'    => $placeholder,
-            'html5'          => true,
+            'view_timezone' => null,
+            'empty_value' => $emptyValue, // deprecated
+            'placeholder' => $placeholder,
+            'html5' => true,
             // Don't modify \DateTime classes by reference, we treat
             // them like immutable value objects
-            'by_reference'   => false,
+            'by_reference' => false,
             'error_bubbling' => false,
             // If initialized with a \DateTime object, FormType initializes
             // this option to "\DateTime". Since the internal, normalized
             // representation is not \DateTime, but an array, we need to unset
             // this option.
-            'data_class'     => null,
-            'compound'       => $compound,
+            'data_class' => null,
+            'compound' => $compound,
         ));
 
         $resolver->setNormalizers(array(
@@ -230,13 +230,13 @@ class DateType extends AbstractType
         ));
 
         $resolver->setAllowedValues(array(
-            'input'     => array(
+            'input' => array(
                 'datetime',
                 'string',
                 'timestamp',
                 'array',
             ),
-            'widget'    => array(
+            'widget' => array(
                 'single_text',
                 'text',
                 'choice',
@@ -245,9 +245,9 @@ class DateType extends AbstractType
 
         $resolver->setAllowedTypes(array(
             'format' => array('int', 'string'),
-            'years'  => 'array',
+            'years' => 'array',
             'months' => 'array',
-            'days'   => 'array',
+            'days' => 'array',
         ));
     }
 
