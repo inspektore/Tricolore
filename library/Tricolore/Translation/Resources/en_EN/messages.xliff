@@ -58,6 +58,10 @@
                 <source>Database queries</source>
                 <target>Database queries</target>
             </trans-unit>
+            <trans-unit id="15">
+                <source>Authorization</source>
+                <target>Authorization</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
