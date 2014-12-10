@@ -41,7 +41,7 @@ class TwigIntegrationTest extends \PHPUnit_Framework_TestCase
         $service_locator = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator');
         $service_view = $service_locator->get('view');
 
-        $expected = 'index.php?/my/test';
+        $expected = 'http://localhost/Tricolore/tests/index.php?/my/test';
         $actual = $service_view->display(null, 'TestUrl', [], true);
 
         $this->assertEquals($expected, $actual);
