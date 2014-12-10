@@ -5,6 +5,7 @@ use Tricolore\Config\Config;
 use Tricolore\RoutingProvider\RoutingProvider;
 use Tricolore\Services\ServiceLocator;
 use Tricolore\Exception\ErrorException;
+use Tricolore\Exception\RuntimeException;
 use Symfony\Component\Routing\Generator\UrlGenerator;
 
 class Application extends ServiceLocator
@@ -35,6 +36,10 @@ class Application extends ServiceLocator
         self::getInstance()->setupErrorReporting();
 
         try {
+            if(endsWith('/', Config::key('base.full_url')) === true) {
+                throw new RuntimeException('Setting "base.full_url" cannot end with a slash.');
+            }
+
             self::$routing = new RoutingProvider();
             self::$routing->register();
         } catch(\Exception $exception) {
@@ -93,7 +98,13 @@ class Application extends ServiceLocator
             return $generator->generate($route_name, $arguments, $generator::ABSOLUTE_URL);
         }
 
-        return 'index.php?/' . $generator->generate($route_name, $arguments, $generator::RELATIVE_PATH);
+        $prefix = '/index.php?/';
+
+        if($route_name === 'home') {
+            $prefix = '/';
+        }
+
+        return Config::key('base.full_url') . $prefix . $generator->generate($route_name, $arguments, $generator::RELATIVE_PATH);
     }
 
     /**
