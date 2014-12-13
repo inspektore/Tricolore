@@ -10,6 +10,11 @@ hello:
     defaults: 
         _controller: Tricolore\Controller\Frontend\HelloAction:sayHello
 
+auth:
+    path: /auth
+    defaults:
+        _controller: Tricolore\Controller\Frontend\Auth:process
+
 admincp_auth:
     path: /admincp/auth
     defaults:
