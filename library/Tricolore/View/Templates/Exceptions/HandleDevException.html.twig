@@ -81,7 +81,7 @@
 
     <footer class="container">
       <div class="pull-right footer">
-        Powered by <a href="https://github.com/Macsch15/Tricolore">Tricolore</a>
+        Powered by <a href="https://github.com/Macsch15/Tricolore">Tricolore</a> {{ app.getEnv() == 'dev' ? app.getVersion() : null }}
       </div>
     </footer>
 
