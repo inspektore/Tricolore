@@ -1,6 +1,6 @@
 #Tricolore [![Build Status](http://img.shields.io/travis/Macsch15/Tricolore.svg?style=flat)](https://travis-ci.org/Macsch15/Tricolore) [![Unicorn](http://img.shields.io/badge/unicorn-on-ff69b4.svg?style=flat)](https://github.com/Macsch15/Tricolore) [![Licence](http://img.shields.io/badge/licence-MIT-red.svg?style=flat)](https://github.com/Macsch15/Tricolore/blob/master/LICENSE.md)
 
-#####Discussion software for modern web
+#####Discussion software
 *Work in progress...*
 
 ###Environment requirements
@@ -18,20 +18,6 @@ $ sudo service hhvm restart
 
 ###3-rd party libraries
 - [Symfony](https://github.com/symfony/symfony)
-  - Config
-  - EventDispatcher
-  - Filesystem
-  - Finder
-  - Form
-  - HttpFoundation
-  - OptionsResolver
-  - PropertyAccess
-  - Routing
-  - Security
-  - Translation
-  - Validator
-  - VarDumper
-  - Yaml
 - [Twig](https://github.com/twigphp/Twig)
 - [jQuery](https://github.com/jquery/jquery)
 - [Carbon](https://github.com/briannesbitt/Carbon)
