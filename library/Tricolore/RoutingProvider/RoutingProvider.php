@@ -5,6 +5,7 @@ use Tricolore\Application;
 use Tricolore\Config\Config;
 use Tricolore\Services\ServiceLocator;
 use Tricolore\Exception\RuntimeException;
+use Symfony\Component\Routing\Router;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Matcher\UrlMatcher;
 use Symfony\Component\Routing\RequestContext;
@@ -17,18 +18,11 @@ use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 class RoutingProvider extends ServiceLocator
 {
     /**
-     * Route collection
+     * Router
      * 
-     * @var Symfony\Component\Routing\RouteCollection
-     */
-    private $collection;
-
-    /**
-     * Request context
-     * 
-     * @var Symfony\Component\Routing\RequestContext
+     * @var Symfony\Component\Routing\Router
      */    
-    private $context;
+    private $router;
 
     /**
      * Register routing
@@ -57,17 +51,15 @@ class RoutingProvider extends ServiceLocator
             $collection_filename = 'TestCollection';
         }
 
-        $this->collection = $loader->load(sprintf('RouteCollection/%s.yml', $collection_filename));
-        $this->collection->setHost(Config::key('router.host'));
+        $request_context = new RequestContext();
+        $request_context->fromRequest(Request::createFromGlobals());
 
-        $this->context = new RequestContext();
-
-        $this->context->fromRequest(Request::createFromGlobals());
-
-        $matcher = new UrlMatcher($this->collection, $this->context);
+        $this->router = new Router($loader, sprintf('RouteCollection/%s.yml', $collection_filename), [
+            'cache_dir' => Application::createPath('storage:router')
+        ], $request_context);
 
         if (Application::getInstance()->getEnv() !== 'test') {
-            $this->controllerCall($matcher, $request);
+            $this->controllerCall($this->router, $request);
         }
     }
 
@@ -78,7 +70,7 @@ class RoutingProvider extends ServiceLocator
      */
     public function getRouteCollection()
     {
-        return $this->collection;
+        return $this->router->getRouteCollection();
     }
 
     /**
@@ -88,21 +80,21 @@ class RoutingProvider extends ServiceLocator
      */
     public function getContext()
     {
-        return $this->context;
+        return $this->router->getContext();
     }
 
     /**
      * Call to the controller
      * 
-     * @param UrlMatcher $matcher
+     * @param Router $router
      * @param string $request
      * @throws Tricolore\Exception\RuntimeException
      * @return void
      */
-    private function controllerCall(UrlMatcher $matcher, $request)
+    private function controllerCall(Router $router, $request)
     {
         try {
-            $parameters = $matcher->match($request);
+            $parameters = $router->match($request);
 
             $controller = explode(':', $parameters['_controller']);
 
