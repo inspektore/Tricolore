@@ -126,7 +126,7 @@ class Update
 
         try {
             $prepare->execute();
-        } catch(\PDOException $exception) {
+        } catch (\PDOException $exception) {
             throw new DatabaseException($exception->getMessage());
         }
     }

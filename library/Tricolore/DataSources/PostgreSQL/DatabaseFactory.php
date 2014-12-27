@@ -68,7 +68,7 @@ class DatabaseFactory
 
 
             $this->table_prefix = $config['table_prefix'];
-        } catch(\PDOException $exception) {
+        } catch (\PDOException $exception) {
             throw new DatabaseException($exception->getMessage());
         }
 
@@ -87,6 +87,10 @@ class DatabaseFactory
         self::$queries++;
 
         $type = ucfirst($type);
+
+        if (strpos($type, '_') !== false) {
+            $type = substr($type, 0, strpos($type, '_')) . ucfirst(str_replace('_', '', substr($type, strpos($type, '_'))));
+        }
 
         $allowed_types = ['Select', 'Delete', 'Update', 'Insert'];
 

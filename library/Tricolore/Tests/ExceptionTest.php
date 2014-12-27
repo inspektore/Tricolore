@@ -14,7 +14,7 @@ class ExceptionTest extends \PHPUnit_Framework_TestCase
 
         try {
             throw new InvalidArgumentException('Unicorn');
-        } catch(InvalidArgumentException $exception) {
+        } catch (InvalidArgumentException $exception) {
             $service_view->handleException($exception, true);
         }
     }

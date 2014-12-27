@@ -42,7 +42,7 @@ class Application extends ServiceLocator
 
             self::$routing = new RoutingProvider();
             self::$routing->register();
-        } catch(\Exception $exception) {
+        } catch (\Exception $exception) {
             self::getInstance()->get('view', [true])->handleException($exception);
         }
     }
