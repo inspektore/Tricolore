@@ -66,6 +66,14 @@
                 <source>Forgot your password?</source>
                 <target>Forgot your password?</target>
             </trans-unit>
+            <trans-unit id="17">
+                <source>Method not allowed</source>
+                <target>Method not allowed</target>
+            </trans-unit>
+            <trans-unit id="18">
+                <source>%method% method is not allowed for this request!</source>
+                <target>%method% method is not allowed for this request!</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

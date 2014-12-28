@@ -14,6 +14,7 @@ use Symfony\Component\Routing\Route;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Routing\Loader\YamlFileLoader;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
+use Symfony\Component\Routing\Exception\MethodNotAllowedException;
 
 class RoutingProvider extends ServiceLocator
 {
@@ -118,11 +119,19 @@ class RoutingProvider extends ServiceLocator
                 throw new RuntimeException(sprintf('Action method "%s" in "%s" does not exists.', $controller[1], $controller[0]));
             }
 
-            return call_user_func([$call, $controller[1]], (object)$arguments);
-        } catch(ResourceNotFoundException $exception) {
+            return call_user_func_array([$call, $controller[1]], $arguments);
+        } catch (ResourceNotFoundException $exception) {
             http_response_code(404);
 
             $this->get('view')->display('Errors', 'ResourceNotFound');
+        } catch (MethodNotAllowedException $exception) {
+            http_response_code(405);
+
+            $render = [
+                'method' => $this->getContext()->getMethod()
+            ];
+
+            $this->get('view')->display('Errors', 'MethodNotAllowed', $render);
         }
     }
 }

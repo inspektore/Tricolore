@@ -8,10 +8,10 @@ class HelloAction extends ServiceLocator
     /**
      * @Route('/hello/{name}', name="hello")
      */
-    public function sayHello(\stdClass $route)
+    public function sayHello($name)
     {
         $render = [
-            'name' => $route->name
+            'name' => $name
         ];
 
         return $this->get('view')->display('Actions/Frontend', 'HelloAction', $render);
