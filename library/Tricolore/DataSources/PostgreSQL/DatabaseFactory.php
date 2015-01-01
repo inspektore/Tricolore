@@ -86,10 +86,10 @@ class DatabaseFactory
     {
         self::$queries++;
 
-        $type = ucfirst($type);
-
         if (strpos($type, '_') !== false) {
-            $type = substr($type, 0, strpos($type, '_')) . ucfirst(str_replace('_', '', substr($type, strpos($type, '_'))));
+            $type = underscoreToCamelCase($type);
+        } else {
+            $type = ucfirst($type);
         }
 
         $allowed_types = ['Select', 'Delete', 'Update', 'Insert'];

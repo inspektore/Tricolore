@@ -46,3 +46,14 @@ function endsWith($condition, $from, $length = 1)
 
     return false;
 }
+
+/**
+ * Underscore to CamelCase
+ * 
+ * @param string $text 
+ * @return string
+ */
+function underscoreToCamelCase($text)
+{
+    return str_replace(' ', '', ucwords(str_replace('_', ' ', $text)));
+}

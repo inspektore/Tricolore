@@ -66,4 +66,13 @@ class HelpersTest extends \PHPUnit_Framework_TestCase
 
         $this->assertFalse($actual);
     }
+
+    public function testUnderscoreToCamelCase()
+    {
+        $string = 'example_string';
+        $expected = 'ExampleString';
+        $actual = underscoreToCamelCase($string);
+
+        $this->assertEquals($expected, $actual);
+    }
 }
