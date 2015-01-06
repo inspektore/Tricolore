@@ -57,7 +57,7 @@ class Insert
      */
     public function into($into)
     {
-        $this->collection['into'] = $into;
+        $this->collection['into'] = $this->table_prefix . $into;
 
         return $this;
     }
