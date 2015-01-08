@@ -21,13 +21,6 @@ class Insert
     private $collection = [];
 
     /**
-     * Database factory
-     * 
-     * @var Tricolore\DataSources\PostgreSQL\DatabaseFactory
-     */
-    private $factory;
-
-    /**
      * Table prefix
      * 
      * @var string
@@ -45,7 +38,6 @@ class Insert
     public function __construct(\PDO $pdo, DatabaseFactory $factory, $table_prefix)
     {
         $this->pdo = $pdo;
-        $this->factory = $factory;
         $this->table_prefix = $table_prefix;
     }
 
