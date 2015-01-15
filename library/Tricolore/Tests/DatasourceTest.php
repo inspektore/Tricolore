@@ -16,7 +16,7 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
         $service_datasource = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator')
         ->get('datasource');
 
-        $database_name = (Application::inTravis() === true) ? 'tricolore_tests' : 'travis_ci_test';
+        $database_name = (Application::getInstance()->inTravis() === true) ? 'travis_ci_test' : 'tricolore_tests';
 
         $actual = $service_datasource->databaseExists($database_name);
 
