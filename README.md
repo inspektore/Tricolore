@@ -7,16 +7,7 @@
 - PHP 5.5 (5.6 recommended)
 - PostgreSQL 9.3 (or later)
 - INTL extension
-- PDO_pgsql extension
-
-On HHVM 3.3 and later put in your **php.ini**:
-```
-hhvm.libxml.ext_entity_whitelist = file,http,https
-```
-And restart HHVM
-```
-$ sudo service hhvm restart
-```
+- pdo_pgsql extension **(currently unsupported by HHVM)**
 
 ###3-rd party libraries
 - [Symfony](https://github.com/symfony/symfony)
