@@ -22,4 +22,23 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue($actual);
     }
+
+    public function testCreateTable()
+    {
+        $service_datasource = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator')
+        ->get('datasource');
+
+        $service_datasource->buildQuery('create_table')
+        ->name('tmp')
+        ->columns([
+            'tmp_col' => 'TEXT',
+            'tmp_col2' => 'INT'
+        ])
+        ->ifNotExists()
+        ->execute();
+
+        $this->assertTrue($service_datasource->tableExists('tmp'));
+
+        $service_datasource->dropTable('tmp');
+    }
 }
