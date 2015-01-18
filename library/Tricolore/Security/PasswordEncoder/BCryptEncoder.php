@@ -32,10 +32,9 @@ class BCryptEncoder
      * 
      * @param string $raw_password
      * @param string $password_hash
-     * @param array $options 
      * @return bool
      */
-    public static function passwordVerify($raw_password, $password_hash, array $options = [])
+    public static function passwordVerify($raw_password, $password_hash)
     {
         return password_verify($raw_password, $password_hash);
     }
