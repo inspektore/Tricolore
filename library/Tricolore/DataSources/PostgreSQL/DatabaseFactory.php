@@ -166,14 +166,10 @@ class DatabaseFactory
     public function dropTable($table_name)
     {
         if (is_array($table_name) && count($table_name)) {
-            foreach ($table_name as $table) {
-                $this->exec(sprintf('drop table %s%s', $this->table_prefix, $table));
-            }
-
-            return count($table_name);
+            $table_name = implode(',', $table_name);
         }
 
-        return $this->exec(sprintf('drop table %s%s', $this->table_prefix, $table_name));
+        return $this->exec(sprintf('drop table if exists %s%s', $this->table_prefix, $table_name));
     }
 
     /**
@@ -187,13 +183,13 @@ class DatabaseFactory
     {
         if (is_array($field_name) && count($field_name)) {
             foreach ($field_name as $field) {
-                $this->exec(sprintf('alter table %s drop column if exists %s', $from_table, $field));
+                $this->exec(sprintf('alter table %s drop column if exists %s', $this->table_prefix . $from_table, $field));
             }
 
             return count($field_name);
         }
 
-        return $this->exec(sprintf('alter table %s drop column %s', $from_table, $field_name));
+        return $this->exec(sprintf('alter table %s drop column if exists %s', $this->table_prefix . $from_table, $field_name));
     }
 
     /**
