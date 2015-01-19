@@ -165,7 +165,7 @@ class DatabaseFactory
      */
     public function dropTable($table_name)
     {
-        if (is_array($table_name) && count($table_name)) {
+        if (is_array($table_name) === true && count($table_name)) {
             $table_name = implode(',', $table_name);
         }
 
@@ -181,7 +181,7 @@ class DatabaseFactory
      */
     public function dropField($from_table, $field_name)
     {
-        if (is_array($field_name) && count($field_name)) {
+        if (is_array($field_name) === true && count($field_name)) {
             foreach ($field_name as $field) {
                 $this->exec(sprintf('alter table %s drop column if exists %s', $this->table_prefix . $from_table, $field));
             }
@@ -190,6 +190,25 @@ class DatabaseFactory
         }
 
         return $this->exec(sprintf('alter table %s drop column if exists %s', $this->table_prefix . $from_table, $field_name));
+    }
+
+    /**
+     * Drop database
+     * 
+     * @param string|array $database_name
+     * @return int
+     */
+    public function dropDatabase($database_name)
+    {
+        if (is_array($database_name) === true && count($database_name)) {
+            foreach ($database_name as $database) {
+                $this->exec(sprintf('drop database %s', $database));
+
+                return count($database_name);
+            }
+
+            $this->exec(sprintf('drop database %s', $database_name));
+        }
     }
 
     /**
@@ -313,7 +332,7 @@ class DatabaseFactory
             throw new InvalidArgumentException('Database name contains prohibited characters.');
         }
 
-        return $this->exec(sprintf('CREATE DATABASE %s', $database_name));
+        return $this->exec(sprintf('create database %s', $database_name));
     }
 
     /**
