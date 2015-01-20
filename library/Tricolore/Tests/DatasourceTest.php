@@ -28,6 +28,8 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
         $service_datasource = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator')
         ->get('datasource');
 
+        $this->assertFalse($service_datasource->tableExists('tmp'));
+
         $service_datasource->buildQuery('create_table')
         ->name('tmp')
         ->columns([
@@ -40,5 +42,30 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($service_datasource->tableExists('tmp'));
 
         $service_datasource->dropTable('tmp');
+    }
+
+    /**
+     * @expectedException Tricolore\Exception\InvalidArgumentException
+     */
+    public function testExceptionCreateDatabase()
+    {
+        $service_datasource = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator')
+        ->get('datasource');
+
+        $service_datasource->createDatabase('&foo');
+    }
+
+    public function testCreateDatabase()
+    {
+        $service_datasource = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator')
+        ->get('datasource');
+
+        if ($service_datasource->databaseExists('tmp_db') === false) {
+            $service_datasource->createDatabase('tmp_db');
+        }
+
+        $this->assertTrue($service_datasource->databaseExists('tmp_db'));
+
+        $service_datasource->dropDatabase('tmp_db');
     }
 }
