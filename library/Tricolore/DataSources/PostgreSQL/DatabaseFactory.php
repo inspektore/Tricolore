@@ -183,13 +183,13 @@ class DatabaseFactory
     {
         if (is_array($field_name) === true && count($field_name)) {
             foreach ($field_name as $field) {
-                $this->exec(sprintf('alter table %s drop column if exists %s', $this->table_prefix . $from_table, $field));
+                $this->exec(sprintf('alter table %s drop column if exists %s%s', $this->table_prefix, $from_table, $field));
             }
 
             return count($field_name);
         }
 
-        return $this->exec(sprintf('alter table %s drop column if exists %s', $this->table_prefix . $from_table, $field_name));
+        return $this->exec(sprintf('alter table %s%s drop column if exists %s', $this->table_prefix, $from_table, $field_name));
     }
 
     /**
