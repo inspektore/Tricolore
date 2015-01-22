@@ -9,7 +9,7 @@ class TranslationTest extends \PHPUnit_Framework_TestCase
     {
         $service_locator = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator');
         $service_trans = $service_locator->get('translator', [
-            Application::createPath('library:Tricolore:Tests:Fixtures:Translation_enEN.xliff'),
+            Application::createPath('app:Tricolore:Tests:Fixtures:Translation_enEN.xliff'),
         ]);
 
         $expected = 'Translated unit!';
@@ -22,7 +22,7 @@ class TranslationTest extends \PHPUnit_Framework_TestCase
     {
         $service_locator = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator');
         $service_trans = $service_locator->get('translator', [
-            Application::createPath('library:Tricolore:Tests:Fixtures:Translation_enEN.xliff'),
+            Application::createPath('app:Tricolore:Tests:Fixtures:Translation_enEN.xliff'),
         ]);
 
         $expected = 'Welcome Peter';
@@ -35,7 +35,7 @@ class TranslationTest extends \PHPUnit_Framework_TestCase
     {
         $service_locator = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator');
         $service_trans = $service_locator->get('translator', [
-            Application::createPath('library:Tricolore:Tests:Fixtures:Translation_enEN.xliff'),
+            Application::createPath('app:Tricolore:Tests:Fixtures:Translation_enEN.xliff'),
         ]);
 
         $expected = 'Bob has 6 apples';

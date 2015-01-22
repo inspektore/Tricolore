@@ -18,7 +18,7 @@ class Config
             return false;
         }
 
-        $collection_parsed = Yaml::parse(sprintf(Application::createPath('library:Tricolore:Config:Resources:%s.yml'), $collection));
+        $collection_parsed = Yaml::parse(sprintf(Application::createPath('app:Tricolore:Config:Resources:%s.yml'), $collection));
 
         if (isset($collection_parsed[Application::getInstance()->getEnv()][$key]) === false) {
             return false;
@@ -37,7 +37,7 @@ class Config
     {
         if (self::collectionExists($collection) === false ||
             !count($collection_parsed = Yaml::parse(
-                sprintf(Application::createPath('library:Tricolore:Config:Resources:%s.yml'), $collection)))
+                sprintf(Application::createPath('app:Tricolore:Config:Resources:%s.yml'), $collection)))
         ) {
             return [];
         }
@@ -53,6 +53,6 @@ class Config
      */
     private static function collectionExists($collection)
     {
-        return file_exists(sprintf(Application::createPath('library:Tricolore:Config:Resources:%s.yml'), $collection));
+        return file_exists(sprintf(Application::createPath('app:Tricolore:Config:Resources:%s.yml'), $collection));
     }
 }

@@ -27,7 +27,7 @@ class Translation
         if ($resource === null) {
             $translator->addResource('xliff', 
                 Application::getInstance()->createPath(
-                    sprintf('library:Tricolore:Translation:Resources:%s:messages.xliff', $locale)), 
+                    sprintf('app:Tricolore:Translation:Resources:%s:messages.xliff', $locale)), 
                 $locale);           
         } else {
             if (file_exists($resource) === false) {
@@ -55,7 +55,7 @@ class Translation
     {
         $translator->addResource('xliff', 
             Application::getInstance()->createPath(
-                sprintf('library:Tricolore:Translation:Resources:%s:validators.xliff', $locale)), 
+                sprintf('app:Tricolore:Translation:Resources:%s:validators.xliff', $locale)), 
             $locale);  
     }
 }

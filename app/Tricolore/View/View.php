@@ -33,19 +33,19 @@ class View extends ServiceLocator
 
         $finder = $this->get('finder')
         ->directories()
-        ->in(Application::createPath('library:Tricolore:View:Templates'));
+        ->in(Application::createPath('app:Tricolore:View:Templates'));
 
         foreach ($finder as $file) {
             $directories[] = $file->getRealpath();
         }
 
         $directories = array_merge($directories, [
-            Application::createPath('library:Tricolore:View:Templates')
+            Application::createPath('app:Tricolore:View:Templates')
         ]);
 
         if (Application::getInstance()->getEnv() === 'test') {
             $directories = array_merge($directories, [
-                Application::createPath('library:Tricolore:Tests:Fixtures:Templates') 
+                Application::createPath('app:Tricolore:Tests:Fixtures:Templates') 
             ]);
         }
 
@@ -132,7 +132,7 @@ class View extends ServiceLocator
         }));
 
         $this->environment->addFunction(new \Twig_SimpleFunction('assets', function ($section, $file) {
-            return Config::key('base.full_url') . '/assets/' . $section . '/' . $file;
+            return Config::key('base.full_url') . '/static/' . $section . '/' . $file;
         }));
 
         $this->environment->addFunction(new \Twig_SimpleFunction('url', function ($route_name = null, $arguments = []) {
@@ -162,7 +162,7 @@ class View extends ServiceLocator
     {
         if (Application::getInstance()->getEnv() === 'test') {
             $this->environment->addExtension(new TranslationExtension($this->get('translator', [
-                Application::createPath('library:Tricolore:Tests:Fixtures:Translation_enEN.xliff'),
+                Application::createPath('app:Tricolore:Tests:Fixtures:Translation_enEN.xliff'),
                 'en_EN'
             ])));
         } else {

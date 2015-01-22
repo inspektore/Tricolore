@@ -6,13 +6,13 @@ if(version_compare(phpversion(), '5.5.0', '<')) {
 use Tricolore\Autoloader;
 use Tricolore\Application;
 
-require_once __DIR__ . DIRECTORY_SEPARATOR . 'library' .
+require_once __DIR__ . DIRECTORY_SEPARATOR . 'app' .
     DIRECTORY_SEPARATOR . 'Tricolore' .
     DIRECTORY_SEPARATOR . 'Autoloader.php';
 
 require_once __DIR__ . DIRECTORY_SEPARATOR . '.helpers.php';
 
-Autoloader::register();
+Autoloader::getInstance()->register();
 
 Application::register([
     'directory' => __DIR__ . DIRECTORY_SEPARATOR,

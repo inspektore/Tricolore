@@ -8,7 +8,7 @@ class ServiceLocatorTest extends \PHPUnit_Framework_TestCase
     public function testServiceInstanceOf()
     {
         $service_locator = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator');
-        $service_path = Application::createPath('library:Tricolore:Tests:Fixtures:ServiceLocator.yml');
+        $service_path = Application::createPath('app:Tricolore:Tests:Fixtures:ServiceLocator.yml');
         $service_extra = $service_locator->get('extra', [], $service_path);
 
         $expected = 'Tricolore\Tests\Fixtures\ServiceLocatorExtra';
@@ -23,7 +23,7 @@ class ServiceLocatorTest extends \PHPUnit_Framework_TestCase
     public function testExceptionServiceNotExists()
     {
         $service_locator = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator');
-        $service_path = Application::createPath('library:Tricolore:Tests:Fixtures:ServiceLocator.yml');
+        $service_path = Application::createPath('app:Tricolore:Tests:Fixtures:ServiceLocator.yml');
 
         return $service_locator->get('fake_foo', [], $service_path);
     }
@@ -41,7 +41,7 @@ class ServiceLocatorTest extends \PHPUnit_Framework_TestCase
     public function testMethodReturn()
     {
         $service_locator = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator');
-        $service_path = Application::createPath('library:Tricolore:Tests:Fixtures:ServiceLocator.yml');
+        $service_path = Application::createPath('app:Tricolore:Tests:Fixtures:ServiceLocator.yml');
         $service_extra = $service_locator->get('extra', [], $service_path);
 
         $expected = 'Hello World';
@@ -53,7 +53,7 @@ class ServiceLocatorTest extends \PHPUnit_Framework_TestCase
     public function testServiceFunction()
     {
         $service_locator = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator');
-        $service_path = Application::createPath('library:Tricolore:Tests:Fixtures:ServiceLocator.yml');
+        $service_path = Application::createPath('app:Tricolore:Tests:Fixtures:ServiceLocator.yml');
 
         $expected = 'myFunc';
         $actual = $service_locator->get('extra_func', [], $service_path);

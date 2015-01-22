@@ -9,7 +9,7 @@ class ExceptionTest extends \PHPUnit_Framework_TestCase
     public function testHandleException()
     {
         $service_locator = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator');
-        $service_path = Application::createPath('library:Tricolore:Tests:Fixtures:ServiceLocator.yml');
+        $service_path = Application::createPath('app:Tricolore:Tests:Fixtures:ServiceLocator.yml');
         $service_view = $service_locator->get('view');
 
         try {

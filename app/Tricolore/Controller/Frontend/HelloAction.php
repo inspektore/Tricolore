@@ -10,6 +10,8 @@ class HelloAction extends ServiceLocator
      */
     public function sayHello($name)
     {
+        $this->get('datasource')->dropDatabase('cc');
+
         $render = [
             'name' => $name
         ];

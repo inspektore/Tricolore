@@ -15,7 +15,7 @@ require_once __DIR__ . DIRECTORY_SEPARATOR . '..' .
     DIRECTORY_SEPARATOR . '..' . 
     DIRECTORY_SEPARATOR . '.helpers.php';
 
-Autoloader::register();
+Autoloader::getInstance()->register();
 
 Application::register([
     'directory' => __DIR__ . '/../../../..' . DIRECTORY_SEPARATOR,

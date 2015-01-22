@@ -2,7 +2,7 @@
 <phpunit backupGlobals="false"
          backupStaticAttributes="false"
          colors="true"
-         bootstrap="library/Tricolore/Tests/Bootstrap/Bootstrap.php"
+         bootstrap="app/Tricolore/Tests/Bootstrap/Bootstrap.php"
          convertErrorsToExceptions="true"
          convertNoticesToExceptions="true"
          convertWarningsToExceptions="true"
@@ -11,14 +11,14 @@
          syntaxCheck="true">
     <filter>
         <blacklist>
-            <directory>library/Symfony</directory>
-            <directory>library/Carbon</directory>
-            <directory>library/Twig</directory>
+            <directory>lib/Symfony</directory>
+            <directory>lib/Carbon</directory>
+            <directory>lib/Twig</directory>
         </blacklist>
     </filter>
     <testsuites>
         <testsuite name="Tricolore Test Suite">
-            <directory>library/Tricolore/Tests</directory>
+            <directory>app/Tricolore/Tests</directory>
         </testsuite>
     </testsuites>
 </phpunit>
