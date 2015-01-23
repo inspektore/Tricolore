@@ -1,7 +1,11 @@
 server {
     # Nginx configuration
 
-    location ^~ /library {
+    location ^~ /app {
+        deny all;
+    }
+
+    location ^~ /lib {
         deny all;
     }
 
