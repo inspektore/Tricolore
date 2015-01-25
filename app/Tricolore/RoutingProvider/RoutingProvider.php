@@ -46,11 +46,7 @@ class RoutingProvider extends ServiceLocator
         $locator = new FileLocator([__DIR__]);
         $loader = new YamlFileLoader($locator);
 
-        $collection_filename = 'Collection';
-
-        if (Application::getInstance()->getEnv() === 'test') {
-            $collection_filename = 'TestCollection';
-        }
+        $collection_filename = ucfirst(Application::getInstance()->getEnv());
 
         $request_context = new RequestContext();
         $request_context->fromRequest(Request::createFromGlobals());
