@@ -1,6 +1,15 @@
 $(function() {
-  $('[data-toggle="tooltip"]').tooltip({container: 'body'});
+  registerBootstrapTooltips()
+  activeNavbar()
+});
 
+function registerBootstrapTooltips()
+{
+  $('[data-toggle="tooltip"]').tooltip({container: 'body'});
+}
+
+function activeNavbar()
+{
   var filter = $('.nav a').filter(function () {
     return this.href == location.href;
   });
@@ -10,4 +19,4 @@ $(function() {
   $('.nav a').click(function () {
     $(this).parent().addClass('active').siblings().removeClass('active');
   });
-});
+}
