@@ -15,7 +15,6 @@
 - [jQuery](https://github.com/jquery/jquery)
 - [Carbon](https://github.com/briannesbitt/Carbon)
 - [Bootstrap](https://github.com/twbs/bootstrap)
-- [highlight.js](https://github.com/isagalaev/highlight.js)
 
 ###Licence
 
