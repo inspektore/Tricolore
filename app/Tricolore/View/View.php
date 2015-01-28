@@ -54,7 +54,7 @@ class View extends ServiceLocator
         $in_dev = Application::getInstance()->getEnv() === 'dev';
 
         $this->environment = new \Twig_Environment($loader, [
-            'cache' => ($in_dev) ? Application::createPath('storage:twig') : false,
+            'cache' => ($in_dev === false) ? Application::createPath('storage:twig') : false,
             'auto_reload' => ($in_dev) ?: false,
             'strict_variables' => ($in_dev) ?: false
         ]);
@@ -194,6 +194,10 @@ class View extends ServiceLocator
         $reflection = new \ReflectionClass(get_class($exception));
         $exception_name = $reflection->getShortName();
 
+        if ($reflection->getName() !== 'Tricolore\Exception\ErrorException') {
+            $this->logException($exception);
+        }
+
         if (Application::getInstance()->getEnv() === 'prod') {
             return $this->display('Exceptions', 'HandleClientException');
         }
@@ -209,10 +213,6 @@ class View extends ServiceLocator
         $file_array = new \SplFileObject($error_file, 'r');
 
         $request = Request::createFromGlobals();
-
-        if ($reflection->getName() !== 'Tricolore\Exception\ErrorException') {
-            $this->logException($exception);
-        }
 
         return $this->display('Exceptions', 'HandleDevException', [
             'exception' => $exception,
