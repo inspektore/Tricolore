@@ -34,7 +34,7 @@ class RoutingProvider extends ServiceLocator
     public function register()
     {
         $request = getenv('QUERY_STRING');
-        
+
         if (endsWith('/', $request) === true) {
             $request = substr($request, 0, -1);
         }
@@ -51,8 +51,10 @@ class RoutingProvider extends ServiceLocator
         $request_context = new RequestContext();
         $request_context->fromRequest(Request::createFromGlobals());
 
+        $in_prod = Application::getInstance()->getEnv() === 'prod';
+
         $this->router = new Router($loader, sprintf('RouteCollection/%s.yml', $collection_filename), [
-            'cache_dir' => Application::createPath('storage:router')
+            'cache_dir' => ($in_prod === true) ? Application::createPath('storage:router') : null
         ], $request_context);
 
         if (Application::getInstance()->getEnv() !== 'test') {

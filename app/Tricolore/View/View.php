@@ -51,12 +51,12 @@ class View extends ServiceLocator
 
         $loader = new \Twig_Loader_Filesystem($directories);
 
-        $in_dev = Application::getInstance()->getEnv() === 'dev';
+        $in_prod = Application::getInstance()->getEnv() === 'prod';
 
         $this->environment = new \Twig_Environment($loader, [
-            'cache' => ($in_dev === false) ? Application::createPath('storage:twig') : false,
-            'auto_reload' => ($in_dev) ?: false,
-            'strict_variables' => ($in_dev) ?: false
+            'cache' => ($in_prod === true) ? Application::createPath('storage:twig') : false,
+            'auto_reload' => ($in_prod === true) ? false : true,
+            'strict_variables' => ($in_prod === true) ? false : true
         ]);
 
         $this->registerGlobals();
@@ -192,7 +192,6 @@ class View extends ServiceLocator
         http_response_code(500);
 
         $reflection = new \ReflectionClass(get_class($exception));
-        $exception_name = $reflection->getShortName();
 
         if ($reflection->getName() !== 'Tricolore\Exception\ErrorException') {
             $this->logException($exception);
@@ -219,7 +218,7 @@ class View extends ServiceLocator
             'file_array' => iterator_to_array($file_array),
             'error_line' => $error_line,
             'error_file' => $error_file,
-            'exception_name' => $exception_name,
+            'exception_name' => $reflection->getShortName(),
             'path_info' => $request->getPathInfo()
         ], $return);
     }
