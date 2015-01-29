@@ -15,7 +15,6 @@ abstract class ServiceLocator
      * @param array $arguments
      * @param string $service_file
      * @throws Tricolore\Exception\ServicesException
-     * @throws Tricolore\Exception\AssetNotFound
      * @return mixed
      */
     final public function get($key, array $arguments = [], $service_file = null)
@@ -104,6 +103,7 @@ abstract class ServiceLocator
      * Parse YAML file to raw array
      * 
      * @param string $service_file
+     * @throws Tricolore\Exception\AssetNotFound
      * @return array
      */
     final private function parseServicesMap($service_file)
