@@ -43,7 +43,8 @@
         <ul class="pull-right list-inline">
           <li><span class="glyphicon glyphicon-compressed"></span> {% trans %}GZip compression{% endtrans %}: {{ config('gzip.enabled') == true ? 'On' : 'Off' }}</li>
           <li><span class="glyphicon glyphicon-tasks"></span> {% trans %}Used memory{% endtrans %}: {{ app.getUsageMemory() / 1024 }}KB</li>
-          <li style="padding-right: 0"><i class="fa fa-database"></i> {% trans %}Database queries{% endtrans %}: {{ app.dataSourceQueries() }}</li>
+          <li><i class="fa fa-cubes"></i> Loaded classes: {{ app.loadedClasses()|length }}</li>
+          <li style="padding-right: 0"><i class="fa fa-database"></i> {% trans %}Database queries{% endtrans %}: {{ app.dataSourceQueries() is not null ? app.dataSourceQueries() : 0 }}</li>
         </ul>
       {% endif %}
     </footer>

@@ -92,6 +92,10 @@ class Application extends ServiceLocator
             return Config::key('base.full_url');
         }
 
+        if (self::$routing->getRouteCollection()->all()[$route_name] === null) {
+            return Config::key('base.full_url') . '/not-found/404';
+        }
+
         $generator = new UrlGenerator(self::$routing->getRouteCollection(), self::$routing->getContext());
 
         if (Config::key('router.use_httpd_rewrite') === true) {
@@ -188,5 +192,15 @@ class Application extends ServiceLocator
     public function dataSourceQueries()
     {
         return self::getInstance()->get('datasource')->getQueriesNumber();
+    }
+
+    /**
+     * Loaded classes
+     * 
+     * @return array
+     */
+    public function loadedClasses()
+    {
+        return Autoloader::getLoadedClasses();
     }
 }

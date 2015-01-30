@@ -4,6 +4,13 @@ namespace Tricolore;
 class Autoloader
 {
     /**
+     * Loaded classes
+     * 
+     * @var array
+     */
+    private static $loadedClasses  = [];
+
+    /**
      * Autoloader instance
      *
      * @return Tricolore\Autoloader
@@ -31,6 +38,8 @@ class Autoloader
      */
     public function loadClass($class)
     {
+        self::$loadedClasses[] = $class;
+
         $base_dir = substr(__DIR__, 0, strripos(__DIR__, DIRECTORY_SEPARATOR) - 3);
         $class = str_replace(['_', '\\'], DIRECTORY_SEPARATOR, $class) . '.php';
 
@@ -39,6 +48,16 @@ class Autoloader
 
             $this->requireFile($base_dir . $directories . $class);
         }
+    }
+
+    /**
+     * Loaded classess accessor
+     * 
+     * @return array
+     */
+    public static function getLoadedClasses()
+    {
+        return self::$loadedClasses;
     }
 
     /**
