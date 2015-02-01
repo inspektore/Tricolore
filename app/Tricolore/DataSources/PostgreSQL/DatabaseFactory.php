@@ -25,7 +25,7 @@ class DatabaseFactory
      * 
      * @var int
      */
-    private static $queries = 0;
+    private static $queries;
 
     /**
      * Connection
@@ -110,11 +110,11 @@ class DatabaseFactory
      * @param array $binding_container
      * @param \PDOStatement $prepare
      * @throws Tricolore\Exception\DatabaseException 
-     * @return void
+     * @return mixed
      */
     public function binding(array $binding_container, \PDOStatement $prepare)
     {
-        if (! count($binding_container)) {
+        if (!count($binding_container)) {
             return false;
         }
 
