@@ -8,6 +8,7 @@
 - PostgreSQL 9.3 (or later)
 - INTL extension
 - pdo_pgsql extension **(currently unsupported by HHVM)**
+- (optional) zlib
 
 ###3-rd party libraries
 - [Symfony](https://github.com/symfony/symfony)
