@@ -18,7 +18,13 @@ matrix:
     - php: hhvm-nightly
 
 before_script:
+  - curl -s http://getcomposer.org/installer | php
+  - php composer.phar install --dev --no-interaction
   - psql -c 'create database travis_ci_test;' -U postgres
 
 script:
+  - mkdir -p build/logs
   - sh -c 'if [ "$TRAVIS_PHP_VERSION" = "hhvm" -o "$TRAVIS_PHP_VERSION" = "hhvm-nightly" ]; then hhvm -c travis.hhvm.ini $HOME/.phpenv/versions/hhvm/bin/phpunit --verbose --coverage-text; else phpunit --verbose --coverage-text; fi;'
+
+after_script:
+  - php vendor/bin/coveralls -v
