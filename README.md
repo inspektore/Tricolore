@@ -1,4 +1,4 @@
-#Tricolore [![Build Status](http://img.shields.io/travis/Macsch15/Tricolore.svg?style=flat)](https://travis-ci.org/Macsch15/Tricolore) [![Licence](http://img.shields.io/badge/licence-MIT-red.svg?style=flat)](https://github.com/Macsch15/Tricolore/blob/master/LICENSE.md)
+#Tricolore [![Build Status](http://img.shields.io/travis/Macsch15/Tricolore.svg?style=flat)](https://travis-ci.org/Macsch15/Tricolore) [![Coverage Status](https://coveralls.io/repos/Macsch15/Tricolore/badge.svg?branch=master)](https://coveralls.io/r/Macsch15/Tricolore?branch=master)
 
 #####Discussion software
 *Work in progress...*
