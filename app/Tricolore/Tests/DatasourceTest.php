@@ -2,6 +2,7 @@
 namespace Tricolore\Tests;
 
 use Tricolore\Application;
+use Tricolore\Config\Config;
 
 class DatasourceTest extends \PHPUnit_Framework_TestCase
 {
@@ -16,7 +17,9 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
         $service_datasource = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator')
         ->get('datasource');
 
-        $database_name = (Application::getInstance()->inTravis() === true) ? 'travis_ci_test' : 'tricolore_tests';
+        $database_config = Config::all('Database');
+        $config_key = (Application::getInstance()->inTravis() === true) ? 'travis' : 'default';
+        $database_name = $database_config[Application::getInstance()->getEnv()][$config_key]['database_name'];
 
         $actual = $service_datasource->databaseExists($database_name);
 
@@ -67,5 +70,56 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($service_datasource->databaseExists('tmp_db'));
 
         $service_datasource->dropDatabase('tmp_db');
+    }
+
+    public function testDelete()
+    {
+        $service_datasource = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator')
+        ->get('datasource');
+
+        $service_datasource->buildQuery('create_table')
+        ->name('test_delete')
+        ->columns([
+            'tmp_col' => 'TEXT',
+            'tmp_col2' => 'INT'
+        ])
+        ->ifNotExists()
+        ->execute();
+
+        $service_datasource->buildQuery('insert')
+        ->into('test_delete')
+        ->values([
+            'tmp_col' => 'Doggy',
+            'tmp_col2' => 6
+        ])
+        ->execute();
+
+        $result = $service_datasource->buildQuery('select')
+        ->select('tmp_col, tmp_col2')
+        ->from('test_delete')
+        ->execute();
+
+        $this->assertSame($result[0], [
+            'tmp_col' => 'Doggy',
+            0 => 'Doggy',
+            'tmp_col2' => 6,
+            1 => 6
+        ]);
+
+        $service_datasource->buildQuery('delete')
+        ->deleteFrom('test_delete')
+        ->where('tmp_col = :dog', [
+            ':dog' => [
+                'value' => 'Doggy'
+            ]
+        ])
+        ->execute();
+
+        $result = $service_datasource->buildQuery('select')
+        ->select('tmp_col, tmp_col2')
+        ->from('test_delete')
+        ->execute();
+
+        $this->assertSame($result, []);
     }
 }
