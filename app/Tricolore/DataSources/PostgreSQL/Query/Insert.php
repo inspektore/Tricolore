@@ -89,9 +89,10 @@ class Insert
 
         $query = sprintf('insert into %s ', $this->collection['into']);
 
-        foreach ($this->collection['values'] as $field => $value) {
-            $query .= sprintf('(%s) values (\'%s\')', $field, $value);
-        }
+        $field = implode(', ', array_keys($this->collection['values']));
+        $value = implode('\', \'', $this->collection['values']);
+
+        $query .= sprintf('(%s) values (\'%s\')', $field, $value);
 
         $prepare = $this->pdo->prepare($query);
 

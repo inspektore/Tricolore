@@ -55,7 +55,7 @@ class Delete
      * @param string $table_name 
      * @return Tricolore\DataSources\PostgreSQL\Query\Delete
      */
-    public function deteleFrom($table_name)
+    public function deleteFrom($table_name)
     {
         $this->collection['delete_from'] = $this->table_prefix . $table_name;
 
