@@ -108,8 +108,8 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
 
         $service_datasource->buildQuery('delete')
         ->deleteFrom('test_delete')
-        ->where('tmp_col = :dog', [
-            ':dog' => [
+        ->where('tmp_col = ?', [
+            1 => [
                 'value' => 'Doggy'
             ]
         ])
