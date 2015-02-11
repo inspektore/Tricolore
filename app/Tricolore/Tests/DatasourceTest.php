@@ -277,6 +277,13 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
         ->orderBy('groupby_col1', 'asc')
         ->execute();
 
+        $asc_non_valid_sorting = $service_datasource->buildQuery('select')
+        ->select('groupby_col1')
+        ->from('groupbytable')
+        ->groupBy('groupby_col1')
+        ->orderBy('groupby_col1', 'not-valid')
+        ->execute();
+
         $desc = $service_datasource->buildQuery('select')
         ->select('groupby_col1')
         ->from('groupbytable')
@@ -302,6 +309,23 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
         ]);
 
         $this->assertSame($asc, [
+            0 => [
+                'groupby_col1' => '1',
+                0 => '1'
+            ],
+
+            1 => [
+                'groupby_col1' => '2',
+                0 => '2'
+            ],
+
+            2 => [
+                'groupby_col1' => '3',
+                0 => '3'
+            ]
+        ]);
+
+        $this->assertSame($asc_non_valid_sorting, [
             0 => [
                 'groupby_col1' => '1',
                 0 => '1'
@@ -348,5 +372,47 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
         ->execute();
 
         $this->assertCount(3, $result);
+    }
+
+    /**
+     * @expectedException Tricolore\Exception\DatabaseException
+     * @expectedExceptionMessage "Select" in query is required. Add select() method to your query builder.
+     */
+    public function testExceptionSelectRequiredSelect()
+    {
+        $service_datasource = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator')
+        ->get('datasource');
+
+        $service_datasource->buildQuery('select')
+        ->from('test')
+        ->execute();
+    }
+
+    /**
+     * @expectedException Tricolore\Exception\DatabaseException
+     * @expectedExceptionMessage "From" in query is required. Add from() method to your query builder.
+     */
+    public function testExceptionSelectRequiredFrom()
+    {
+        $service_datasource = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator')
+        ->get('datasource');
+
+        $service_datasource->buildQuery('select')
+        ->select('test')
+        ->execute();
+    }
+
+    /**
+     * @expectedException Tricolore\Exception\DatabaseException
+     */
+    public function testExceptionSelectNotExistingTable()
+    {
+        $service_datasource = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator')
+        ->get('datasource');
+
+        $service_datasource->buildQuery('select')
+        ->select('thing')
+        ->from('some_table')
+        ->execute();
     }
 }
