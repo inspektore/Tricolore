@@ -4,6 +4,7 @@ use Symfony\Component\VarDumper\VarDumper;
 /**
  * Dump variable
  * 
+ * @codeCoverageIgnore
  * @return mixed
  */
 function dump()

@@ -14,6 +14,7 @@
             <directory>lib/Symfony</directory>
             <directory>lib/Carbon</directory>
             <directory>lib/Twig</directory>
+            <file>app/Tricolore/Application.php</file>
         </blacklist>
     </filter>
     <testsuites>
