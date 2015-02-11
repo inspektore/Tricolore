@@ -122,4 +122,231 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
 
         $this->assertSame($result, []);
     }
+
+    public function testSelectAllResults()
+    {
+        $service_datasource = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator')
+        ->get('datasource');
+
+        $service_datasource->buildQuery('create_table')
+        ->name('test_select_all_results')
+        ->columns([
+            'tmp_col' => 'TEXT',
+            'tmp_col2' => 'INT'
+        ])
+        ->ifNotExists()
+        ->execute();
+
+        $service_datasource->buildQuery('insert')
+        ->into('test_select_all_results')
+        ->values([
+            'tmp_col' => 'Doggy',
+            'tmp_col2' => 6
+        ])
+        ->execute();
+
+        $result = $service_datasource->buildQuery('select')
+        ->select('tmp_col, tmp_col2')
+        ->from('test_select_all_results')
+        ->execute();
+
+        $this->assertSame($result[0], [
+            'tmp_col' => 'Doggy',
+            0 => 'Doggy',
+            'tmp_col2' => 6,
+            1 => 6
+        ]);
+    }
+
+    public function testSelectWhere()
+    {
+        $service_datasource = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator')
+        ->get('datasource');
+
+        $service_datasource->buildQuery('create_table')
+        ->name('test_select_all_results')
+        ->columns([
+            'tmp_col' => 'TEXT',
+            'tmp_col2' => 'INT'
+        ])
+        ->ifNotExists()
+        ->execute();
+
+        $service_datasource->buildQuery('insert')
+        ->into('test_select_all_results')
+        ->values([
+            'tmp_col' => 'Catty',
+            'tmp_col2' => 7
+        ])
+        ->execute();
+
+        $result = $service_datasource->buildQuery('select')
+        ->select('tmp_col, tmp_col2')
+        ->from('test_select_all_results')
+        ->where('tmp_col = ?', [
+            1 => [
+                'value' => 'Catty',
+                'type' => 'str'
+            ]
+        ])
+        ->execute();
+
+        $this->assertSame($result[0], [
+            'tmp_col' => 'Catty',
+            0 => 'Catty',
+            'tmp_col2' => 7,
+            1 => 7
+        ]);
+    }
+
+    public function testSelectLeftJoin()
+    {
+        $service_datasource = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator')
+        ->get('datasource');
+
+        $service_datasource->buildQuery('create_table')
+        ->name('join1table')
+        ->columns([
+            'join1col' => 'TEXT'
+        ])
+        ->ifNotExists()
+        ->execute();
+
+        $service_datasource->buildQuery('create_table')
+        ->name('join2table')
+        ->columns([
+            'join2col' => 'TEXT'
+        ])
+        ->ifNotExists()
+        ->execute();
+
+        $service_datasource->buildQuery('insert')
+        ->into('join1table')
+        ->values([
+            'join1col' => '___data___'
+        ])
+        ->execute();
+
+        $service_datasource->buildQuery('insert')
+        ->into('join2table')
+        ->values([
+            'join2col' => '___data___'
+        ])
+        ->execute();
+
+        $result = $service_datasource->buildQuery('select')
+        ->select('join1table.join1col, join2table.join2col')
+        ->from('join1table')
+        ->leftJoin('join2table', 'join1table.join1col = join2table.join2col')
+        ->execute();
+
+        $this->assertSame($result[0], [
+            'join1col' => '___data___',
+            0 => '___data___',
+            'join2col' => '___data___',
+            1 => '___data___'
+        ]);
+    }
+
+    public function testSelectGroupByOrderBy()
+    {
+        $service_datasource = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator')
+        ->get('datasource');
+
+        $service_datasource->buildQuery('create_table')
+        ->name('groupbytable')
+        ->columns([
+            'groupby_col1' => 'TEXT'
+        ])
+        ->ifNotExists()
+        ->execute();
+
+        foreach ([1, 2, 3] as $name) {
+            $service_datasource->buildQuery('insert')
+            ->into('groupbytable')
+            ->values([
+                'groupby_col1' => $name
+            ])
+            ->execute();
+        }
+
+        $asc = $service_datasource->buildQuery('select')
+        ->select('groupby_col1')
+        ->from('groupbytable')
+        ->groupBy('groupby_col1')
+        ->orderBy('groupby_col1', 'asc')
+        ->execute();
+
+        $desc = $service_datasource->buildQuery('select')
+        ->select('groupby_col1')
+        ->from('groupbytable')
+        ->groupBy('groupby_col1')
+        ->orderBy('groupby_col1', 'desc')
+        ->execute();
+
+        $this->assertSame($desc, [
+            0 => [
+                'groupby_col1' => '3',
+                0 => '3'
+            ],
+
+            1 => [
+                'groupby_col1' => '2',
+                0 => '2'
+            ],
+
+            2 => [
+                'groupby_col1' => '1',
+                0 => '1'
+            ]
+        ]);
+
+        $this->assertSame($asc, [
+            0 => [
+                'groupby_col1' => '1',
+                0 => '1'
+            ],
+
+            1 => [
+                'groupby_col1' => '2',
+                0 => '2'
+            ],
+
+            2 => [
+                'groupby_col1' => '3',
+                0 => '3'
+            ]
+        ]);
+    }
+
+    public function testSelectMaxResults()
+    {
+        $service_datasource = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator')
+        ->get('datasource');
+
+        $service_datasource->buildQuery('create_table')
+        ->name('maxresultstable')
+        ->columns([
+            'maxresultscol' => 'TEXT'
+        ])
+        ->ifNotExists()
+        ->execute();
+
+        foreach ([1, 2, 3, 4, 5] as $name) {
+            $service_datasource->buildQuery('insert')
+            ->into('maxresultstable')
+            ->values([
+                'maxresultscol' => $name
+            ])
+            ->execute();
+        }
+
+        $result = $service_datasource->buildQuery('select')
+        ->select('maxresultscol')
+        ->from('maxresultstable')
+        ->maxResults(3)
+        ->execute();
+
+        $this->assertCount(3, $result);
+    }
 }
