@@ -14,6 +14,9 @@ prod:
 
     gzip.enabled: true
 
+    storage_directory: "storage"
+    assets_directory: "static"
+
 dev:
     base.full_url: "http://localhost/Tricolore/develop"
     base.locale: "en"
@@ -29,6 +32,9 @@ dev:
     trans.locale: "en_EN"
 
     gzip.enabled: false
+
+    storage_directory: "storage"
+    assets_directory: "static"
 
 test:
     base.full_url: "http://localhost/Tricolore/tests"

@@ -54,7 +54,7 @@ class RoutingProvider extends ServiceLocator
         $in_prod = Application::getInstance()->getEnv() === 'prod';
 
         $this->router = new Router($loader, sprintf('RouteCollection/%s.yml', $collection_filename), [
-            'cache_dir' => ($in_prod === true) ? Application::createPath('storage:router') : null
+            'cache_dir' => ($in_prod === true) ? Application::createPath(Config::key('storage_directory') . ':router') : null
         ], $request_context);
 
         if (Application::getInstance()->getEnv() !== 'test') {
