@@ -1,6 +1,8 @@
 <?php
 namespace Tricolore\Tests;
 
+use Tricolore\Config\Config;
+
 class TwigIntegrationTest extends \PHPUnit_Framework_TestCase
 {
     public function testAssetFunction()
@@ -8,7 +10,7 @@ class TwigIntegrationTest extends \PHPUnit_Framework_TestCase
         $service_locator = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator');
         $service_view = $service_locator->get('view');
 
-        $expected = 'http://localhost/Tricolore/tests/static/css/foo';
+        $expected = 'http://localhost/Tricolore/tests/' . Config::key('directory.assets') . '/css/foo';
         $actual = $service_view->display(null, 'TestAsset', [], true);
 
         $this->assertEquals($expected, $actual);

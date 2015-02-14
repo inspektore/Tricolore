@@ -31,7 +31,9 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
             'base.charset' => 'utf-8',
             'router.use_httpd_rewrite' => false,
             'trans.locale' => 'en_EN',
-            'test.int' => 5874
+            'test.int' => 5874,
+            'directory.storage' => 'storage',
+            'directory.assets' => 'static'
         ];
         $actual = Config::all('Configuration')['test'];
 
