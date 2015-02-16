@@ -85,6 +85,7 @@ class RoutingProvider extends ServiceLocator
     /**
      * Call to the controller
      * 
+     * @codeCoverageIgnore
      * @param Router $router
      * @param string $request
      * @throws Tricolore\Exception\RuntimeException
