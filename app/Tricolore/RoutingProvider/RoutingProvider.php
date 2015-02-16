@@ -28,6 +28,7 @@ class RoutingProvider extends ServiceLocator
     /**
      * Register routing
      * 
+     * @codeCoverageIgnore
      * @param bool $silent
      * @return void
      */
@@ -64,7 +65,8 @@ class RoutingProvider extends ServiceLocator
 
     /**
      * Route collection
-     *  
+     * 
+     * @codeCoverageIgnore
      * @return Symfony\Component\Routing\RouteCollection
      */
     public function getRouteCollection()
@@ -75,6 +77,7 @@ class RoutingProvider extends ServiceLocator
     /**
      * Request context
      * 
+     * @codeCoverageIgnore
      * @return Symfony\Component\Routing\RequestContext
      */
     public function getContext()
