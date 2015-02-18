@@ -38,16 +38,18 @@ class Autoloader
      */
     public function loadClass($class)
     {
-        self::$loadedClasses[] = $class;
+        if (startsWith('Tricolore', $class, 9) === true) {
+            $directory = 'app' . DIRECTORY_SEPARATOR;
+        } else {
+            $directory = 'lib' . DIRECTORY_SEPARATOR;
+        }
 
         $base_dir = substr(__DIR__, 0, strripos(__DIR__, DIRECTORY_SEPARATOR) - 3);
-        $class = str_replace(['_', '\\'], DIRECTORY_SEPARATOR, $class) . '.php';
+        $class = str_replace(['_', '\\'], DIRECTORY_SEPARATOR, $class);
 
-        foreach (['app', 'lib'] as $directories) {
-            $directories .= DIRECTORY_SEPARATOR;
+        self::$loadedClasses[$base_dir . $directory . $class] = $class;
 
-            $this->requireFile($base_dir . $directories . $class);
-        }
+        $this->requireFile($base_dir . $directory . $class . '.php');
     }
 
     /**
