@@ -74,6 +74,22 @@
                 <source>%method% method is not allowed for this request!</source>
                 <target>%method% method is not allowed for this request!</target>
             </trans-unit>
+            <trans-unit id="19">
+                <source>Loaded classes</source>
+                <target>Loaded classes</target>
+            </trans-unit>
+            <trans-unit id="20">
+                <source>Close</source>
+                <target>Close</target>
+            </trans-unit>
+            <trans-unit id="21">
+                <source>Search...</source>
+                <target>Search...</target>
+            </trans-unit>
+            <trans-unit id="22">
+                <source>No match found.</source>
+                <target>No match found.</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
