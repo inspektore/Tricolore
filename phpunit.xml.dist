@@ -15,6 +15,7 @@
             <directory>lib/Carbon</directory>
             <directory>lib/Twig</directory>
             <file>app/Tricolore/Application.php</file>
+            <file>app/Tricolore/Autoloader.php</file>
         </blacklist>
     </filter>
     <testsuites>
