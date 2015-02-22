@@ -26,6 +26,174 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($actual);
     }
 
+    /**
+     * @expectedException Tricolore\Exception\InvalidArgumentException
+     */
+    public function testExceptionFactoryNotAllowedType()
+    {
+        $service_datasource = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator')
+        ->get('datasource');
+
+        $service_datasource->buildQuery('not_valid');
+    }
+
+    /**
+     * @expectedException Tricolore\Exception\DatabaseException
+     */
+    public function testExceptionFactoryBindingMissingValue()
+    {
+        $service_datasource = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator')
+        ->get('datasource');
+
+        $service_datasource->buildQuery('create_table')
+        ->name('binding1table')
+        ->columns([
+            'binding1col' => 'TEXT'
+        ])
+        ->ifNotExists()
+        ->execute();
+
+        $service_datasource->buildQuery('insert')
+        ->into('binding1table')
+        ->values([
+            'binding1col' => '___data___'
+        ])
+        ->execute();
+
+        $service_datasource->buildQuery('select')
+        ->select('binding1col')
+        ->from('binding1table')
+        ->where('binding1col = ?', [
+            1 => [
+                'not_valid' => 'not_valid'
+            ]
+        ])
+        ->execute();
+    }
+
+    /**
+     * @expectedException Tricolore\Exception\DatabaseException
+     */
+    public function testExceptionFactoryBindingWrongDataType()
+    {
+        $service_datasource = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator')
+        ->get('datasource');
+
+        $service_datasource->buildQuery('create_table')
+        ->name('binding2table')
+        ->columns([
+            'binding2col' => 'TEXT'
+        ])
+        ->ifNotExists()
+        ->execute();
+
+        $service_datasource->buildQuery('insert')
+        ->into('binding2table')
+        ->values([
+            'binding2col' => '___data___'
+        ])
+        ->execute();
+
+        $service_datasource->buildQuery('select')
+        ->select('binding2col')
+        ->from('binding2table')
+        ->where('binding2col = ?', [
+            1 => [
+                'value' => 'foo',
+                'type' => 'not_valid'
+            ]
+        ])
+        ->execute();
+    }
+
+    public function testFactoryDropTableArray()
+    {
+        $service_datasource = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator')
+        ->get('datasource');
+
+        $service_datasource->buildQuery('create_table')
+        ->name('drop1table')
+        ->columns([
+            'drop1col' => 'TEXT'
+        ])
+        ->ifNotExists()
+        ->execute();
+
+        $service_datasource->buildQuery('create_table')
+        ->name('drop2table')
+        ->columns([
+            'drop2col' => 'TEXT'
+        ])
+        ->ifNotExists()
+        ->execute();
+
+        $this->assertTrue($service_datasource->tableExists('drop1table'));
+        $this->assertTrue($service_datasource->tableExists('drop2table'));
+
+        $service_datasource->dropTable(['drop1table', 'drop2table']);
+
+        $this->assertFalse($service_datasource->tableExists('drop1table'));
+        $this->assertFalse($service_datasource->tableExists('drop2table'));
+    }
+
+    public function testFactoryQueriesNumber()
+    {
+        $service_datasource = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator')
+        ->get('datasource');
+
+        $expected = 15;
+        $actual = $service_datasource->getQueriesNumber();
+
+        $this->assertSame($actual, $expected);
+    }
+
+    public function testFactoryDropField()
+    {
+        $service_datasource = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator')
+        ->get('datasource');
+
+        $service_datasource->buildQuery('create_table')
+        ->name('dropfield1table')
+        ->columns([
+            'dropfield1col' => 'TEXT'
+        ])
+        ->ifNotExists()
+        ->execute();
+
+        $this->assertTrue($service_datasource->fieldExists('dropfield1col', 'dropfield1table'));
+
+        $service_datasource->dropField('dropfield1table', 'dropfield1col');
+
+        $this->assertFalse($service_datasource->fieldExists('dropfield1col', 'dropfield1table'));
+
+        $service_datasource->dropTable('dropfield1table');
+    }
+
+    public function testFactoryDropFieldArray()
+    {
+        $service_datasource = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator')
+        ->get('datasource');
+
+        $service_datasource->buildQuery('create_table')
+        ->name('dropfield2table')
+        ->columns([
+            'dropfield1col' => 'TEXT',
+            'dropfield2col' => 'TEXT'
+        ])
+        ->ifNotExists()
+        ->execute();
+
+        $this->assertTrue($service_datasource->fieldExists('dropfield1col', 'dropfield2table'));
+        $this->assertTrue($service_datasource->fieldExists('dropfield2col', 'dropfield2table'));
+
+        $service_datasource->dropField('dropfield2table', ['dropfield1col', 'dropfield2col']);
+
+        $this->assertFalse($service_datasource->fieldExists('dropfield1col', 'dropfield2table'));
+        $this->assertFalse($service_datasource->fieldExists('dropfield2col', 'dropfield2table'));
+
+        $service_datasource->dropTable('dropfield2table');
+    }
+
     public function testCreateTable()
     {
         $service_datasource = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator')
@@ -45,6 +213,67 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($service_datasource->tableExists('tmp'));
 
         $service_datasource->dropTable('tmp');
+    }
+
+    /**
+     * @expectedException Tricolore\Exception\DatabaseException
+     * @expectedExceptionMessage "Name" in query is required. Add name() method to your query builder.
+     */
+    public function testExceptionCreateTableNameRequired()
+    {
+        $service_datasource = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator')
+        ->get('datasource');
+
+        $service_datasource->buildQuery('create_table')
+        ->columns([
+            'col' => 'value'
+        ])
+        ->execute();
+    }
+
+    /**
+     * @expectedException Tricolore\Exception\DatabaseException
+     * @expectedExceptionMessage "Columns" in query is required. Add columns() method to your query builder.
+     */
+    public function testExceptionCreateTableColumnsRequired()
+    {
+        $service_datasource = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator')
+        ->get('datasource');
+
+        $service_datasource->buildQuery('create_table')
+        ->name('tmp')
+        ->execute();
+    }
+
+    /**
+     * @expectedException Tricolore\Exception\DatabaseException
+     * @expectedExceptionMessage "Columns" array is empty.
+     */
+    public function testExceptionCreateTableColumnsEmptyArray()
+    {
+        $service_datasource = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator')
+        ->get('datasource');
+
+        $service_datasource->buildQuery('create_table')
+        ->name('tmp')
+        ->columns([])
+        ->execute();
+    }
+
+    /**
+     * @expectedException Tricolore\Exception\DatabaseException
+     */
+    public function testExceptionCreateTableQuery()
+    {
+        $service_datasource = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator')
+        ->get('datasource');
+
+        $service_datasource->buildQuery('create_table')
+        ->name('tmp')
+        ->columns([
+            '' => 'value'
+        ])
+        ->execute();
     }
 
     /**
@@ -68,8 +297,6 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
         }
 
         $this->assertTrue($service_datasource->databaseExists('tmp_db'));
-
-        $service_datasource->dropDatabase('tmp_db');
     }
 
     public function testDelete()
@@ -121,6 +348,56 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
         ->execute();
 
         $this->assertSame($result, []);
+    }
+
+    /**
+     * @expectedException Tricolore\Exception\DatabaseException
+     * @expectedExceptionMessage "From" in query is required. Add deleteFrom() method to your query builder.
+     */
+    public function testExceptionDeteleFromRequired()
+    {
+        $service_datasource = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator')
+        ->get('datasource');
+
+        $service_datasource->buildQuery('delete')
+        ->where('foo = ?', [
+            1 => [
+                'value' => 'bar'
+            ]
+        ])
+        ->execute();
+    }
+
+    /**
+     * @expectedException Tricolore\Exception\DatabaseException
+     * @expectedExceptionMessage "Where" in query is required. Add where() method to your query builder.
+     */
+    public function testExceptionDeteleWhereRequired()
+    {
+        $service_datasource = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator')
+        ->get('datasource');
+
+        $service_datasource->buildQuery('delete')
+        ->deleteFrom('foo')
+        ->execute();
+    }
+
+    /**
+     * @expectedException Tricolore\Exception\DatabaseException
+     */
+    public function testExceptionDeleteQuery()
+    {
+        $service_datasource = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator')
+        ->get('datasource');
+
+        $service_datasource->buildQuery('delete')
+        ->deleteFrom('not_valid')
+        ->where('foo = ?', [
+            1 => [
+                'value' => 'bar'
+            ]
+        ])
+        ->execute();
     }
 
     public function testSelectAllResults()
