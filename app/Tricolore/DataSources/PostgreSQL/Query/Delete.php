@@ -86,7 +86,7 @@ class Delete
     public function execute()
     {
         if (isset($this->collection['delete_from']) === false) {
-            throw new DatabaseException('"From" in query is required. Add from() method to your query builder.');
+            throw new DatabaseException('"From" in query is required. Add deleteFrom() method to your query builder.');
         }
 
         if (isset($this->collection['delete_where']) === false) {
