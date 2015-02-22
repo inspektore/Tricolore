@@ -446,6 +446,65 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($expected, $actual[0]['insert1col']);
     }
 
+    /**
+     * @expectedException Tricolore\Exception\DatabaseException
+     * @expectedExceptionMessage "Into" in query is required. Add into() method to your query builder.
+     */
+    public function testExceptionInsertIntoRequired()
+    {
+        $service_datasource = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator')
+        ->get('datasource');
+
+        $service_datasource->buildQuery('insert')
+        ->values([])
+        ->execute();
+    }
+
+    /**
+     * @expectedException Tricolore\Exception\DatabaseException
+     * @expectedExceptionMessage "Values" in query is required. Add values() method to your query builder.
+     */
+    public function testExceptionInsertValuesRequired()
+    {
+        $service_datasource = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator')
+        ->get('datasource');
+
+        $service_datasource->buildQuery('insert')
+        ->into('some_table')
+        ->execute();
+    }
+
+    /**
+     * @expectedException Tricolore\Exception\DatabaseException
+     * @expectedExceptionMessage "Values" array is empty.
+     */
+    public function testExceptionInsertEmptyValues()
+    {
+        $service_datasource = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator')
+        ->get('datasource');
+
+        $service_datasource->buildQuery('insert')
+        ->into('some_table')
+        ->values([])
+        ->execute();
+    }
+
+    /**
+     * @expectedException Tricolore\Exception\DatabaseException
+     */
+    public function testExceptionInsertQuery()
+    {
+        $service_datasource = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator')
+        ->get('datasource');
+
+        $service_datasource->buildQuery('insert')
+        ->into('some_table')
+        ->values([
+            'foo' => 'bar'
+        ])
+        ->execute();
+    }
+
     public function testUpdate()
     {
         $service_datasource = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator')
@@ -499,5 +558,47 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($expected, $actual[0]['update1col']);
 
         $service_datasource->dropTable('update1table');
+    }
+
+    /**
+     * @expectedException Tricolore\Exception\DatabaseException
+     * @expectedExceptionMessage "Table" in query is required. Add table() method to your query builder.
+     */
+    public function testExceptionUpdateTableRequired()
+    {
+        $service_datasource = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator')
+        ->get('datasource');
+
+        $service_datasource->buildQuery('update')
+        ->set('string')
+        ->execute();
+    }
+
+    /**
+     * @expectedException Tricolore\Exception\DatabaseException
+     * @expectedExceptionMessage "Set" in query is required. Add set() method to your query builder.
+     */
+    public function testExceptionUpdateSetRequired()
+    {
+        $service_datasource = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator')
+        ->get('datasource');
+
+        $service_datasource->buildQuery('update')
+        ->table('some_table')
+        ->execute();
+    }
+
+    /**
+     * @expectedException Tricolore\Exception\DatabaseException
+     */
+    public function testExceptionUpdateQuery()
+    {
+        $service_datasource = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator')
+        ->get('datasource');
+
+        $service_datasource->buildQuery('update')
+        ->table('some_table')
+        ->set('foo = bar')
+        ->execute();
     }
 }
