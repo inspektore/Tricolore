@@ -415,4 +415,89 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
         ->from('some_table')
         ->execute();
     }
+
+    public function testInsert()
+    {
+        $service_datasource = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator')
+        ->get('datasource');
+
+        $service_datasource->buildQuery('create_table')
+        ->name('insert1table')
+        ->columns([
+            'insert1col' => 'TEXT'
+        ])
+        ->ifNotExists()
+        ->execute();
+
+        $service_datasource->buildQuery('insert')
+        ->into('insert1table')
+        ->values([
+            'insert1col' => '___data___'
+        ])
+        ->execute();
+
+        $actual = $service_datasource->buildQuery('select')
+        ->select('insert1col')
+        ->from('insert1table')
+        ->execute();
+
+        $expected = '___data___';
+
+        $this->assertSame($expected, $actual[0]['insert1col']);
+    }
+
+    public function testUpdate()
+    {
+        $service_datasource = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator')
+        ->get('datasource');
+
+        $service_datasource->buildQuery('create_table')
+        ->name('update1table')
+        ->columns([
+            'update1col' => 'TEXT'
+        ])
+        ->ifNotExists()
+        ->execute();
+
+        $service_datasource->buildQuery('insert')
+        ->into('update1table')
+        ->values([
+            'update1col' => '___data___'
+        ])
+        ->execute();
+
+        $actual = $service_datasource->buildQuery('select')
+        ->select('update1col')
+        ->from('update1table')
+        ->execute();
+
+        $expected = '___data___';
+
+        $this->assertSame($expected, $actual[0]['update1col']);
+
+        $service_datasource->buildQuery('update')
+        ->table('update1table')
+        ->set('update1col = ?', [
+            1 => [
+                'value' => '___newdata___'
+            ]
+        ])
+        ->where('update1col = ?', [
+            2 => [
+                'value' => '___data___'
+            ]
+        ])
+        ->execute();
+
+        $actual = $service_datasource->buildQuery('select')
+        ->select('update1col')
+        ->from('update1table')
+        ->execute();
+
+        $expected = '___newdata___';
+
+        $this->assertSame($expected, $actual[0]['update1col']);
+
+        $service_datasource->dropTable('update1table');
+    }
 }
