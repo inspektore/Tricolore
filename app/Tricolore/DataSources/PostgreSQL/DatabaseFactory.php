@@ -183,32 +183,13 @@ class DatabaseFactory
     {
         if (is_array($field_name) === true && count($field_name)) {
             foreach ($field_name as $field) {
-                $this->exec(sprintf('alter table %s drop column if exists %s%s', $this->table_prefix, $from_table, $field));
+                $this->exec(sprintf('alter table %s%s drop column if exists %s', $this->table_prefix, $from_table, $field));
             }
 
             return count($field_name);
         }
 
         return $this->exec(sprintf('alter table %s%s drop column if exists %s', $this->table_prefix, $from_table, $field_name));
-    }
-
-    /**
-     * Drop database
-     * 
-     * @param string|array $database_name
-     * @return int
-     */
-    public function dropDatabase($database_name)
-    {
-        if (is_array($database_name) === true && count($database_name)) {
-            foreach ($database_name as $database) {
-                $this->exec(sprintf('drop database %s', $database));
-
-                return count($database_name);
-            }
-
-            $this->exec(sprintf('drop database %s', $database_name));
-        }
     }
 
     /**
