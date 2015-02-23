@@ -1,7 +1,7 @@
 #Tricolore [![Build Status](http://img.shields.io/travis/Macsch15/Tricolore.svg?style=flat)](https://travis-ci.org/Macsch15/Tricolore) [![Coverage Status](https://coveralls.io/repos/Macsch15/Tricolore/badge.svg?branch=master)](https://coveralls.io/r/Macsch15/Tricolore?branch=master)
 
 #####Discussion software
-*Work in progress...*
+*Work in progress...* [Screenshots](https://mega.co.nz/#F!J1oRzArb!F1gfB7x2tIPr2yP94AR7dQ)
 
 ###Environment requirements
 - PHP 5.5 (5.6 recommended)
