@@ -104,7 +104,7 @@ class Application extends ServiceLocator
 
         $prefix = '/index.php?/';
 
-        if($route_name === 'home') {
+        if ($route_name === 'home') {
             $prefix = '/';
         }
 
