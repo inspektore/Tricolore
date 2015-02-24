@@ -878,4 +878,31 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
         ->set('foo = bar')
         ->execute();
     }
+
+    public function testGetAllTables()
+    {
+        $service_datasource = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator')
+        ->get('datasource');
+
+        $expected = [
+            0 => 'join2table',
+            1 => 'binding1table',
+            2 => 'binding2table',
+            3 => 'groupbytable',
+            4 => 'test_delete',
+            5 => 'test_select_all_results',
+            6 => 'join1table',
+            7 => 'maxresultstable',
+            8 => 'insert1table'
+        ];
+
+        $actual = $service_datasource->getAllTables();
+
+        $this->assertEquals($expected, $actual);
+
+        $expected_count = 9;
+        $actual_count = count($service_datasource->getAllTables());
+
+        $this->assertEquals($expected_count, $actual_count);
+    }
 }
