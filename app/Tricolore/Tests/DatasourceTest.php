@@ -6,22 +6,23 @@ use Tricolore\Config\Config;
 
 class DatasourceTest extends \PHPUnit_Framework_TestCase
 {
+    private function getDataSource()
+    {
+        return $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator')
+        ->get('datasource');
+    }
+
     public function testConnection()
     {
-        $service_datasource = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator')
-        ->get('datasource');
+        $this->getDataSource();
     }
 
     public function testDatabaseExists()
     {
-        $service_datasource = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator')
-        ->get('datasource');
-
-        $database_config = Config::all('Database');
         $config_key = (Application::getInstance()->inTravis() === true) ? 'travis' : 'default';
-        $database_name = $database_config[Application::getInstance()->getEnv()][$config_key]['database_name'];
+        $database_name = Config::all('Database')[Application::getInstance()->getEnv()][$config_key]['database_name'];
 
-        $actual = $service_datasource->databaseExists($database_name);
+        $actual = $this->getDataSource()->databaseExists($database_name);
 
         $this->assertTrue($actual);
     }
@@ -31,10 +32,7 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
      */
     public function testExceptionFactoryNotAllowedType()
     {
-        $service_datasource = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator')
-        ->get('datasource');
-
-        $service_datasource->buildQuery('not_valid');
+        $this->getDataSource()->buildQuery('not_valid');
     }
 
     /**
@@ -42,10 +40,7 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
      */
     public function testExceptionFactoryBindingMissingValue()
     {
-        $service_datasource = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator')
-        ->get('datasource');
-
-        $service_datasource->buildQuery('create_table')
+        $this->getDataSource()->buildQuery('create_table')
         ->name('binding1table')
         ->columns([
             'binding1col' => 'TEXT'
@@ -53,14 +48,14 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
         ->ifNotExists()
         ->execute();
 
-        $service_datasource->buildQuery('insert')
+        $this->getDataSource()->buildQuery('insert')
         ->into('binding1table')
         ->values([
             'binding1col' => '___data___'
         ])
         ->execute();
 
-        $service_datasource->buildQuery('select')
+        $this->getDataSource()->buildQuery('select')
         ->select('binding1col')
         ->from('binding1table')
         ->where('binding1col = ?', [
@@ -76,10 +71,7 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
      */
     public function testExceptionFactoryBindingWrongDataType()
     {
-        $service_datasource = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator')
-        ->get('datasource');
-
-        $service_datasource->buildQuery('create_table')
+        $this->getDataSource()->buildQuery('create_table')
         ->name('binding2table')
         ->columns([
             'binding2col' => 'TEXT'
@@ -87,14 +79,14 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
         ->ifNotExists()
         ->execute();
 
-        $service_datasource->buildQuery('insert')
+        $this->getDataSource()->buildQuery('insert')
         ->into('binding2table')
         ->values([
             'binding2col' => '___data___'
         ])
         ->execute();
 
-        $service_datasource->buildQuery('select')
+        $this->getDataSource()->buildQuery('select')
         ->select('binding2col')
         ->from('binding2table')
         ->where('binding2col = ?', [
@@ -108,10 +100,7 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
 
     public function testFactoryDropTableArray()
     {
-        $service_datasource = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator')
-        ->get('datasource');
-
-        $service_datasource->buildQuery('create_table')
+        $this->getDataSource()->buildQuery('create_table')
         ->name('drop1table')
         ->columns([
             'drop1col' => 'TEXT'
@@ -119,7 +108,7 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
         ->ifNotExists()
         ->execute();
 
-        $service_datasource->buildQuery('create_table')
+        $this->getDataSource()->buildQuery('create_table')
         ->name('drop2table')
         ->columns([
             'drop2col' => 'TEXT'
@@ -127,32 +116,26 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
         ->ifNotExists()
         ->execute();
 
-        $this->assertTrue($service_datasource->tableExists('drop1table'));
-        $this->assertTrue($service_datasource->tableExists('drop2table'));
+        $this->assertTrue($this->getDataSource()->tableExists('drop1table'));
+        $this->assertTrue($this->getDataSource()->tableExists('drop2table'));
 
-        $service_datasource->dropTable(['drop1table', 'drop2table']);
+        $this->getDataSource()->dropTable(['drop1table', 'drop2table']);
 
-        $this->assertFalse($service_datasource->tableExists('drop1table'));
-        $this->assertFalse($service_datasource->tableExists('drop2table'));
+        $this->assertFalse($this->getDataSource()->tableExists('drop1table'));
+        $this->assertFalse($this->getDataSource()->tableExists('drop2table'));
     }
 
     public function testFactoryQueriesNumber()
     {
-        $service_datasource = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator')
-        ->get('datasource');
-
         $expected = 15;
-        $actual = $service_datasource->getQueriesNumber();
+        $actual = $this->getDataSource()->getQueriesNumber();
 
         $this->assertSame($actual, $expected);
     }
 
     public function testFactoryDropField()
     {
-        $service_datasource = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator')
-        ->get('datasource');
-
-        $service_datasource->buildQuery('create_table')
+        $this->getDataSource()->buildQuery('create_table')
         ->name('dropfield1table')
         ->columns([
             'dropfield1col' => 'TEXT'
@@ -160,21 +143,18 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
         ->ifNotExists()
         ->execute();
 
-        $this->assertTrue($service_datasource->fieldExists('dropfield1col', 'dropfield1table'));
+        $this->assertTrue($this->getDataSource()->fieldExists('dropfield1col', 'dropfield1table'));
 
-        $service_datasource->dropField('dropfield1table', 'dropfield1col');
+        $this->getDataSource()->dropField('dropfield1table', 'dropfield1col');
 
-        $this->assertFalse($service_datasource->fieldExists('dropfield1col', 'dropfield1table'));
+        $this->assertFalse($this->getDataSource()->fieldExists('dropfield1col', 'dropfield1table'));
 
-        $service_datasource->dropTable('dropfield1table');
+        $this->getDataSource()->dropTable('dropfield1table');
     }
 
     public function testFactoryDropFieldArray()
     {
-        $service_datasource = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator')
-        ->get('datasource');
-
-        $service_datasource->buildQuery('create_table')
+        $this->getDataSource()->buildQuery('create_table')
         ->name('dropfield2table')
         ->columns([
             'dropfield1col' => 'TEXT',
@@ -183,25 +163,22 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
         ->ifNotExists()
         ->execute();
 
-        $this->assertTrue($service_datasource->fieldExists('dropfield1col', 'dropfield2table'));
-        $this->assertTrue($service_datasource->fieldExists('dropfield2col', 'dropfield2table'));
+        $this->assertTrue($this->getDataSource()->fieldExists('dropfield1col', 'dropfield2table'));
+        $this->assertTrue($this->getDataSource()->fieldExists('dropfield2col', 'dropfield2table'));
 
-        $service_datasource->dropField('dropfield2table', ['dropfield1col', 'dropfield2col']);
+        $this->getDataSource()->dropField('dropfield2table', ['dropfield1col', 'dropfield2col']);
 
-        $this->assertFalse($service_datasource->fieldExists('dropfield1col', 'dropfield2table'));
-        $this->assertFalse($service_datasource->fieldExists('dropfield2col', 'dropfield2table'));
+        $this->assertFalse($this->getDataSource()->fieldExists('dropfield1col', 'dropfield2table'));
+        $this->assertFalse($this->getDataSource()->fieldExists('dropfield2col', 'dropfield2table'));
 
-        $service_datasource->dropTable('dropfield2table');
+        $this->getDataSource()->dropTable('dropfield2table');
     }
 
     public function testCreateTable()
     {
-        $service_datasource = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator')
-        ->get('datasource');
+        $this->assertFalse($this->getDataSource()->tableExists('tmp'));
 
-        $this->assertFalse($service_datasource->tableExists('tmp'));
-
-        $service_datasource->buildQuery('create_table')
+        $this->getDataSource()->buildQuery('create_table')
         ->name('tmp')
         ->columns([
             'tmp_col' => 'TEXT',
@@ -210,9 +187,9 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
         ->ifNotExists()
         ->execute();
 
-        $this->assertTrue($service_datasource->tableExists('tmp'));
+        $this->assertTrue($this->getDataSource()->tableExists('tmp'));
 
-        $service_datasource->dropTable('tmp');
+        $this->getDataSource()->dropTable('tmp');
     }
 
     /**
@@ -221,10 +198,7 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
      */
     public function testExceptionCreateTableNameRequired()
     {
-        $service_datasource = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator')
-        ->get('datasource');
-
-        $service_datasource->buildQuery('create_table')
+        $this->getDataSource()->buildQuery('create_table')
         ->columns([
             'col' => 'value'
         ])
@@ -237,10 +211,7 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
      */
     public function testExceptionCreateTableColumnsRequired()
     {
-        $service_datasource = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator')
-        ->get('datasource');
-
-        $service_datasource->buildQuery('create_table')
+        $this->getDataSource()->buildQuery('create_table')
         ->name('tmp')
         ->execute();
     }
@@ -251,10 +222,7 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
      */
     public function testExceptionCreateTableColumnsEmptyArray()
     {
-        $service_datasource = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator')
-        ->get('datasource');
-
-        $service_datasource->buildQuery('create_table')
+        $this->getDataSource()->buildQuery('create_table')
         ->name('tmp')
         ->columns([])
         ->execute();
@@ -265,10 +233,7 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
      */
     public function testExceptionCreateTableQuery()
     {
-        $service_datasource = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator')
-        ->get('datasource');
-
-        $service_datasource->buildQuery('create_table')
+        $this->getDataSource()->buildQuery('create_table')
         ->name('tmp')
         ->columns([
             '' => 'value'
@@ -281,30 +246,21 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
      */
     public function testExceptionCreateDatabase()
     {
-        $service_datasource = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator')
-        ->get('datasource');
-
-        $service_datasource->createDatabase('&foo');
+        $this->getDataSource()->createDatabase('&foo');
     }
 
     public function testCreateDatabase()
     {
-        $service_datasource = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator')
-        ->get('datasource');
-
-        if ($service_datasource->databaseExists('tmp_db') === false) {
-            $service_datasource->createDatabase('tmp_db');
+        if ($this->getDataSource()->databaseExists('tmp_db') === false) {
+            $this->getDataSource()->createDatabase('tmp_db');
         }
 
-        $this->assertTrue($service_datasource->databaseExists('tmp_db'));
+        $this->assertTrue($this->getDataSource()->databaseExists('tmp_db'));
     }
 
     public function testDelete()
     {
-        $service_datasource = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator')
-        ->get('datasource');
-
-        $service_datasource->buildQuery('create_table')
+        $this->getDataSource()->buildQuery('create_table')
         ->name('test_delete')
         ->columns([
             'tmp_col' => 'TEXT',
@@ -313,7 +269,7 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
         ->ifNotExists()
         ->execute();
 
-        $service_datasource->buildQuery('insert')
+        $this->getDataSource()->buildQuery('insert')
         ->into('test_delete')
         ->values([
             'tmp_col' => 'Doggy',
@@ -321,7 +277,7 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
         ])
         ->execute();
 
-        $result = $service_datasource->buildQuery('select')
+        $result = $this->getDataSource()->buildQuery('select')
         ->select('tmp_col, tmp_col2')
         ->from('test_delete')
         ->execute();
@@ -333,7 +289,7 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
             1 => 6
         ]);
 
-        $service_datasource->buildQuery('delete')
+        $this->getDataSource()->buildQuery('delete')
         ->deleteFrom('test_delete')
         ->where('tmp_col = ?', [
             1 => [
@@ -342,7 +298,7 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
         ])
         ->execute();
 
-        $result = $service_datasource->buildQuery('select')
+        $result = $this->getDataSource()->buildQuery('select')
         ->select('tmp_col, tmp_col2')
         ->from('test_delete')
         ->execute();
@@ -356,10 +312,7 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
      */
     public function testExceptionDeteleFromRequired()
     {
-        $service_datasource = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator')
-        ->get('datasource');
-
-        $service_datasource->buildQuery('delete')
+        $this->getDataSource()->buildQuery('delete')
         ->where('foo = ?', [
             1 => [
                 'value' => 'bar'
@@ -374,10 +327,7 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
      */
     public function testExceptionDeteleWhereRequired()
     {
-        $service_datasource = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator')
-        ->get('datasource');
-
-        $service_datasource->buildQuery('delete')
+        $this->getDataSource()->buildQuery('delete')
         ->deleteFrom('foo')
         ->execute();
     }
@@ -387,10 +337,7 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
      */
     public function testExceptionDeleteQuery()
     {
-        $service_datasource = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator')
-        ->get('datasource');
-
-        $service_datasource->buildQuery('delete')
+        $this->getDataSource()->buildQuery('delete')
         ->deleteFrom('not_valid')
         ->where('foo = ?', [
             1 => [
@@ -402,10 +349,7 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
 
     public function testSelectAllResults()
     {
-        $service_datasource = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator')
-        ->get('datasource');
-
-        $service_datasource->buildQuery('create_table')
+        $this->getDataSource()->buildQuery('create_table')
         ->name('test_select_all_results')
         ->columns([
             'tmp_col' => 'TEXT',
@@ -414,7 +358,7 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
         ->ifNotExists()
         ->execute();
 
-        $service_datasource->buildQuery('insert')
+        $this->getDataSource()->buildQuery('insert')
         ->into('test_select_all_results')
         ->values([
             'tmp_col' => 'Doggy',
@@ -422,7 +366,7 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
         ])
         ->execute();
 
-        $result = $service_datasource->buildQuery('select')
+        $result = $this->getDataSource()->buildQuery('select')
         ->select('tmp_col, tmp_col2')
         ->from('test_select_all_results')
         ->execute();
@@ -437,10 +381,7 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
 
     public function testSelectWhere()
     {
-        $service_datasource = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator')
-        ->get('datasource');
-
-        $service_datasource->buildQuery('create_table')
+        $this->getDataSource()->buildQuery('create_table')
         ->name('test_select_all_results')
         ->columns([
             'tmp_col' => 'TEXT',
@@ -449,7 +390,7 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
         ->ifNotExists()
         ->execute();
 
-        $service_datasource->buildQuery('insert')
+        $this->getDataSource()->buildQuery('insert')
         ->into('test_select_all_results')
         ->values([
             'tmp_col' => 'Catty',
@@ -457,7 +398,7 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
         ])
         ->execute();
 
-        $result = $service_datasource->buildQuery('select')
+        $result = $this->getDataSource()->buildQuery('select')
         ->select('tmp_col, tmp_col2')
         ->from('test_select_all_results')
         ->where('tmp_col = ?', [
@@ -478,10 +419,7 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
 
     public function testSelectLeftJoin()
     {
-        $service_datasource = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator')
-        ->get('datasource');
-
-        $service_datasource->buildQuery('create_table')
+        $this->getDataSource()->buildQuery('create_table')
         ->name('join1table')
         ->columns([
             'join1col' => 'TEXT'
@@ -489,7 +427,7 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
         ->ifNotExists()
         ->execute();
 
-        $service_datasource->buildQuery('create_table')
+        $this->getDataSource()->buildQuery('create_table')
         ->name('join2table')
         ->columns([
             'join2col' => 'TEXT'
@@ -497,21 +435,21 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
         ->ifNotExists()
         ->execute();
 
-        $service_datasource->buildQuery('insert')
+        $this->getDataSource()->buildQuery('insert')
         ->into('join1table')
         ->values([
             'join1col' => '___data___'
         ])
         ->execute();
 
-        $service_datasource->buildQuery('insert')
+        $this->getDataSource()->buildQuery('insert')
         ->into('join2table')
         ->values([
             'join2col' => '___data___'
         ])
         ->execute();
 
-        $result = $service_datasource->buildQuery('select')
+        $result = $this->getDataSource()->buildQuery('select')
         ->select('join1table.join1col, join2table.join2col')
         ->from('join1table')
         ->leftJoin('join2table', 'join1table.join1col = join2table.join2col')
@@ -527,10 +465,7 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
 
     public function testSelectGroupByOrderBy()
     {
-        $service_datasource = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator')
-        ->get('datasource');
-
-        $service_datasource->buildQuery('create_table')
+        $this->getDataSource()->buildQuery('create_table')
         ->name('groupbytable')
         ->columns([
             'groupby_col1' => 'TEXT'
@@ -539,7 +474,7 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
         ->execute();
 
         foreach ([1, 2, 3] as $name) {
-            $service_datasource->buildQuery('insert')
+            $this->getDataSource()->buildQuery('insert')
             ->into('groupbytable')
             ->values([
                 'groupby_col1' => $name
@@ -547,21 +482,21 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
             ->execute();
         }
 
-        $asc = $service_datasource->buildQuery('select')
+        $asc = $this->getDataSource()->buildQuery('select')
         ->select('groupby_col1')
         ->from('groupbytable')
         ->groupBy('groupby_col1')
         ->orderBy('groupby_col1', 'asc')
         ->execute();
 
-        $asc_non_valid_sorting = $service_datasource->buildQuery('select')
+        $asc_non_valid_sorting = $this->getDataSource()->buildQuery('select')
         ->select('groupby_col1')
         ->from('groupbytable')
         ->groupBy('groupby_col1')
         ->orderBy('groupby_col1', 'not-valid')
         ->execute();
 
-        $desc = $service_datasource->buildQuery('select')
+        $desc = $this->getDataSource()->buildQuery('select')
         ->select('groupby_col1')
         ->from('groupbytable')
         ->groupBy('groupby_col1')
@@ -622,10 +557,7 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
 
     public function testSelectMaxResults()
     {
-        $service_datasource = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator')
-        ->get('datasource');
-
-        $service_datasource->buildQuery('create_table')
+        $this->getDataSource()->buildQuery('create_table')
         ->name('maxresultstable')
         ->columns([
             'maxresultscol' => 'TEXT'
@@ -634,7 +566,7 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
         ->execute();
 
         foreach ([1, 2, 3, 4, 5] as $name) {
-            $service_datasource->buildQuery('insert')
+            $this->getDataSource()->buildQuery('insert')
             ->into('maxresultstable')
             ->values([
                 'maxresultscol' => $name
@@ -642,7 +574,7 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
             ->execute();
         }
 
-        $result = $service_datasource->buildQuery('select')
+        $result = $this->getDataSource()->buildQuery('select')
         ->select('maxresultscol')
         ->from('maxresultstable')
         ->maxResults(3)
@@ -657,10 +589,7 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
      */
     public function testExceptionSelectRequiredSelect()
     {
-        $service_datasource = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator')
-        ->get('datasource');
-
-        $service_datasource->buildQuery('select')
+        $this->getDataSource()->buildQuery('select')
         ->from('test')
         ->execute();
     }
@@ -671,10 +600,7 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
      */
     public function testExceptionSelectRequiredFrom()
     {
-        $service_datasource = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator')
-        ->get('datasource');
-
-        $service_datasource->buildQuery('select')
+        $this->getDataSource()->buildQuery('select')
         ->select('test')
         ->execute();
     }
@@ -684,10 +610,7 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
      */
     public function testExceptionSelectNotExistingTable()
     {
-        $service_datasource = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator')
-        ->get('datasource');
-
-        $service_datasource->buildQuery('select')
+        $this->getDataSource()->buildQuery('select')
         ->select('thing')
         ->from('some_table')
         ->execute();
@@ -695,10 +618,7 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
 
     public function testInsert()
     {
-        $service_datasource = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator')
-        ->get('datasource');
-
-        $service_datasource->buildQuery('create_table')
+        $this->getDataSource()->buildQuery('create_table')
         ->name('insert1table')
         ->columns([
             'insert1col' => 'TEXT'
@@ -706,14 +626,14 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
         ->ifNotExists()
         ->execute();
 
-        $service_datasource->buildQuery('insert')
+        $this->getDataSource()->buildQuery('insert')
         ->into('insert1table')
         ->values([
             'insert1col' => '___data___'
         ])
         ->execute();
 
-        $actual = $service_datasource->buildQuery('select')
+        $actual = $this->getDataSource()->buildQuery('select')
         ->select('insert1col')
         ->from('insert1table')
         ->execute();
@@ -729,10 +649,7 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
      */
     public function testExceptionInsertIntoRequired()
     {
-        $service_datasource = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator')
-        ->get('datasource');
-
-        $service_datasource->buildQuery('insert')
+        $this->getDataSource()->buildQuery('insert')
         ->values([])
         ->execute();
     }
@@ -743,10 +660,7 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
      */
     public function testExceptionInsertValuesRequired()
     {
-        $service_datasource = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator')
-        ->get('datasource');
-
-        $service_datasource->buildQuery('insert')
+        $this->getDataSource()->buildQuery('insert')
         ->into('some_table')
         ->execute();
     }
@@ -757,10 +671,7 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
      */
     public function testExceptionInsertEmptyValues()
     {
-        $service_datasource = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator')
-        ->get('datasource');
-
-        $service_datasource->buildQuery('insert')
+        $this->getDataSource()->buildQuery('insert')
         ->into('some_table')
         ->values([])
         ->execute();
@@ -771,10 +682,7 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
      */
     public function testExceptionInsertQuery()
     {
-        $service_datasource = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator')
-        ->get('datasource');
-
-        $service_datasource->buildQuery('insert')
+        $this->getDataSource()->buildQuery('insert')
         ->into('some_table')
         ->values([
             'foo' => 'bar'
@@ -784,10 +692,7 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
 
     public function testUpdate()
     {
-        $service_datasource = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator')
-        ->get('datasource');
-
-        $service_datasource->buildQuery('create_table')
+        $this->getDataSource()->buildQuery('create_table')
         ->name('update1table')
         ->columns([
             'update1col' => 'TEXT'
@@ -795,14 +700,14 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
         ->ifNotExists()
         ->execute();
 
-        $service_datasource->buildQuery('insert')
+        $this->getDataSource()->buildQuery('insert')
         ->into('update1table')
         ->values([
             'update1col' => '___data___'
         ])
         ->execute();
 
-        $actual = $service_datasource->buildQuery('select')
+        $actual = $this->getDataSource()->buildQuery('select')
         ->select('update1col')
         ->from('update1table')
         ->execute();
@@ -811,7 +716,7 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
 
         $this->assertSame($expected, $actual[0]['update1col']);
 
-        $service_datasource->buildQuery('update')
+        $this->getDataSource()->buildQuery('update')
         ->table('update1table')
         ->set('update1col = ?', [
             1 => [
@@ -825,7 +730,7 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
         ])
         ->execute();
 
-        $actual = $service_datasource->buildQuery('select')
+        $actual = $this->getDataSource()->buildQuery('select')
         ->select('update1col')
         ->from('update1table')
         ->execute();
@@ -834,7 +739,7 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
 
         $this->assertSame($expected, $actual[0]['update1col']);
 
-        $service_datasource->dropTable('update1table');
+        $this->getDataSource()->dropTable('update1table');
     }
 
     /**
@@ -843,10 +748,7 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
      */
     public function testExceptionUpdateTableRequired()
     {
-        $service_datasource = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator')
-        ->get('datasource');
-
-        $service_datasource->buildQuery('update')
+        $this->getDataSource()->buildQuery('update')
         ->set('string')
         ->execute();
     }
@@ -857,10 +759,7 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
      */
     public function testExceptionUpdateSetRequired()
     {
-        $service_datasource = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator')
-        ->get('datasource');
-
-        $service_datasource->buildQuery('update')
+        $this->getDataSource()->buildQuery('update')
         ->table('some_table')
         ->execute();
     }
@@ -870,10 +769,7 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
      */
     public function testExceptionUpdateQuery()
     {
-        $service_datasource = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator')
-        ->get('datasource');
-
-        $service_datasource->buildQuery('update')
+        $this->getDataSource()->buildQuery('update')
         ->table('some_table')
         ->set('foo = bar')
         ->execute();
@@ -881,11 +777,8 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
 
     public function testGetAllTables()
     {
-        $service_datasource = $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator')
-        ->get('datasource');
-
         $expected = 9;
-        $actual = count($service_datasource->getAllTables());
+        $actual = count($this->getDataSource()->getAllTables());
 
         $this->assertEquals($expected, $actual);
     }
