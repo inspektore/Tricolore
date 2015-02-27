@@ -67,6 +67,38 @@ class HelpersTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($actual);
     }
 
+    public function testStartsWithIgnoreWhitespacesTrue()
+    {
+        $string = ' Example string';
+        $actual = startsWith('Exa', $string, 3, true);
+
+        $this->assertTrue($actual);
+    }
+
+    public function testStartsWithIgnoreWhitespacesFalse()
+    {
+        $string = ' Example string';
+        $actual = startsWith('Exa', $string, 3, false);
+
+        $this->assertFalse($actual);
+    }
+
+    public function testEndsWithIgnoreWhitespacesTrue()
+    {
+        $string = 'Example string ';
+        $actual = endsWith('ing', $string, 3, true);
+
+        $this->assertTrue($actual);
+    }
+
+    public function testEndsWithIgnoreWhitespacesFalse()
+    {
+        $string = 'Example string ';
+        $actual = endsWith('ing', $string, 3, false);
+
+        $this->assertFalse($actual);
+    }
+
     public function testUnderscoreToCamelCase()
     {
         $string = 'example_string';

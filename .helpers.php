@@ -9,7 +9,7 @@ use Symfony\Component\VarDumper\VarDumper;
  */
 function dump()
 {
-    foreach(func_get_args() as $variable) {
+    foreach (func_get_args() as $variable) {
         VarDumper::dump($variable);
     }
 }
@@ -20,11 +20,16 @@ function dump()
  * @param string $condition
  * @param string $from
  * @param int $length
+ * @param bool $ignore_whitespaces
  * @return bool
  */
-function startsWith($condition, $from, $length = 1)
+function startsWith($condition, $from, $length = 1, $ignore_whitespaces = false)
 {
-    if(substr($from, 0, $length) === $condition) {
+    if ($ignore_whitespaces === true) {
+        $from = ltrim($from);
+    }
+
+    if (substr($from, 0, $length) === $condition) {
         return true;
     }
 
@@ -37,11 +42,16 @@ function startsWith($condition, $from, $length = 1)
  * @param string $condition
  * @param string $from
  * @param int $length
+ * @param bool $ignore_whitespaces
  * @return bool
  */
-function endsWith($condition, $from, $length = 1)
+function endsWith($condition, $from, $length = 1, $ignore_whitespaces = false)
 {
-    if(substr($from, -$length) === $condition) {
+    if ($ignore_whitespaces === true) {
+        $from = rtrim($from);
+    }
+
+    if (substr($from, -$length) === $condition) {
         return true;
     }
 
