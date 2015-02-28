@@ -36,7 +36,7 @@ class Application extends ServiceLocator
         self::getInstance()->setupErrorReporting();
 
         try {
-            if(endsWith('/', Config::key('base.full_url')) === true) {
+            if (endsWith('/', Config::key('base.full_url')) === true) {
                 throw new RuntimeException('Setting "base.full_url" cannot end with a slash.');
             }
 
