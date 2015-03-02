@@ -87,7 +87,7 @@ class DatabaseFactory
         self::$queries++;
 
         if (strpos($type, '_') !== false) {
-            $type = underscoreToCamelCase($type);
+            $type = underscoreToStudlyCaps($type);
         } else {
             $type = ucfirst($type);
         }

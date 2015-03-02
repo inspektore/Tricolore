@@ -9,6 +9,14 @@ use Symfony\Component\VarDumper\VarDumper;
  */
 function dump()
 {
+    if (function_exists('xdebug_var_dump') === true) {
+        foreach (func_get_args() as $variable) {
+            xdebug_var_dump($variable);
+        }
+
+        return;
+    }
+
     foreach (func_get_args() as $variable) {
         VarDumper::dump($variable);
     }
@@ -59,12 +67,12 @@ function endsWith($condition, $from, $length = 1, $ignore_whitespaces = false)
 }
 
 /**
- * Underscore to CamelCase
+ * Underscore to StudlyCaps
  * 
  * @param string $text 
  * @return string
  */
-function underscoreToCamelCase($text)
+function underscoreToStudlyCaps($text)
 {
     return str_replace(' ', '', ucwords(str_replace('_', ' ', $text)));
 }
