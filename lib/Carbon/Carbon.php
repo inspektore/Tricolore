@@ -363,13 +363,11 @@ class Carbon extends DateTime
      *
      * @param string              $format
      * @param string              $time
-     * @param DateTimeZone|string $tz
+     * @param DateTimeZone        $tz
      *
      * @return static
-     *
-     * @throws InvalidArgumentException
      */
-    public static function createFromFormat($format, $time, $tz = null)
+    public static function createFromFormat($format, $time, DateTimeZone $tz = null)
     {
         if ($tz !== null) {
             $dt = parent::createFromFormat($format, $time, static::safeCreateDateTimeZone($tz));
@@ -377,12 +375,7 @@ class Carbon extends DateTime
             $dt = parent::createFromFormat($format, $time);
         }
 
-        if ($dt instanceof DateTime) {
-            return static::instance($dt);
-        }
-
-        $errors = static::getLastErrors();
-        throw new InvalidArgumentException(implode(PHP_EOL, $errors['errors']));
+        return static::instance($dt);
     }
 
     /**
