@@ -367,15 +367,15 @@ class Carbon extends DateTime
      *
      * @return static
      */
-    public static function createFromFormat($format, $time, DateTimeZone $object = null)
+    public static function createFromFormat($format, $time, DateTimeZone $tz = null)
     {
-        if ($object !== null) {
-            $dt = parent::createFromFormat($format, $time, static::safeCreateDateTimeZone($object));
+        if ($tz !== null) {
+            $dt = parent::createFromFormat($format, $time, static::safeCreateDateTimeZone($tz));
         } else {
-            $object = parent::createFromFormat($format, $time);
+            $dt = parent::createFromFormat($format, $time);
         }
 
-        return static::instance($object);
+        return static::instance($dt);
     }
 
     /**
