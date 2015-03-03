@@ -65,12 +65,12 @@ class Select
     /**
      * From
      * 
-     * @param string $from 
+     * @param mixed $from 
      * @return Tricolore\DataSources\PostgreSQL\Query\Select
      */
     public function from($from)
     {
-        $this->collection['from'] = $this->table_prefix . $from;
+        $this->collection['from'] = $from;
 
         return $this;
     }
@@ -178,7 +178,7 @@ class Select
         }
 
         $query = sprintf('select %s ', $this->collection['select']);
-        $query .= sprintf('from %s ', $this->collection['from']);
+        $query .= sprintf('from %s%s ', $this->table_prefix, $this->collection['from']);
 
         if (isset($this->collection['left_join']) === true 
             && isset($this->collection['left_join_on']) === true
@@ -195,10 +195,6 @@ class Select
         }
 
         if (isset($this->collection['order_by']) === true) {
-            if (is_array($this->collection['order_by']) === true) {
-                $this->collection['order_by'] = implode(',', $this->collection['order_by']);
-            }
-
             $query .= sprintf('order by %s %s ', $this->collection['order_by'], $this->collection['order_by_sorting']);
         }
 
