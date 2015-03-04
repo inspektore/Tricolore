@@ -41,6 +41,11 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
                     'default' => [
                         'username' => 'not-valid',
                         'password' => 'not-valid'
+                    ],
+
+                    'travis' => [
+                        'username' => 'not-valid',
+                        'password' => 'not-valid'
                     ]
                 ]
             ]
