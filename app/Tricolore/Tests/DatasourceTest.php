@@ -6,15 +6,45 @@ use Tricolore\Config\Config;
 
 class DatasourceTest extends \PHPUnit_Framework_TestCase
 {
-    private function getDataSource()
+    private function getDataSource(array $arguments = [])
     {
         return $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator')
-        ->get('datasource');
+        ->get('datasource', $arguments);
     }
 
     public function testConnection()
     {
         $this->getDataSource();
+    }
+
+    /**
+     * @expectedException Tricolore\Exception\DatabaseException
+     */
+    public function testAdapterNotFound()
+    {
+        $this->getDataSource([
+            'config' => [
+                'adapter' => 'not-valid'
+            ]
+        ]);
+    }
+
+    /**
+     * @expectedException Tricolore\Exception\DatabaseException
+     */
+    public function testConnectionFailed()
+    {
+        $this->getDataSource([
+            'config' => [
+                'adapter' => 'PostgreSQL',
+                'test' => [
+                    'default' => [
+                        'username' => 'not-valid',
+                        'password' => 'not-valid'
+                    ]
+                ]
+            ]
+        ]);
     }
 
     public function testDatabaseExists()
@@ -565,11 +595,11 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
         ->ifNotExists()
         ->execute();
 
-        foreach ([1, 2, 3, 4, 5] as $name) {
+        foreach ([1, 2, 3, 4, 5] as $collection) {
             $this->getDataSource()->buildQuery('insert')
             ->into('maxresultstable')
             ->values([
-                'maxresultscol' => $name
+                'maxresultscol' => $collection
             ])
             ->execute();
         }
@@ -581,6 +611,67 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
         ->execute();
 
         $this->assertCount(3, $result);
+    }
+
+    public function testSelectArray()
+    {
+        $this->getDataSource()->buildQuery('create_table')
+        ->name('selectarray')
+        ->columns([
+            'selectarraycol' => 'TEXT',
+            'selectarraycol2' => 'TEXT'
+        ])
+        ->ifNotExists()
+        ->execute();
+
+        $this->getDataSource()->buildQuery('insert')
+        ->into('selectarray')
+        ->values([
+            'selectarraycol' => 'value1',
+            'selectarraycol2' => 'value2',
+        ])
+        ->execute();
+
+        $this->getDataSource()->buildQuery('create_table')
+        ->name('selectarray2')
+        ->columns([
+            'selectarray2col' => 'TEXT',
+            'selectarray2col2' => 'TEXT'
+        ])
+        ->ifNotExists()
+        ->execute();
+
+        $this->getDataSource()->buildQuery('insert')
+        ->into('selectarray2')
+        ->values([
+            'selectarray2col' => 'value3',
+            'selectarray2col2' => 'value4',
+        ])
+        ->execute();
+
+        $result = $this->getDataSource()->buildQuery('select')
+        ->select([
+            'selectarraycol',
+            'selectarraycol2',
+            'selectarray2col',
+            'selectarray2col2'
+        ])
+        ->from([
+            'selectarray',
+            'selectarray2'
+        ])
+        ->execute();
+
+        $this->assertSame($result[0], [
+            'selectarraycol' => 'value1',
+            0 => 'value1',
+            'selectarraycol2' => 'value2',
+            1 => 'value2',
+            'selectarray2col' => 'value3',
+            2 => 'value3',
+            'selectarray2col2' => 'value4',
+            3 => 'value4'
+        ]);
     }
 
     /**
@@ -777,9 +868,11 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
 
     public function testGetAllTables()
     {
-        $expected = 9;
-        $actual = count($this->getDataSource()->getAllTables());
+        $expected = 11;
+        $actual = $this->getDataSource()->getAllTables();
 
-        $this->assertEquals($expected, $actual);
+        $this->assertEquals($expected, count($actual));
+
+        $this->getDataSource()->dropTable($this->getDataSource()->getAllTables());
     }
 }

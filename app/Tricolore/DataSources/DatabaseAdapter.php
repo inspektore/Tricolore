@@ -10,12 +10,17 @@ class DatabaseAdapter
     /**
      * Get database factory
      * 
+     * @param array $custom_config
      * @throws Tricolore\Exception\DatabaseException
      * @return Tricolore\DataSources\PostgreSQL\DatabaseFactory
      */
-    public function getDatabaseFactory()
+    public function getDatabaseFactory(array $custom_config = [])
     {
-        $database_config = Config::all('Database');
+        if (count($custom_config)) {
+            $database_config = $custom_config;
+        } else {
+            $database_config = Config::all('Database'); 
+        }
 
         $allowed_adapters = ['PostgreSQL'];
 
