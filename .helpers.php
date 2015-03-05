@@ -67,7 +67,7 @@ function endsWith($condition, $from, $length = 1, $ignore_whitespaces = false)
 }
 
 /**
- * Underscore to StudlyCaps
+ * under_score to StudlyCaps
  * 
  * @param string $text 
  * @return string
