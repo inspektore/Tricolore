@@ -10,6 +10,12 @@
 - pdo_pgsql extension **(currently unsupported by HHVM)**
 - (optional) zlib
 
+###Downloading
+```
+$ git clone https://github.com/Macsch15/Tricolore.git
+$ cd Tricolore
+```
+
 ###3-rd party libraries
 - [Symfony](https://github.com/symfony/symfony)
 - [Twig](https://github.com/twigphp/Twig)
