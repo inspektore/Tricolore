@@ -77,7 +77,7 @@ class View extends ServiceLocator
      * @param string $template_name
      * @param array $variables
      * @param bool $return
-     * @return mixed
+     * @return string
      */
     public function display($template_section, $template_name, array $variables = [], $return = false)
     {

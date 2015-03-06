@@ -52,7 +52,7 @@ class Select
     /**
      * Select
      * 
-     * @param mixed $select 
+     * @param string|array $select 
      * @return Tricolore\DataSources\PostgreSQL\Query\Select
      */
     public function select($select)
@@ -65,7 +65,7 @@ class Select
     /**
      * From
      * 
-     * @param mixed $from 
+     * @param string|array $from 
      * @return Tricolore\DataSources\PostgreSQL\Query\Select
      */
     public function from($from)

@@ -10,7 +10,7 @@ class Config
      * Get the config by key
      * 
      * @param string $key
-     * @return mixed
+     * @return string|bool
      */
     public static function key($key, $collection = 'Configuration')
     {

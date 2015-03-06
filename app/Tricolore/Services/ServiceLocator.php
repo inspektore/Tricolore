@@ -15,7 +15,7 @@ abstract class ServiceLocator
      * @param array $arguments
      * @param string $service_file
      * @throws Tricolore\Exception\ServicesException
-     * @return mixed
+     * @return object
      */
     final public function get($key, array $arguments = [], $service_file = null)
     {
@@ -52,9 +52,9 @@ abstract class ServiceLocator
      * 
      * @param callable $callback
      * @param array $arguments
-     * @return mixed
+     * @return object
      */
-    final private function callDynamic(callable $callback, array $arguments)
+    private function callDynamic(callable $callback, array $arguments)
     {
         return call_user_func_array($callback, $arguments);
     }
@@ -64,9 +64,9 @@ abstract class ServiceLocator
      * 
      * @param callable $callback
      * @param array $arguments
-     * @return mixed
+     * @return object
      */
-    final private function callStatic(callable $callback, array $arguments)
+    private function callStatic(callable $callback, array $arguments)
     {
         return forward_static_call_array($callback, $arguments);
     }
@@ -78,7 +78,7 @@ abstract class ServiceLocator
      * @param string $key
      * @return bool
      */
-    final private function isStatic(array $service_map, $key)
+    private function isStatic(array $service_map, $key)
     {
         return isset($service_map['service-locator'][$key]['static']) && $service_map['service-locator'][$key]['static'] === true;
     }
@@ -88,9 +88,9 @@ abstract class ServiceLocator
      * 
      * @param array $service_map
      * @param string $key 
-     * @return mixed
+     * @return object
      */
-    final private function serviceClassLoad(array $service_map, $key)
+    private function serviceClassLoad(array $service_map, $key)
     {
         if ($this->isStatic($service_map, $key) === true) {
             return $service_map['service-locator'][$key]['class'];
@@ -106,7 +106,7 @@ abstract class ServiceLocator
      * @throws Tricolore\Exception\AssetNotFound
      * @return array
      */
-    final private function parseServicesMap($service_file)
+    private function parseServicesMap($service_file)
     {
         if ($service_file === null) {
             $service_map = Yaml::parse(Application::createPath('app:Tricolore:Services:ServicesMap:Map.yml'));
