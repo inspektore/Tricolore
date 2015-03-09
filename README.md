@@ -23,7 +23,7 @@ $ cd Tricolore
 - [Carbon](https://github.com/briannesbitt/Carbon)
 - [Bootstrap](https://github.com/twbs/bootstrap)
 
-###Licence
+###MIT Licence
 
 Copyright (c) 2015 Maciej Schmidt
 
