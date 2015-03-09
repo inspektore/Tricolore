@@ -118,10 +118,6 @@ class DatabaseFactory
             return false;
         }
 
-        if ($prepare->queryString == null) {
-            return false;
-        }
-
         foreach ($binding_container as $key => $binding) {
             if (isset($binding['value']) === false) {
                 throw new DatabaseException('Missing "value" in parameters.');
@@ -298,22 +294,6 @@ class DatabaseFactory
         }
 
         return false;
-    }
-
-    /**
-     * Create database
-     *
-     * @param string $database_name
-     * @throws Tricolore\Exception\InvalidArgumentException
-     * @return int
-     */
-    public function createDatabase($database_name)
-    {
-        if (preg_match('/[^A-Za-z0-9_-]/', $database_name)) {
-            throw new InvalidArgumentException('Database name contains prohibited characters.');
-        }
-
-        return $this->exec(sprintf('create database %s', $database_name));
     }
 
     /**
