@@ -52,6 +52,22 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
         ]);
     }
 
+    /**
+     * @expectedException Tricolore\Exception\DatabaseException
+     */
+    public function testConnectionFailedNoUsernameAndPassword()
+    {
+        $this->getDataSource([
+            'config' => [
+                'adapter' => 'PostgreSQL',
+                'test' => [
+                    'default' => [],
+                    'travis' => []
+                ]
+            ]
+        ]);
+    }
+
     public function testDatabaseExists()
     {
         $config_key = (Application::getInstance()->inTravis() === true) ? 'travis' : 'default';
@@ -60,6 +76,13 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
         $actual = $this->getDataSource()->databaseExists($database_name);
 
         $this->assertTrue($actual);
+    }
+
+    public function testDatabaseExistsFail()
+    {
+        $database = $this->getDataSource()->databaseExists('not_existing_database');
+
+        $this->assertFalse($database);
     }
 
     /**
@@ -162,7 +185,7 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
 
     public function testFactoryQueriesNumber()
     {
-        $expected = 15;
+        $expected = 16;
         $actual = $this->getDataSource()->getQueriesNumber();
 
         $this->assertSame($actual, $expected);
@@ -274,23 +297,6 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
             '' => 'value'
         ])
         ->execute();
-    }
-
-    /**
-     * @expectedException Tricolore\Exception\InvalidArgumentException
-     */
-    public function testExceptionCreateDatabase()
-    {
-        $this->getDataSource()->createDatabase('&foo');
-    }
-
-    public function testCreateDatabase()
-    {
-        if ($this->getDataSource()->databaseExists('tmp_db') === false) {
-            $this->getDataSource()->createDatabase('tmp_db');
-        }
-
-        $this->assertTrue($this->getDataSource()->databaseExists('tmp_db'));
     }
 
     public function testDelete()
