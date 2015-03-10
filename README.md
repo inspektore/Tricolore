@@ -16,13 +16,6 @@ $ git clone https://github.com/Macsch15/Tricolore.git
 $ cd Tricolore
 ```
 
-###3-rd party libraries
-- [Symfony](https://github.com/symfony/symfony)
-- [Twig](https://github.com/twigphp/Twig)
-- [jQuery](https://github.com/jquery/jquery)
-- [Carbon](https://github.com/briannesbitt/Carbon)
-- [Bootstrap](https://github.com/twbs/bootstrap)
-
 ###MIT Licence
 
 Copyright (c) 2015 Maciej Schmidt
