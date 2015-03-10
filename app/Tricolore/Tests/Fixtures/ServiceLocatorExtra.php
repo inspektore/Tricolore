@@ -17,4 +17,9 @@ class ServiceLocatorExtra
     {
         return 'myFunc';
     }
+
+    public static function staticFunc()
+    {
+        return 'staticFunc';
+    }
 }

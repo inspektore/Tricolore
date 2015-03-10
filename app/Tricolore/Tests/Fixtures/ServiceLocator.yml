@@ -1,3 +1,6 @@
 service-locator:
     extra: { class: Tricolore\Tests\Fixtures\ServiceLocatorExtra }
     extra_func: { class: Tricolore\Tests\Fixtures\ServiceLocatorExtra, function: myFunc }
+    class_not_exists: { class: Not\Existing\Class }
+    method_not_exists: { class: Tricolore\Tests\Fixtures\ServiceLocatorExtra, function: notExistingFunction }
+    static_func: { class: Tricolore\Tests\Fixtures\ServiceLocatorExtra, function: staticFunc, static: true }
