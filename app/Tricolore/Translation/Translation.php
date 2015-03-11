@@ -14,7 +14,6 @@ class Translation
      * Get translator
      * 
      * @param string $resource
-     * @throws Tricolore\Exception\AssetNotFound
      * @return Symfony\Component\Translation\Translator
      */
     public function getTranslator($resource = null)
@@ -24,6 +23,25 @@ class Translation
         $translator = new Translator($locale, new MessageSelector());
         $translator->addLoader('xliff', new XliffFileLoader());
 
+        $this->addResource($translator, $resource, $locale);
+        $this->addValidatorResource($translator, $locale);
+
+        $translator->setFallbackLocale(['en_EN']);
+
+        return $translator;
+    }
+
+    /**
+     * Add resource
+     * 
+     * @param Symfony\Component\Translation\Translator $translator
+     * @param string $resource
+     * @param string $locale
+     * @throws Tricolore\Exception\AssetNotFound
+     * @return void
+     */
+    private function addResource(Translator $translator, $resource, $locale)
+    {
         if ($resource === null) {
             $translator->addResource('xliff', 
                 Application::getInstance()->createPath(
@@ -36,12 +54,6 @@ class Translation
 
             $translator->addResource('xliff', $resource, $locale);
         }
-
-        $this->addValidatorResource($translator, $locale);
-
-        $translator->setFallbackLocale(['en_EN']);
-
-        return $translator;
     }
 
     /**
