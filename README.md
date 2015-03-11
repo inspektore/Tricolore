@@ -9,6 +9,7 @@
 - INTL extension
 - pdo_pgsql extension **(currently unsupported by HHVM)**
 - zlib (optional)
+- xdebug (optional)
 
 ###Downloading
 ```
