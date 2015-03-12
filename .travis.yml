@@ -4,7 +4,7 @@ before_install:
   - echo 'hhvm.libxml.ext_entity_whitelist = file,http,https' > travis.hhvm.ini
 
 addons:
-  postgresql: "9.3"
+  postgresql: "9.4"
 
 php:
   - 5.5
