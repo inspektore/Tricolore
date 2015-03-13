@@ -29,8 +29,6 @@ class View extends ServiceLocator
      */
     public function register($safe_mode = false)
     {
-        \Twig_Autoloader::register();
-
         $finder = $this->get('finder')
         ->directories()
         ->in(Application::createPath('app:Tricolore:View:Templates'));
@@ -77,7 +75,7 @@ class View extends ServiceLocator
      * @param string $template_name
      * @param array $variables
      * @param bool $return
-     * @return string
+     * @return string|bool
      */
     public function display($template_section, $template_name, array $variables = [], $return = false)
     {
@@ -100,7 +98,7 @@ class View extends ServiceLocator
 
             ob_end_flush();
 
-            return true;
+            return;
         }
 
         if ($return === true) {
