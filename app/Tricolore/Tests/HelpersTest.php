@@ -107,4 +107,25 @@ class HelpersTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals($expected, $actual);
     }
+
+    /**
+     * @expectedException Tricolore\Exception\RuntimeException
+     * @expectedExceptionMessage Headers already sent.
+     */
+    public function testRedirectHeadersAlreadySent()
+    {
+        redirect('go');
+    }
+
+    /**
+     * @runInSeparateProcess
+     */
+    public function testRedirect()
+    {
+        redirect('go');
+
+        if (function_exists('xdebug_get_headers')) {
+            $this->assertContains('Location: go', xdebug_get_headers());    
+        }
+    }
 }
