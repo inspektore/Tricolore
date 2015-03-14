@@ -1,4 +1,5 @@
 <?php
+use Tricolore\Exception\RuntimeException;
 use Symfony\Component\VarDumper\VarDumper;
 
 /**
@@ -75,4 +76,20 @@ function endsWith($condition, $from, $length = 1, $ignore_whitespaces = false)
 function underscoreToStudlyCaps($text)
 {
     return str_replace(' ', '', ucwords(str_replace('_', ' ', $text)));
+}
+
+/**
+ * Redirect
+ * 
+ * @param string $target
+ * @throws Tricolore\Exception\RuntimeException
+ * @return void
+ */
+function redirect($target)
+{
+    if (headers_sent() === true) {
+        throw new RuntimeException('Headers already sent.');
+    }
+
+    header(sprintf('Location: %s', $target));
 }
