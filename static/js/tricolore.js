@@ -34,6 +34,17 @@
   });
 }();
 
++function destroyAllFlashMessages()
+{
+  "use strict";
+
+  setTimeout(function () {
+    $(".flash-message").hide('fast', function () {
+      $(this).remove();
+    });
+  }, 2000);
+}();
+
 function escapeRegExp(string) {
   return string.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
 }
