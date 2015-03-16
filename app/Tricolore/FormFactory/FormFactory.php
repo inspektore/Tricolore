@@ -3,7 +3,6 @@ namespace Tricolore\FormFactory;
 
 use Tricolore\Application;
 use Symfony\Component\Validator\Validation;
-use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Form\Forms;
 use Symfony\Component\Form\Extension\Csrf\CsrfExtension;
 use Symfony\Component\Form\Extension\Csrf\CsrfProvider\SessionCsrfProvider;
