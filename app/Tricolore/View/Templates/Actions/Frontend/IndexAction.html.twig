@@ -3,5 +3,7 @@
 {% block head_title %}Hello World!{% endblock %}
 
 {% block body_content %}
+  {{ flash_message.getAllMessages() }}
+
   {% include "ForumsView.html.twig" %}
 {% endblock %}
