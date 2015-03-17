@@ -13,7 +13,7 @@ class TwigIntegrationTest extends \PHPUnit_Framework_TestCase
 
     public function testAssetFunction()
     {
-        $expected = 'http://localhost/Tricolore/tests/' . Config::key('directory.assets') . '/css/foo';
+        $expected = 'http://localhost/Tricolore/tests/' . Config::getParameter('directory.assets') . '/css/foo';
         $actual = $this->getView()->display(null, 'TestAsset', [], true);
 
         $this->assertEquals($expected, $actual);

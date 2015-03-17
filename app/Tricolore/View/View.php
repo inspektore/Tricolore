@@ -52,7 +52,7 @@ class View extends ServiceLocator
         $in_prod = Application::getInstance()->getEnv() === 'prod';
 
         $this->environment = new \Twig_Environment($loader, [
-            'cache' => ($in_prod === true) ? Application::createPath(Config::key('directory.storage') . ':twig') : false,
+            'cache' => ($in_prod === true) ? Application::createPath(Config::getParameter('directory.storage') . ':twig') : false,
             'auto_reload' => ($in_prod === true) ? false : true,
             'strict_variables' => ($in_prod === true) ? false : true
         ]);
@@ -85,7 +85,7 @@ class View extends ServiceLocator
 
         $combined_template_path = ($template_section != null ? $template_section . '/' : null) . $template_name;
 
-        if (Config::key('gzip.enabled') === true && extension_loaded('zlib') === true) {
+        if (Config::getParameter('gzip.enabled') === true && extension_loaded('zlib') === true) {
             ob_start('ob_gzhandler');
 
             if ($return === true) {
@@ -126,11 +126,11 @@ class View extends ServiceLocator
     private function registerFunctions()
     {
         $this->environment->addFunction(new \Twig_SimpleFunction('config', function ($key) {
-            return Config::key($key);
+            return Config::getParameter($key);
         }));
 
         $this->environment->addFunction(new \Twig_SimpleFunction('assets', function ($section, $file) {
-            return Config::key('base.full_url') . '/' . Config::key('directory.assets') . '/' . $section . '/' . $file;
+            return Config::getParameter('base.full_url') . '/' . Config::getParameter('directory.assets') . '/' . $section . '/' . $file;
         }));
 
         $this->environment->addFunction(new \Twig_SimpleFunction('url', function ($route_name = null, $arguments = []) {
@@ -239,7 +239,7 @@ class View extends ServiceLocator
         $exception_log .= str_repeat('-', 20) . ' LAST EXCEPTION LOG ' . str_repeat('-', 20);
 
         if (Application::getInstance()->getEnv() !== 'test') {
-            $filesystem->dumpFile(Application::createPath(Config::key('directory.storage') . ':last_exception.txt'), $exception_log);
+            $filesystem->dumpFile(Application::createPath(Config::getParameter('directory.storage') . ':last_exception.txt'), $exception_log);
         }
     }
 }

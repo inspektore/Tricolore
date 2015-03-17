@@ -3,7 +3,7 @@ namespace Tricolore\Translation;
 
 use Tricolore\Application;
 use Tricolore\Config\Config;
-use Tricolore\Exception\AssetNotFound;
+use Tricolore\Exception\NotFoundResourceException;
 use Symfony\Component\Translation\Translator;
 use Symfony\Component\Translation\MessageSelector;
 use Symfony\Component\Translation\Loader\XliffFileLoader;
@@ -18,7 +18,7 @@ class Translation
      */
     public function getTranslator($resource = null)
     {
-        $locale = Config::key('trans.locale');
+        $locale = Config::getParameter('trans.locale');
 
         $translator = new Translator($locale, new MessageSelector());
         $translator->addLoader('xliff', new XliffFileLoader());
@@ -37,7 +37,7 @@ class Translation
      * @param Symfony\Component\Translation\Translator $translator
      * @param string $resource
      * @param string $locale
-     * @throws Tricolore\Exception\AssetNotFound
+     * @throws Tricolore\Exception\NotFoundResourceException
      * @return void
      */
     private function addResource(Translator $translator, $resource, $locale)
@@ -49,7 +49,7 @@ class Translation
                 $locale);           
         } else {
             if (file_exists($resource) === false) {
-                throw new AssetNotFound(sprintf('Translation resource "%s" not found.', $resource));
+                throw new NotFoundResourceException(sprintf('Translation resource "%s" not found.', $resource));
             }
 
             $translator->addResource('xliff', $resource, $locale);

@@ -29,7 +29,6 @@ class RoutingProvider extends ServiceLocator
      * Register routing
      * 
      * @codeCoverageIgnore
-     * @param bool $silent
      * @return void
      */
     public function register()
@@ -55,11 +54,11 @@ class RoutingProvider extends ServiceLocator
         $in_prod = Application::getInstance()->getEnv() === 'prod';
 
         $this->router = new Router($loader, sprintf('RouteCollection/%s.yml', $collection_filename), [
-            'cache_dir' => ($in_prod === true) ? Application::createPath(Config::key('directory.storage') . ':router') : null
+            'cache_dir' => ($in_prod === true) ? Application::createPath(Config::getParameter('directory.storage') . ':router') : null
         ], $request_context);
 
         if (Application::getInstance()->getEnv() !== 'test') {
-            $this->controllerCall($this->router, $request);
+            $this->call($this->router, $request);
         }
     }
 
@@ -94,7 +93,7 @@ class RoutingProvider extends ServiceLocator
      * @throws Tricolore\Exception\RuntimeException
      * @return void
      */
-    private function controllerCall(Router $router, $request)
+    private function call(Router $router, $request)
     {
         try {
             $parameters = $router->match($request);

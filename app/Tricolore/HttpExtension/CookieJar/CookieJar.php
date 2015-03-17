@@ -48,9 +48,9 @@ class CookieJar
             new Cookie($name, 
                 $value, 
                 Carbon::now()->addSeconds($expire)->timestamp, 
-                Config::key('cookie.path'), 
-                Config::key('cookie.domain'), 
-                Config::key('cookie.secure')));
+                Config::getParameter('cookie.path'), 
+                Config::getParameter('cookie.domain'), 
+                Config::getParameter('cookie.secure')));
 
         return $this->response->send();
     }
@@ -86,9 +86,9 @@ class CookieJar
             new Cookie($name, 
                 null, 
                 -1, 
-                Config::key('cookie.path'), 
-                Config::key('cookie.domain'), 
-                Config::key('cookie.secure')));
+                Config::getParameter('cookie.path'), 
+                Config::getParameter('cookie.domain'), 
+                Config::getParameter('cookie.secure')));
 
         return $this->response->send();
     }

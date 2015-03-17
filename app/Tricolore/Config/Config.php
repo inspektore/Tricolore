@@ -7,12 +7,12 @@ use Symfony\Component\Yaml\Yaml;
 class Config
 {
     /**
-     * Get the config by key
+     * Get parameter
      * 
      * @param string $key
      * @return string|bool
      */
-    public static function key($key, $collection = 'Configuration')
+    public static function getParameter($key, $collection = 'Configuration')
     {
         if (self::collectionExists($collection) === false) {
             return false;
@@ -28,7 +28,7 @@ class Config
     }
 
     /**
-     * Fech all as array
+     * Fech all parameters as array
      * 
      * @param string $collection 
      * @return array

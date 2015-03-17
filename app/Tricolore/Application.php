@@ -45,7 +45,7 @@ class Application extends ServiceLocator
         self::getInstance()->setupErrorReporting();
 
         try {
-            if (endsWith('/', Config::key('base.full_url')) === true) {
+            if (endsWith('/', Config::getParameter('base.full_url')) === true) {
                 throw new RuntimeException('Setting "base.full_url" cannot end with a slash.');
             }
 
@@ -112,16 +112,16 @@ class Application extends ServiceLocator
     public static function buildUrl($route_name = null, array $arguments = [])
     {
         if ($route_name == null) {
-            return Config::key('base.full_url');
+            return Config::getParameter('base.full_url');
         }
 
         if (self::$routing->getRouteCollection()->all()[$route_name] === null) {
-            return Config::key('base.full_url') . '/not-found/404';
+            return Config::getParameter('base.full_url') . '/not-found/404';
         }
 
         $generator = new UrlGenerator(self::$routing->getRouteCollection(), self::$routing->getContext());
 
-        if (Config::key('router.use_httpd_rewrite') === true) {
+        if (Config::getParameter('router.use_httpd_rewrite') === true) {
             return $generator->generate($route_name, $arguments, $generator::ABSOLUTE_URL);
         }
 
@@ -131,7 +131,7 @@ class Application extends ServiceLocator
             $prefix = '/';
         }
 
-        return Config::key('base.full_url') . $prefix . $generator->generate($route_name, $arguments, $generator::RELATIVE_PATH);
+        return Config::getParameter('base.full_url') . $prefix . $generator->generate($route_name, $arguments, $generator::RELATIVE_PATH);
     }
 
     /**

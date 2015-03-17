@@ -8,17 +8,17 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
     public function testGetKey()
     {
         $expected = 'utf-8';
-        $actual = Config::key('base.charset');
+        $actual = Config::getParameter('base.charset');
 
         $this->assertEquals($expected, $actual);
 
         $expected = false;
-        $actual = Config::key('router.use_httpd_rewrite');
+        $actual = Config::getParameter('router.use_httpd_rewrite');
 
         $this->assertEquals($expected, $actual);
 
         $expected = 5874;
-        $actual = Config::key('test.int');
+        $actual = Config::getParameter('test.int');
 
         $this->assertEquals($expected, $actual);
     }
@@ -42,14 +42,14 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
 
     public function testNotExistingCollection()
     {
-        $actual = Config::key('key', 'NotExistingCollection');
+        $actual = Config::getParameter('key', 'NotExistingCollection');
 
         $this->assertFalse($actual);
     }
 
     public function testNotExistingKey()
     {
-        $actual = Config::key('Not.ExistingKey');
+        $actual = Config::getParameter('Not.ExistingKey');
 
         $this->assertFalse($actual);
     }
