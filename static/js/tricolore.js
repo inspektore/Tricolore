@@ -38,11 +38,7 @@
 {
   "use strict";
 
-  setTimeout(function () {
-    $(".flash-message").hide('fast', function () {
-      $(this).remove();
-    });
-  }, 2000);
+  $('div.flash-message').delay(2000).slideUp(100);
 }();
 
 function escapeRegExp(string) {
