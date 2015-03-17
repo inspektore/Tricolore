@@ -3,7 +3,7 @@ namespace Tricolore\Services;
 
 use Tricolore\Application;
 use Tricolore\Exception\ServicesException;
-use Tricolore\Exception\AssetNotFound;
+use Tricolore\Exception\NotFoundResourceException;
 use Symfony\Component\Yaml\Yaml;
 
 abstract class ServiceLocator
@@ -103,7 +103,7 @@ abstract class ServiceLocator
      * Parse YAML file to raw array
      * 
      * @param string $service_file
-     * @throws Tricolore\Exception\AssetNotFound
+     * @throws Tricolore\Exception\NotFoundResourceException
      * @return array
      */
     private function parseServicesMap($service_file)
@@ -112,7 +112,7 @@ abstract class ServiceLocator
             $service_map = Yaml::parse(Application::createPath('app:Tricolore:Services:ServicesMap:Map.yml'));
         } else {
             if (file_exists($service_file) === false) {
-                throw new AssetNotFound(sprintf('File: %s does not exists.', $service_file));
+                throw new NotFoundResourceException(sprintf('File "%s" does not exists.', $service_file));
             }
 
             $service_map = Yaml::parse($service_file); 

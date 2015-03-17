@@ -32,7 +32,7 @@ class ServiceLocatorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException Tricolore\Exception\AssetNotFound
+     * @expectedException Tricolore\Exception\NotFoundResourceException
      */
     public function testExceptionWrongPath()
     {
