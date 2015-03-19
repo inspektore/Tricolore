@@ -9,7 +9,7 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
     private function getDataSource(array $arguments = [])
     {
         return $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator')
-        ->get('datasource', $arguments);
+            ->get('datasource', $arguments);
     }
 
     public function testConnection()
@@ -18,7 +18,7 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException Tricolore\Exception\DatabaseException
+     * @expectedException Tricolore\Exception\LogicException
      */
     public function testAdapterNotFound()
     {
@@ -99,29 +99,29 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
     public function testExceptionFactoryBindingMissingValue()
     {
         $this->getDataSource()->buildQuery('create_table')
-        ->name('binding1table')
-        ->columns([
-            'binding1col' => 'TEXT'
-        ])
-        ->ifNotExists()
-        ->execute();
+            ->name('binding1table')
+            ->columns([
+                'binding1col' => 'TEXT'
+            ])
+            ->ifNotExists()
+            ->execute();
 
         $this->getDataSource()->buildQuery('insert')
-        ->into('binding1table')
-        ->values([
-            'binding1col' => '___data___'
-        ])
-        ->execute();
+            ->into('binding1table')
+            ->values([
+                'binding1col' => '___data___'
+            ])
+            ->execute();
 
         $this->getDataSource()->buildQuery('select')
-        ->select('binding1col')
-        ->from('binding1table')
-        ->where('binding1col = ?', [
-            1 => [
-                'not_valid' => 'not_valid'
-            ]
-        ])
-        ->execute();
+            ->select('binding1col')
+            ->from('binding1table')
+            ->where('binding1col = ?', [
+                1 => [
+                    'not_valid' => 'not_valid'
+                ]
+            ])
+            ->execute();
     }
 
     /**
@@ -130,49 +130,49 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
     public function testExceptionFactoryBindingWrongDataType()
     {
         $this->getDataSource()->buildQuery('create_table')
-        ->name('binding2table')
-        ->columns([
-            'binding2col' => 'TEXT'
-        ])
-        ->ifNotExists()
-        ->execute();
+            ->name('binding2table')
+            ->columns([
+                'binding2col' => 'TEXT'
+            ])
+            ->ifNotExists()
+            ->execute();
 
         $this->getDataSource()->buildQuery('insert')
-        ->into('binding2table')
-        ->values([
-            'binding2col' => '___data___'
-        ])
-        ->execute();
+            ->into('binding2table')
+            ->values([
+                'binding2col' => '___data___'
+            ])
+            ->execute();
 
         $this->getDataSource()->buildQuery('select')
-        ->select('binding2col')
-        ->from('binding2table')
-        ->where('binding2col = ?', [
-            1 => [
-                'value' => 'foo',
-                'type' => 'not_valid'
-            ]
-        ])
-        ->execute();
+            ->select('binding2col')
+            ->from('binding2table')
+            ->where('binding2col = ?', [
+                1 => [
+                    'value' => 'foo',
+                    'type' => 'not_valid'
+                ]
+            ])
+            ->execute();
     }
 
     public function testFactoryDropTableArray()
     {
         $this->getDataSource()->buildQuery('create_table')
-        ->name('drop1table')
-        ->columns([
-            'drop1col' => 'TEXT'
-        ])
-        ->ifNotExists()
-        ->execute();
+            ->name('drop1table')
+            ->columns([
+                'drop1col' => 'TEXT'
+            ])
+            ->ifNotExists()
+            ->execute();
 
         $this->getDataSource()->buildQuery('create_table')
-        ->name('drop2table')
-        ->columns([
-            'drop2col' => 'TEXT'
-        ])
-        ->ifNotExists()
-        ->execute();
+            ->name('drop2table')
+            ->columns([
+                'drop2col' => 'TEXT'
+            ])
+            ->ifNotExists()
+            ->execute();
 
         $this->assertTrue($this->getDataSource()->tableExists('drop1table'));
         $this->assertTrue($this->getDataSource()->tableExists('drop2table'));
@@ -194,12 +194,12 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
     public function testFactoryDropField()
     {
         $this->getDataSource()->buildQuery('create_table')
-        ->name('dropfield1table')
-        ->columns([
-            'dropfield1col' => 'TEXT'
-        ])
-        ->ifNotExists()
-        ->execute();
+            ->name('dropfield1table')
+            ->columns([
+                'dropfield1col' => 'TEXT'
+            ])
+            ->ifNotExists()
+            ->execute();
 
         $this->assertTrue($this->getDataSource()->fieldExists('dropfield1col', 'dropfield1table'));
 
@@ -213,13 +213,13 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
     public function testFactoryDropFieldArray()
     {
         $this->getDataSource()->buildQuery('create_table')
-        ->name('dropfield2table')
-        ->columns([
-            'dropfield1col' => 'TEXT',
-            'dropfield2col' => 'TEXT'
-        ])
-        ->ifNotExists()
-        ->execute();
+            ->name('dropfield2table')
+            ->columns([
+                'dropfield1col' => 'TEXT',
+                'dropfield2col' => 'TEXT'
+            ])
+            ->ifNotExists()
+            ->execute();
 
         $this->assertTrue($this->getDataSource()->fieldExists('dropfield1col', 'dropfield2table'));
         $this->assertTrue($this->getDataSource()->fieldExists('dropfield2col', 'dropfield2table'));
@@ -237,13 +237,13 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($this->getDataSource()->tableExists('tmp'));
 
         $this->getDataSource()->buildQuery('create_table')
-        ->name('tmp')
-        ->columns([
-            'tmp_col' => 'TEXT',
-            'tmp_col2' => 'INT'
-        ])
-        ->ifNotExists()
-        ->execute();
+            ->name('tmp')
+            ->columns([
+                'tmp_col' => 'TEXT',
+                'tmp_col2' => 'INT'
+            ])
+            ->ifNotExists()
+            ->execute();
 
         $this->assertTrue($this->getDataSource()->tableExists('tmp'));
 
@@ -257,10 +257,10 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
     public function testExceptionCreateTableNameRequired()
     {
         $this->getDataSource()->buildQuery('create_table')
-        ->columns([
-            'col' => 'value'
-        ])
-        ->execute();
+            ->columns([
+                'col' => 'value'
+            ])
+            ->execute();
     }
 
     /**
@@ -270,8 +270,8 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
     public function testExceptionCreateTableColumnsRequired()
     {
         $this->getDataSource()->buildQuery('create_table')
-        ->name('tmp')
-        ->execute();
+            ->name('tmp')
+            ->execute();
     }
 
     /**
@@ -281,9 +281,9 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
     public function testExceptionCreateTableColumnsEmptyArray()
     {
         $this->getDataSource()->buildQuery('create_table')
-        ->name('tmp')
-        ->columns([])
-        ->execute();
+            ->name('tmp')
+            ->columns([])
+            ->execute();
     }
 
     /**
@@ -292,36 +292,36 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
     public function testExceptionCreateTableQuery()
     {
         $this->getDataSource()->buildQuery('create_table')
-        ->name('tmp')
-        ->columns([
-            '' => 'value'
-        ])
-        ->execute();
+            ->name('tmp')
+            ->columns([
+                '' => 'value'
+            ])
+            ->execute();
     }
 
     public function testDelete()
     {
         $this->getDataSource()->buildQuery('create_table')
-        ->name('test_delete')
-        ->columns([
-            'tmp_col' => 'TEXT',
-            'tmp_col2' => 'INT'
-        ])
-        ->ifNotExists()
-        ->execute();
+            ->name('test_delete')
+            ->columns([
+                'tmp_col' => 'TEXT',
+                'tmp_col2' => 'INT'
+            ])
+            ->ifNotExists()
+            ->execute();
 
         $this->getDataSource()->buildQuery('insert')
-        ->into('test_delete')
-        ->values([
-            'tmp_col' => 'Doggy',
-            'tmp_col2' => 6
-        ])
-        ->execute();
+            ->into('test_delete')
+            ->values([
+                'tmp_col' => 'Doggy',
+                'tmp_col2' => 6
+            ])
+            ->execute();
 
         $result = $this->getDataSource()->buildQuery('select')
-        ->select('tmp_col, tmp_col2')
-        ->from('test_delete')
-        ->execute();
+            ->select('tmp_col, tmp_col2')
+            ->from('test_delete')
+            ->execute();
 
         $this->assertSame($result[0], [
             'tmp_col' => 'Doggy',
@@ -331,18 +331,18 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
         ]);
 
         $this->getDataSource()->buildQuery('delete')
-        ->deleteFrom('test_delete')
-        ->where('tmp_col = ?', [
-            1 => [
-                'value' => 'Doggy'
-            ]
-        ])
-        ->execute();
+            ->deleteFrom('test_delete')
+            ->where('tmp_col = ?', [
+                1 => [
+                    'value' => 'Doggy'
+                ]
+            ])
+            ->execute();
 
         $result = $this->getDataSource()->buildQuery('select')
-        ->select('tmp_col, tmp_col2')
-        ->from('test_delete')
-        ->execute();
+            ->select('tmp_col, tmp_col2')
+            ->from('test_delete')
+            ->execute();
 
         $this->assertSame($result, []);
     }
@@ -354,12 +354,12 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
     public function testExceptionDeteleFromRequired()
     {
         $this->getDataSource()->buildQuery('delete')
-        ->where('foo = ?', [
-            1 => [
-                'value' => 'bar'
-            ]
-        ])
-        ->execute();
+            ->where('foo = ?', [
+                1 => [
+                    'value' => 'bar'
+                ]
+            ])
+            ->execute();
     }
 
     /**
@@ -369,8 +369,8 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
     public function testExceptionDeteleWhereRequired()
     {
         $this->getDataSource()->buildQuery('delete')
-        ->deleteFrom('foo')
-        ->execute();
+            ->deleteFrom('foo')
+            ->execute();
     }
 
     /**
@@ -379,38 +379,38 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
     public function testExceptionDeleteQuery()
     {
         $this->getDataSource()->buildQuery('delete')
-        ->deleteFrom('not_valid')
-        ->where('foo = ?', [
-            1 => [
-                'value' => 'bar'
-            ]
-        ])
-        ->execute();
+            ->deleteFrom('not_valid')
+            ->where('foo = ?', [
+                1 => [
+                    'value' => 'bar'
+                ]
+            ])
+            ->execute();
     }
 
     public function testSelectAllResults()
     {
         $this->getDataSource()->buildQuery('create_table')
-        ->name('test_select_all_results')
-        ->columns([
-            'tmp_col' => 'TEXT',
-            'tmp_col2' => 'INT'
-        ])
-        ->ifNotExists()
-        ->execute();
+            ->name('test_select_all_results')
+            ->columns([
+                'tmp_col' => 'TEXT',
+                'tmp_col2' => 'INT'
+            ])
+            ->ifNotExists()
+            ->execute();
 
         $this->getDataSource()->buildQuery('insert')
-        ->into('test_select_all_results')
-        ->values([
-            'tmp_col' => 'Doggy',
-            'tmp_col2' => 6
-        ])
-        ->execute();
+            ->into('test_select_all_results')
+            ->values([
+                'tmp_col' => 'Doggy',
+                'tmp_col2' => 6
+            ])
+            ->execute();
 
         $result = $this->getDataSource()->buildQuery('select')
-        ->select('tmp_col, tmp_col2')
-        ->from('test_select_all_results')
-        ->execute();
+            ->select('tmp_col, tmp_col2')
+            ->from('test_select_all_results')
+            ->execute();
 
         $this->assertSame($result[0], [
             'tmp_col' => 'Doggy',
@@ -423,32 +423,32 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
     public function testSelectWhere()
     {
         $this->getDataSource()->buildQuery('create_table')
-        ->name('test_select_all_results')
-        ->columns([
-            'tmp_col' => 'TEXT',
-            'tmp_col2' => 'INT'
-        ])
-        ->ifNotExists()
-        ->execute();
+            ->name('test_select_all_results')
+            ->columns([
+                'tmp_col' => 'TEXT',
+                'tmp_col2' => 'INT'
+            ])
+            ->ifNotExists()
+            ->execute();
 
         $this->getDataSource()->buildQuery('insert')
-        ->into('test_select_all_results')
-        ->values([
-            'tmp_col' => 'Catty',
-            'tmp_col2' => 7
-        ])
-        ->execute();
+            ->into('test_select_all_results')
+            ->values([
+                'tmp_col' => 'Catty',
+                'tmp_col2' => 7
+            ])
+            ->execute();
 
         $result = $this->getDataSource()->buildQuery('select')
-        ->select('tmp_col, tmp_col2')
-        ->from('test_select_all_results')
-        ->where('tmp_col = ?', [
-            1 => [
-                'value' => 'Catty',
-                'type' => 'str'
-            ]
-        ])
-        ->execute();
+            ->select('tmp_col, tmp_col2')
+            ->from('test_select_all_results')
+            ->where('tmp_col = ?', [
+                1 => [
+                    'value' => 'Catty',
+                    'type' => 'str'
+                ]
+            ])
+            ->execute();
 
         $this->assertSame($result[0], [
             'tmp_col' => 'Catty',
@@ -461,40 +461,40 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
     public function testSelectLeftJoin()
     {
         $this->getDataSource()->buildQuery('create_table')
-        ->name('join1table')
-        ->columns([
-            'join1col' => 'TEXT'
-        ])
-        ->ifNotExists()
-        ->execute();
+            ->name('join1table')
+            ->columns([
+                'join1col' => 'TEXT'
+            ])
+            ->ifNotExists()
+            ->execute();
 
         $this->getDataSource()->buildQuery('create_table')
-        ->name('join2table')
-        ->columns([
-            'join2col' => 'TEXT'
-        ])
-        ->ifNotExists()
-        ->execute();
+            ->name('join2table')
+            ->columns([
+                'join2col' => 'TEXT'
+            ])
+            ->ifNotExists()
+            ->execute();
 
         $this->getDataSource()->buildQuery('insert')
-        ->into('join1table')
-        ->values([
-            'join1col' => '___data___'
-        ])
-        ->execute();
+            ->into('join1table')
+            ->values([
+                'join1col' => '___data___'
+            ])
+            ->execute();
 
         $this->getDataSource()->buildQuery('insert')
-        ->into('join2table')
-        ->values([
-            'join2col' => '___data___'
-        ])
-        ->execute();
+            ->into('join2table')
+            ->values([
+                'join2col' => '___data___'
+            ])
+            ->execute();
 
         $result = $this->getDataSource()->buildQuery('select')
-        ->select('join1table.join1col, join2table.join2col')
-        ->from('join1table')
-        ->leftJoin('join2table', 'join1table.join1col = join2table.join2col')
-        ->execute();
+            ->select('join1table.join1col, join2table.join2col')
+            ->from('join1table')
+            ->leftJoin('join2table', 'join1table.join1col = join2table.join2col')
+            ->execute();
 
         $this->assertSame($result[0], [
             'join1col' => '___data___',
@@ -507,12 +507,12 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
     public function testSelectGroupByOrderBy()
     {
         $this->getDataSource()->buildQuery('create_table')
-        ->name('groupbytable')
-        ->columns([
-            'groupby_col1' => 'TEXT'
-        ])
-        ->ifNotExists()
-        ->execute();
+            ->name('groupbytable')
+            ->columns([
+                'groupby_col1' => 'TEXT'
+            ])
+            ->ifNotExists()
+            ->execute();
 
         foreach ([1, 2, 3] as $name) {
             $this->getDataSource()->buildQuery('insert')
@@ -524,25 +524,25 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
         }
 
         $asc = $this->getDataSource()->buildQuery('select')
-        ->select('groupby_col1')
-        ->from('groupbytable')
-        ->groupBy('groupby_col1')
-        ->orderBy('groupby_col1', 'asc')
-        ->execute();
+            ->select('groupby_col1')
+            ->from('groupbytable')
+            ->groupBy('groupby_col1')
+            ->orderBy('groupby_col1', 'asc')
+            ->execute();
 
         $asc_non_valid_sorting = $this->getDataSource()->buildQuery('select')
-        ->select('groupby_col1')
-        ->from('groupbytable')
-        ->groupBy('groupby_col1')
-        ->orderBy('groupby_col1', 'not-valid')
-        ->execute();
+            ->select('groupby_col1')
+            ->from('groupbytable')
+            ->groupBy('groupby_col1')
+            ->orderBy('groupby_col1', 'not-valid')
+            ->execute();
 
         $desc = $this->getDataSource()->buildQuery('select')
-        ->select('groupby_col1')
-        ->from('groupbytable')
-        ->groupBy('groupby_col1')
-        ->orderBy('groupby_col1', 'desc')
-        ->execute();
+            ->select('groupby_col1')
+            ->from('groupbytable')
+            ->groupBy('groupby_col1')
+            ->orderBy('groupby_col1', 'desc')
+            ->execute();
 
         $this->assertSame($desc, [
             0 => [
@@ -599,27 +599,27 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
     public function testSelectMaxResults()
     {
         $this->getDataSource()->buildQuery('create_table')
-        ->name('maxresultstable')
-        ->columns([
-            'maxresultscol' => 'TEXT'
-        ])
-        ->ifNotExists()
-        ->execute();
+            ->name('maxresultstable')
+            ->columns([
+                'maxresultscol' => 'TEXT'
+            ])
+            ->ifNotExists()
+            ->execute();
 
         foreach ([1, 2, 3, 4, 5] as $collection) {
             $this->getDataSource()->buildQuery('insert')
-            ->into('maxresultstable')
-            ->values([
-                'maxresultscol' => $collection
-            ])
-            ->execute();
+                ->into('maxresultstable')
+                ->values([
+                    'maxresultscol' => $collection
+                ])
+                ->execute();
         }
 
         $result = $this->getDataSource()->buildQuery('select')
-        ->select('maxresultscol')
-        ->from('maxresultstable')
-        ->maxResults(3)
-        ->execute();
+            ->select('maxresultscol')
+            ->from('maxresultstable')
+            ->maxResults(3)
+            ->execute();
 
         $this->assertCount(3, $result);
     }
@@ -627,51 +627,51 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
     public function testSelectArray()
     {
         $this->getDataSource()->buildQuery('create_table')
-        ->name('selectarray')
-        ->columns([
-            'selectarraycol' => 'TEXT',
-            'selectarraycol2' => 'TEXT'
-        ])
-        ->ifNotExists()
-        ->execute();
+            ->name('selectarray')
+            ->columns([
+                'selectarraycol' => 'TEXT',
+                'selectarraycol2' => 'TEXT'
+            ])
+            ->ifNotExists()
+            ->execute();
 
         $this->getDataSource()->buildQuery('insert')
-        ->into('selectarray')
-        ->values([
-            'selectarraycol' => 'value1',
-            'selectarraycol2' => 'value2',
-        ])
-        ->execute();
+            ->into('selectarray')
+            ->values([
+                'selectarraycol' => 'value1',
+                'selectarraycol2' => 'value2',
+            ])
+            ->execute();
 
         $this->getDataSource()->buildQuery('create_table')
-        ->name('selectarray2')
-        ->columns([
-            'selectarray2col' => 'TEXT',
-            'selectarray2col2' => 'TEXT'
-        ])
-        ->ifNotExists()
-        ->execute();
+            ->name('selectarray2')
+            ->columns([
+                'selectarray2col' => 'TEXT',
+                'selectarray2col2' => 'TEXT'
+            ])
+            ->ifNotExists()
+            ->execute();
 
         $this->getDataSource()->buildQuery('insert')
-        ->into('selectarray2')
-        ->values([
-            'selectarray2col' => 'value3',
-            'selectarray2col2' => 'value4',
-        ])
-        ->execute();
+            ->into('selectarray2')
+            ->values([
+                'selectarray2col' => 'value3',
+                'selectarray2col2' => 'value4',
+            ])
+            ->execute();
 
         $result = $this->getDataSource()->buildQuery('select')
-        ->select([
-            'selectarraycol',
-            'selectarraycol2',
-            'selectarray2col',
-            'selectarray2col2'
-        ])
-        ->from([
-            'selectarray',
-            'selectarray2'
-        ])
-        ->execute();
+            ->select([
+                'selectarraycol',
+                'selectarraycol2',
+                'selectarray2col',
+                'selectarray2col2'
+            ])
+            ->from([
+                'selectarray',
+                'selectarray2'
+            ])
+            ->execute();
 
         $this->assertSame($result[0], [
             'selectarraycol' => 'value1',
@@ -692,8 +692,8 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
     public function testExceptionSelectRequiredSelect()
     {
         $this->getDataSource()->buildQuery('select')
-        ->from('test')
-        ->execute();
+            ->from('test')
+            ->execute();
     }
 
     /**
@@ -703,8 +703,8 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
     public function testExceptionSelectRequiredFrom()
     {
         $this->getDataSource()->buildQuery('select')
-        ->select('test')
-        ->execute();
+            ->select('test')
+            ->execute();
     }
 
     /**
@@ -713,32 +713,32 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
     public function testExceptionSelectNotExistingTable()
     {
         $this->getDataSource()->buildQuery('select')
-        ->select('thing')
-        ->from('some_table')
-        ->execute();
+            ->select('thing')
+            ->from('some_table')
+            ->execute();
     }
 
     public function testInsert()
     {
         $this->getDataSource()->buildQuery('create_table')
-        ->name('insert1table')
-        ->columns([
-            'insert1col' => 'TEXT'
-        ])
-        ->ifNotExists()
-        ->execute();
+            ->name('insert1table')
+            ->columns([
+                'insert1col' => 'TEXT'
+            ])
+            ->ifNotExists()
+            ->execute();
 
         $this->getDataSource()->buildQuery('insert')
-        ->into('insert1table')
-        ->values([
-            'insert1col' => '___data___'
-        ])
-        ->execute();
+            ->into('insert1table')
+            ->values([
+                'insert1col' => '___data___'
+            ])
+            ->execute();
 
         $actual = $this->getDataSource()->buildQuery('select')
-        ->select('insert1col')
-        ->from('insert1table')
-        ->execute();
+            ->select('insert1col')
+            ->from('insert1table')
+            ->execute();
 
         $expected = '___data___';
 
@@ -752,8 +752,8 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
     public function testExceptionInsertIntoRequired()
     {
         $this->getDataSource()->buildQuery('insert')
-        ->values([])
-        ->execute();
+                ->values([])
+                ->execute();
     }
 
     /**
@@ -763,8 +763,8 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
     public function testExceptionInsertValuesRequired()
     {
         $this->getDataSource()->buildQuery('insert')
-        ->into('some_table')
-        ->execute();
+            ->into('some_table')
+            ->execute();
     }
 
     /**
@@ -774,9 +774,9 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
     public function testExceptionInsertEmptyValues()
     {
         $this->getDataSource()->buildQuery('insert')
-        ->into('some_table')
-        ->values([])
-        ->execute();
+            ->into('some_table')
+            ->values([])
+            ->execute();
     }
 
     /**
@@ -785,57 +785,57 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
     public function testExceptionInsertQuery()
     {
         $this->getDataSource()->buildQuery('insert')
-        ->into('some_table')
-        ->values([
-            'foo' => 'bar'
-        ])
-        ->execute();
+            ->into('some_table')
+            ->values([
+                'foo' => 'bar'
+            ])
+            ->execute();
     }
 
     public function testUpdate()
     {
         $this->getDataSource()->buildQuery('create_table')
-        ->name('update1table')
-        ->columns([
-            'update1col' => 'TEXT'
-        ])
-        ->ifNotExists()
-        ->execute();
+            ->name('update1table')
+            ->columns([
+                'update1col' => 'TEXT'
+            ])
+            ->ifNotExists()
+            ->execute();
 
         $this->getDataSource()->buildQuery('insert')
-        ->into('update1table')
-        ->values([
-            'update1col' => '___data___'
-        ])
-        ->execute();
+            ->into('update1table')
+            ->values([
+                'update1col' => '___data___'
+            ])
+            ->execute();
 
         $actual = $this->getDataSource()->buildQuery('select')
-        ->select('update1col')
-        ->from('update1table')
-        ->execute();
+            ->select('update1col')
+            ->from('update1table')
+            ->execute();
 
         $expected = '___data___';
 
         $this->assertSame($expected, $actual[0]['update1col']);
 
         $this->getDataSource()->buildQuery('update')
-        ->table('update1table')
-        ->set('update1col = ?', [
-            1 => [
-                'value' => '___newdata___'
-            ]
-        ])
-        ->where('update1col = ?', [
-            2 => [
-                'value' => '___data___'
-            ]
-        ])
-        ->execute();
+            ->table('update1table')
+            ->set('update1col = ?', [
+                1 => [
+                    'value' => '___newdata___'
+                ]
+            ])
+            ->where('update1col = ?', [
+                2 => [
+                    'value' => '___data___'
+                ]
+            ])
+            ->execute();
 
         $actual = $this->getDataSource()->buildQuery('select')
-        ->select('update1col')
-        ->from('update1table')
-        ->execute();
+            ->select('update1col')
+            ->from('update1table')
+            ->execute();
 
         $expected = '___newdata___';
 
@@ -851,8 +851,8 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
     public function testExceptionUpdateTableRequired()
     {
         $this->getDataSource()->buildQuery('update')
-        ->set('string')
-        ->execute();
+            ->set('string')
+            ->execute();
     }
 
     /**
@@ -862,8 +862,8 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
     public function testExceptionUpdateSetRequired()
     {
         $this->getDataSource()->buildQuery('update')
-        ->table('some_table')
-        ->execute();
+            ->table('some_table')
+            ->execute();
     }
 
     /**
@@ -872,9 +872,9 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
     public function testExceptionUpdateQuery()
     {
         $this->getDataSource()->buildQuery('update')
-        ->table('some_table')
-        ->set('foo = bar')
-        ->execute();
+            ->table('some_table')
+            ->set('foo = bar')
+            ->execute();
     }
 
     public function testGetAllTables()
