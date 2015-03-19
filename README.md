@@ -11,10 +11,11 @@
 - zlib (optional)
 - xdebug (optional)
 
-###Downloading
+###Downloading and installing dependencies
 ```
 $ git clone https://github.com/Macsch15/Tricolore.git
 $ cd Tricolore
+$ composer install
 ```
 
 ###MIT Licence
