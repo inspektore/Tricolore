@@ -122,7 +122,7 @@
     {% if 'checkbox-inline' in parent_label_class %}
         {{ form_label(form, null, { widget: parent() }) }}
     {% else %}
-        <div class="checkbox">
+        <div class="checkbox checkbox-success">
             {{ form_label(form, null, { widget: parent() }) }}
         </div>
     {% endif %}
@@ -170,8 +170,8 @@
     {% if label is empty %}
         {% set label = name|humanize %}
     {% endif %}
+    {{ widget|raw }}
     <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
-        {{ widget|raw }}
         {{ label|trans({}, translation_domain) }}
     </label>
 {% endblock checkbox_radio_label %}
