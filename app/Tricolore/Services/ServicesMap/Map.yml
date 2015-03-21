@@ -25,3 +25,9 @@ service-locator:
         class: Symfony\Component\Validator\Validation
         function: createValidator
         static: true
+
+    member:
+        class: Tricolore\Member\member
+
+    load_member:
+        class: Tricolore\Member\LoadMember
