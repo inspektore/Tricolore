@@ -76,6 +76,16 @@ class DatabaseFactory
     }
 
     /**
+     * PDO accessor
+     * 
+     * @return \PDO
+     */
+    public function getPdo()
+    {
+        return $this->pdo;
+    }
+
+    /**
      * Build query
      * 
      * @param string $type
@@ -198,18 +208,18 @@ class DatabaseFactory
     public function fieldExists($field_name, $in_table)
     {
         $query = $this->buildQuery('select')
-        ->select('column_name')
-        ->from('information_schema.columns')
-        ->where('table_name=? and column_name=?', [
-            1 => [
-                'value' => $in_table
-            ],
+            ->select('column_name')
+            ->from('information_schema.columns')
+            ->where('table_name=? and column_name=?', [
+                1 => [
+                    'value' => $in_table
+                ],
 
-            2 => [
-                'value' => $field_name
-            ]
-        ])
-        ->execute();
+                2 => [
+                    'value' => $field_name
+                ]
+            ])
+            ->execute();
 
         return count($query) ? true : false;
     }
@@ -223,14 +233,14 @@ class DatabaseFactory
     public function tableExists($table_name)
     {
         $query = $this->buildQuery('select')
-        ->select('*')
-        ->from('pg_tables')
-        ->where('schemaname = ?', [
-            1 => [
-                'value' => 'public'
-            ]
-        ])
-        ->execute();
+            ->select('*')
+            ->from('pg_tables')
+            ->where('schemaname = ?', [
+                1 => [
+                    'value' => 'public'
+                ]
+            ])
+            ->execute();
 
         if (count($query)) {
             foreach ($query as $key => $schema) {
@@ -251,14 +261,14 @@ class DatabaseFactory
     public function getAllTables()
     {
         $query = $this->buildQuery('select')
-        ->select('*')
-        ->from('pg_tables')
-        ->where('schemaname = ?', [
-            1 => [
-                'value' => 'public'
-            ]
-        ])
-        ->execute();
+            ->select('*')
+            ->from('pg_tables')
+            ->where('schemaname = ?', [
+                1 => [
+                    'value' => 'public'
+                ]
+            ])
+            ->execute();
 
         $tables = [];
 
@@ -280,14 +290,14 @@ class DatabaseFactory
     public function databaseExists($database_name)
     {
         $query = $this->buildQuery('select')
-        ->select('*')
-        ->from('pg_catalog.pg_database')
-        ->where('datname = ?', [
-            1 => [
-                'value' => $database_name
-            ]
-        ])
-        ->execute();
+            ->select('*')
+            ->from('pg_catalog.pg_database')
+            ->where('datname = ?', [
+                1 => [
+                    'value' => $database_name
+                ]
+            ])
+            ->execute();
 
         if (count($query)) {
             return true;

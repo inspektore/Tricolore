@@ -2,6 +2,7 @@ prod:
     base.full_url: "http://localhost"
     base.locale: "en"
     base.charset: "utf-8"
+    base.timezone: "Europe/Warsaw"
 
     router.host: ~
     router.use_httpd_rewrite: true
@@ -21,6 +22,7 @@ dev:
     base.full_url: "http://localhost/Tricolore/develop"
     base.locale: "en"
     base.charset: "utf-8"
+    base.timezone: "Europe/Warsaw"
 
     router.host: ~
     router.use_httpd_rewrite: true
@@ -40,6 +42,7 @@ test:
     base.full_url: "http://localhost/Tricolore/tests"
     base.locale: "en"
     base.charset: "utf-8"
+    base.timezone: "Europe/Warsaw"
 
     router.use_httpd_rewrite: false
 

@@ -4,6 +4,8 @@ namespace Tricolore\View;
 use Tricolore\Application;
 use Tricolore\Config\Config;
 use Tricolore\Services\ServiceLocator;
+use Tricolore\Session\Session;
+use Tricolore\Member\Member;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Bridge\Twig\Extension\FormExtension;
@@ -30,8 +32,8 @@ class View extends ServiceLocator
     public function register($safe_mode = false)
     {
         $finder = $this->get('finder')
-        ->directories()
-        ->in(Application::createPath('app:Tricolore:View:Templates'));
+            ->directories()
+            ->in(Application::createPath('app:Tricolore:View:Templates'));
 
         foreach ($finder as $file) {
             $directories[] = $file->getRealpath();
@@ -116,6 +118,8 @@ class View extends ServiceLocator
     private function registerGlobals()
     {
         $this->environment->addGlobal('app', Application::getInstance());
+        $this->environment->addGlobal('session', Session::getSession());
+        $this->environment->addGlobal('member', Member::getInstance());
     }
 
     /**
@@ -148,7 +152,7 @@ class View extends ServiceLocator
         $form = new TwigRendererEngine(['bootstrap_3_layout.html.twig']);
         $form->setEnvironment($this->environment);
 
-        $this->environment->addExtension(new FormExtension(new TwigRenderer($form)));        
+        $this->environment->addExtension(new FormExtension(new TwigRenderer($form, Session::csrfProvider())));        
     }
 
     /**

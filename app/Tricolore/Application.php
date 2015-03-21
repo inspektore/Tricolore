@@ -6,8 +6,8 @@ use Tricolore\RoutingProvider\RoutingProvider;
 use Tricolore\Services\ServiceLocator;
 use Tricolore\Exception\ErrorException;
 use Tricolore\Exception\RuntimeException;
+use Tricolore\Session\Session;
 use Symfony\Component\Routing\Generator\UrlGenerator;
-use Symfony\Component\HttpFoundation\Session\Session;
 
 class Application extends ServiceLocator
 {
@@ -26,13 +26,6 @@ class Application extends ServiceLocator
     private static $routing;
 
     /**
-     * Session object
-     * 
-     * @var Symfony\Component\HttpFoundation\Session\Session
-     */
-    private static $session;
-
-    /**
      * Register application and services
      *
      * @param array $options
@@ -44,14 +37,15 @@ class Application extends ServiceLocator
         self::$options = $options;
         self::getInstance()->setupErrorReporting();
 
+        setlocale(LC_ALL, Config::getParameter('base.locale'));
+        date_default_timezone_set(Config::getParameter('base.timezone'));
+
         try {
             if (endsWith('/', Config::getParameter('base.full_url')) === true) {
                 throw new RuntimeException('Setting "base.full_url" cannot end with a slash.');
             }
 
-            self::$session = new Session();
-            self::$session->setName('tricolore_session');
-            self::$session->start();
+            Session::begin();
 
             self::$routing = new RoutingProvider();
             self::$routing->register();
@@ -90,16 +84,6 @@ class Application extends ServiceLocator
     public static function getInstance()
     {
         return new static();
-    }
-
-    /**
-     * Symfony session accessor
-     * 
-     * @return Symfony\Component\HttpFoundation\Session\Session
-     */
-    public function getSession()
-    {
-        return self::$session;
     }
 
     /**
@@ -215,15 +199,5 @@ class Application extends ServiceLocator
     public function dataSourceQueries()
     {
         return self::getInstance()->get('datasource')->getQueriesNumber();
-    }
-
-    /**
-     * Loaded classes
-     * 
-     * @return array
-     */
-    public function loadedClasses()
-    {
-        return Autoloader::getLoadedClasses();
     }
 }
