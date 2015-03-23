@@ -17,7 +17,8 @@ class MemberTest extends \PHPUnit_Framework_TestCase
                 'group_id' => 'integer',
                 'joined' => 'integer',
                 'email' => 'text',
-                'token' => 'text'
+                'token' => 'text',
+                'ip_address' => 'text'
             ])
             ->ifNotExists()
             ->execute();
@@ -30,7 +31,8 @@ class MemberTest extends \PHPUnit_Framework_TestCase
                 'group_id' => 1,
                 'joined' => Carbon::now()->timestamp,
                 'email' => 'testing@example.com',
-                'token' => BCryptEncoder::passwordHash('test_token')
+                'token' => BCryptEncoder::passwordHash('test_token'),
+                'ip_address' => '0.0.0.0'
             ])
             ->execute();
     }
