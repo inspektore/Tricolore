@@ -92,6 +92,7 @@ class Member extends ServiceLocator
     /**
      * Get logged in member data
      * 
+     * @codeCoverageIgnore
      * @return array
      */
     public function getData()
@@ -108,6 +109,7 @@ class Member extends ServiceLocator
     /**
      * Kill member session
      * 
+     * @codeCoverageIgnore
      * @return void
      */
     public function killCurrentSession()
