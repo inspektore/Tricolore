@@ -25,7 +25,7 @@ $ cd Tricolore
 $ npm install
 ```
 
-Reload CSS from LESS:
+Build CSS from LESS:
 ```
 $ grunt less
 ```
