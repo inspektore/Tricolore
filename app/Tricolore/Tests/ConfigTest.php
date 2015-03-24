@@ -29,6 +29,7 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
             'base.full_url' => 'http://localhost/Tricolore/tests',
             'base.locale' => 'en',
             'base.charset' => 'utf-8',
+            'base.timezone' => 'Europe/Warsaw',
             'router.use_httpd_rewrite' => false,
             'trans.locale' => 'en_EN',
             'test.int' => 5874,
