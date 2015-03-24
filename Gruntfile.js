@@ -6,7 +6,7 @@ module.exports = function(grunt) {
           compress: true,
         },
         files: {
-          "./static/css/ui.css":"./static/less/ui.less"
+          './static/css/ui.css': './static/less/ui.less'
         }
       }
     },
