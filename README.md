@@ -18,6 +18,21 @@ $ cd Tricolore
 $ composer install
 ```
 
+###Using Grunt to manage LESS files
+```
+$ npm install
+```
+
+Reload CSS from LESS:
+```
+$ grunt less
+```
+
+Watch:
+```
+$ grunt watch
+```
+
 ###MIT Licence
 
 Copyright (c) 2015 Maciej Schmidt
