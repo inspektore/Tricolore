@@ -4,6 +4,8 @@ module.exports = function(grunt) {
       development: {
         options: {
           compress: true,
+          sourceMap: true,
+          sourceMapFilename: './static/css/ui.map'
         },
         files: {
           './static/css/ui.css': './static/less/ui.less'
@@ -17,7 +19,7 @@ module.exports = function(grunt) {
           './static/less/*.less',
           './static/less/*/*.less',
           './static/less/*/*/*.less'
-        ],  //watched files
+        ],
         tasks: ['less'],
         options: {
           livereload: true
