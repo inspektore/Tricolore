@@ -1,46 +1,24 @@
-+function registerBootstrapTooltips()
++function registerBootstrapUtils()
 {
   "use strict";
 
   $('[data-toggle="tooltip"]').tooltip({container: 'body'});
 }();
 
-+function searchInLoadedClasses()
-{
-  "use strict";
-
-  $("#search-loaded-classes").keyup(function () {
-    var filter = $(this).val();
-
-    $("ul li#loaded-class-node").each(function () {
-      var search = $(this).text().search(new RegExp(escapeRegExp(filter), "i"));
-
-      if (search < 0) {
-        $(this).hide();
-      } else {
-        $(this).show();
-      }
-    });
-
-    var founded_classes = $('li#loaded-class-node').filter(':visible').length;
-
-    if (founded_classes == 0) {
-      $('#class-not-found').show();
-    } else {
-      $('#class-not-found').hide();
-    }
-
-    $('#loaded-classes-count').text(founded_classes);
-  });
-}();
-
 +function destroyAllFlashMessages()
 {
   "use strict";
 
-  $('div.flash-message').delay(2000).slideUp(100);
+  $('div.flash-message').not('.alert-important').delay(2000).slideUp(100);
 }();
 
-function escapeRegExp(string) {
-  return string.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
-}
++function setUpNotificationPopover()
+{
+  $('#notification-popover').popover({
+    container: 'body',
+    html : true,
+    placement: 'bottom',
+    trigger: 'focus',
+    content: $('#notification-popover-content').html()
+  });
+}();
