@@ -886,4 +886,12 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
 
         $this->getDataSource()->dropTable($this->getDataSource()->getAllTables());
     }
+
+    public function testPdoAccessor()
+    {
+        $expected = 'PDO';
+        $actual = $this->getDataSource()->getPdo();
+
+        $this->assertInstanceOf($expected, $actual);
+    }
 }
