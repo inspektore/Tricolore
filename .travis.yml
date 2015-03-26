@@ -1,10 +1,13 @@
 language: php
 
+env:
+  - DB=pgsql POSTGRESQL_VERSION=9.1
+  - DB=pgsql POSTGRESQL_VERSION=9.2
+  - DB=pgsql POSTGRESQL_VERSION=9.3
+
 before_install:
   - echo 'hhvm.libxml.ext_entity_whitelist = file,http,https' > travis.hhvm.ini
-
-addons:
-  postgresql: "9.4"
+  - composer self-update
 
 php:
   - 5.5
@@ -20,8 +23,8 @@ matrix:
     - php: hhvm-nightly
 
 before_script:
-  - curl -s http://getcomposer.org/installer | php
-  - php composer.phar install --dev --no-interaction
+  - composer install --dev --no-interaction
+  - sudo service postgresql start $POSTGRESQL_VERSION
   - psql -c 'create database travis_ci_test;' -U postgres
 
 script:
