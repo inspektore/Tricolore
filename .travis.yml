@@ -1,6 +1,8 @@
 language: php
 
 env:
+  - DB=pgsql POSTGRESQL_VERSION=9.1
+  - DB=pgsql POSTGRESQL_VERSION=9.2
   - DB=pgsql POSTGRESQL_VERSION=9.3
   - DB=pgsql POSTGRESQL_VERSION=9.4
 
