@@ -74,10 +74,6 @@
                 <source>%method% method is not allowed for this request!</source>
                 <target>%method% method is not allowed for this request!</target>
             </trans-unit>
-            <trans-unit id="19">
-                <source>Loaded classes</source>
-                <target>Loaded classes</target>
-            </trans-unit>
             <trans-unit id="20">
                 <source>Close</source>
                 <target>Close</target>
@@ -89,6 +85,78 @@
             <trans-unit id="22">
                 <source>No match found.</source>
                 <target>No match found.</target>
+            </trans-unit>
+            <trans-unit id="23">
+                <source>You are successfully logged in.</source>
+                <target>You are successfully logged in.</target>
+            </trans-unit>
+            <trans-unit id="24">
+                <source>Account with this username or email not exists.</source>
+                <target>Account with this username or email not exists.</target>
+            </trans-unit>
+            <trans-unit id="25">
+                <source>Password for this account is not valid.</source>
+                <target>Password for this account is not valid.</target>
+            </trans-unit>
+            <trans-unit id="26">
+                <source>Log in</source>
+                <target>Log in</target>
+            </trans-unit>
+            <trans-unit id="27">
+                <source>or</source>
+                <target>or</target>
+            </trans-unit>
+            <trans-unit id="28">
+                <source>Sign Up</source>
+                <target>Sign Up</target> 
+            </trans-unit>
+            <trans-unit id="29">
+                <source>Logout</source>
+                <target>Logout</target>
+            </trans-unit>
+            <trans-unit id="30">
+                <source>You have an existing session. Please logout first.</source>
+                <target>You have an existing session. Please logout first.</target>
+            </trans-unit>
+            <trans-unit id="31">
+                <source>You are successfully logged out.</source>
+                <target>You are successfully logged out.</target>
+            </trans-unit>
+            <trans-unit id="32">
+                <source>Welcome back, %s!</source>
+                <target>Welcome back, %s!</target>
+            </trans-unit>
+            <trans-unit id="33">
+                <source>Don't have an account yet?</source>
+                <target>Don't have an account yet?</target>
+            </trans-unit>
+            <trans-unit id="34">
+                <source>Username</source>
+                <target>Username</target>
+            </trans-unit>
+            <trans-unit id="35">
+                <source>Type your username</source>
+                <target>Type your username</target>
+            </trans-unit>
+            <trans-unit id="36">
+                <source>E-mail</source>
+                <target>E-mail</target>
+            </trans-unit>
+            <trans-unit id="37">
+                <source>Type your active e-mail</source>
+                <target>Type your active e-mail</target>
+            </trans-unit>
+            <trans-unit id="38">
+                <source>Type your password</source>
+                <target>Type your password</target>
+            </trans-unit>
+            <trans-unit id="39">
+                <source>Repeat password</source>
+                <target>Repeat password</target>
+            </trans-unit>
+            <trans-unit id="40">
+                <source>Register</source>
+                <target>Register</target>
             </trans-unit>
         </body>
     </file>

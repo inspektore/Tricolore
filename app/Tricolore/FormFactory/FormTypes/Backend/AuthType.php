@@ -13,24 +13,24 @@ class AuthType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-        ->add('Login', 'text', [
-            'constraints' => [
-                new Assert\NotBlank()
-            ],
-
-            'attr' => [
-                'placeholder' => $options['data']['translator']->trans('Email address or username')
-            ]
-        ])
-        ->add('Password', 'password', [
-            'constraints' => [
-                new Assert\NotBlank()
-            ],
-
-            'attr' => [
-                'placeholder' => $options['data']['translator']->trans('Password')
-            ]
-        ]);
+            ->add('login', 'text', [
+                'constraints' => [
+                    new Assert\NotBlank()
+                ],
+                'label' => $options['data']['translator']->trans('Login'),
+                'attr' => [
+                    'placeholder' => $options['data']['translator']->trans('Email address or username')
+                ]
+            ])
+            ->add('password', 'password', [
+                'constraints' => [
+                    new Assert\NotBlank()
+                ],
+                'label' => $options['data']['translator']->trans('Password'),
+                'attr' => [
+                    'placeholder' => $options['data']['translator']->trans('Password')
+                ]
+            ]);
     }
 
     /**
@@ -38,6 +38,6 @@ class AuthType extends AbstractType
      */
     public function getName()
     {
-        return 'auth';
+        return 'auth_backend';
     }
 }

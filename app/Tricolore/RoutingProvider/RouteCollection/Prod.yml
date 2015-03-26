@@ -16,7 +16,19 @@ auth:
     path: /auth
     methods: [GET, POST]
     defaults:
-        _controller: Tricolore\Controller\Frontend\Auth:process
+        _controller: Tricolore\Controller\Frontend\Auth:login
+
+auth_logout:
+    path: /auth/logout
+    methods: [POST]
+    defaults:
+        _controller: Tricolore\Controller\Frontend\Auth:logout
+
+register:
+    path: /register
+    methods: [GET, POST]
+    defaults:
+        _controller: Tricolore\Controller\Frontend\Register:process
 
 admincp_auth:
     path: /admincp/auth

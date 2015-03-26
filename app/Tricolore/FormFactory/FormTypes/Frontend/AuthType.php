@@ -13,24 +13,40 @@ class AuthType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-        ->add('Login', 'text', [
-            'constraints' => [
-                new Assert\NotBlank()
-            ],
-
-            'attr' => [
-                'placeholder' => $options['data']['translator']->trans('Email address or username')
-            ]
-        ])
-        ->add('Password', 'password', [
-            'constraints' => [
-                new Assert\NotBlank()
-            ],
-
-            'attr' => [
-                'placeholder' => $options['data']['translator']->trans('Password')
-            ]
-        ]);
+            ->add('login', 'text', [
+                'constraints' => [
+                    new Assert\NotBlank()
+                ],
+                'label' => $options['data']['translator']->trans('Login'),
+                'attr' => [
+                    'placeholder' => $options['data']['translator']->trans('Email address or username')
+                ]
+            ])
+            ->add('password', 'password', [
+                'constraints' => [
+                    new Assert\NotBlank()
+                ],
+                'label' => $options['data']['translator']->trans('Password'),
+                'attr' => [
+                    'placeholder' => $options['data']['translator']->trans('Password')
+                ]
+            ])
+            ->add('autologin', 'checkbox', [
+                'label' => 'Remember me',
+                'label_attr' => [
+                    'for' => 'auth_frontend_autologin'
+                ],
+                'attr' => [
+                    'class' => 'checkbox',
+                ],
+                'required' => false
+            ])
+            ->add('auth-submit', 'submit', [
+                'label' => $options['data']['translator']->trans('Log in'),
+                'attr' => [
+                    'class' => 'btn-primary frontend-auth-button-continue full-width'
+                ]
+            ]);
     }
 
     /**
@@ -38,6 +54,6 @@ class AuthType extends AbstractType
      */
     public function getName()
     {
-        return 'auth';
+        return 'auth_frontend';
     }
 }

@@ -25,9 +25,74 @@
     </div>
 
     <div class="auth-buttons pull-right">
-      <a href="{{ url('auth') }}"><b>{% trans %}Log in{% endtrans %}</b></a>
-      &nbsp;<em>{% trans %}or{% endtrans %}</em>&nbsp;
-      <button type="submit" class="btn btn-primary">{% trans %}Sign Up{% endtrans %}</button>
+      {% if member.isLoggedIn() %}
+        <div class="dropdown pull-left">
+          <div class="member-important-icons">
+            <a title="Notifications" id="notification-popover" href="#"><i class="fa fa-bell fa-lg"></i></a>
+          </div>
+
+          <div id="notification-popover-content" style="display: none">
+            <div class="media">
+              <div class="media-left">
+                <a href="#">
+                  <img class="media-object" width="38" height="38" src="http://www.i.cytryna.org.pl/1416641048375.jpg" alt="avatar" />
+                </a>
+              </div>
+              <div class="media-body">
+                <h5 class="media-heading"><a href="#">John</a> poked you in <a href="#">post #18</a></h5>
+                  <a href="#"><b>I need help with this</b></a>
+              </div>
+            </div>
+            <hr />
+            <div class="media">
+              <div class="media-left">
+                <a href="#">
+                  <img class="media-object" width="38" height="38" src="http://www.i.cytryna.org.pl/1416641048375.jpg" alt="avatar" />
+                </a>
+              </div>
+              <div class="media-body">
+                <h5 class="media-heading"><a href="#">John</a> poked you in <a href="#">post #19</a></h5>
+                  <a href="#"><b>I need help with this</b></a>
+              </div>
+            </div>
+            <hr />
+            <div class="media">
+              <div class="media-left">
+                <a href="#">
+                  <img class="media-object" width="38" height="38" src="http://www.i.cytryna.org.pl/1416641048375.jpg" alt="avatar" />
+                </a>
+              </div>
+              <div class="media-body">
+                <h5 class="media-heading"><a href="#">John</a> poked you in <a href="#">post #20</a></h5>
+                  <a href="#"><b>I need help with this</b></a>
+              </div>
+            </div>
+          </div>
+
+          <button class="btn btn-primary btn-no-shadow dropdown-toggle" type="button" id="member-panel" data-toggle="dropdown" aria-expanded="true">
+            <i class="fa fa-user"></i> {{ member.getData()['username'] }} 
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu" role="menu" aria-labelledby="member-panel">
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="#"><i class="fa fa-user fa-fw"></i> Your profile</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="#"><i class="fa fa-envelope-o fa-fw"></i> Private messages</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="#"><i class="fa fa-cogs fa-fw"></i> Settings</a></li>
+          </ul>
+        </div>
+
+        <img class="img-thumbnail no-padding" width="34" height="34" src="http://www.i.cytryna.org.pl/1416641082701.jpg" alt="photo" />
+
+        <div class="pull-right">
+          <form action="{{ url('auth_logout') }}" method="post">
+            <input type="hidden" name="_token" value="{{ csrf_token('logout') }}">
+            <button type="submit" class="btn btn-link btn-no-shadow"><i class="fa fa-sign-out"></i> {% trans %}Logout{% endtrans %}</button>
+          </form>
+        </div>
+      {% else %}
+        <a href="{{ url('auth') }}"><b>{% trans %}Log in{% endtrans %}</b></a>
+        &nbsp;<em>{% trans %}or{% endtrans %}</em>&nbsp;
+        <a href="{{ url('register') }}" class="btn btn-primary">{% trans %}Sign Up{% endtrans %}</a>
+      {% endif %}
     </div>
 
     <form class="navbar-form navbar-left" role="form">

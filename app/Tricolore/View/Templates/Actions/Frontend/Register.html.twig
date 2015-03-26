@@ -1,0 +1,19 @@
+{% extends "BaseBlock.html.twig" %}
+
+{% block head_title %}{% trans %}Register{% endtrans %}{% endblock %}
+
+{% block breadcrumb %}
+  {{ breadcrumb.addChild("Register"|trans) }}
+{% endblock %}
+
+{% block body_content %}
+  <div class="frontend-auth-panel-top-space">
+    <h1>{% trans %}Register{% endtrans %}</h1>
+
+    <div class="frontend-auth-panel-background">
+      <form action="{{ url('register') }}" method="post" {{ form_enctype(form) }}>
+          {{ form_widget(form) }}
+      </form>
+    </div>
+  </div>
+{% endblock %}

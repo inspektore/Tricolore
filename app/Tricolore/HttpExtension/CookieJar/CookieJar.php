@@ -25,7 +25,8 @@ class CookieJar
 
     /**
      * Construct
-     *  
+     * 
+     * @codeCoverageIgnore 
      * @return void
      */
     public function __construct()
@@ -37,6 +38,7 @@ class CookieJar
     /**
      * Set new cookie
      * 
+     * @codeCoverageIgnore
      * @param string $name
      * @param string $value 
      * @param int $expire
@@ -58,6 +60,7 @@ class CookieJar
     /**
      * Get existing cookie
      * 
+     * @codeCoverageIgnore
      * @param string $name
      * @return string|bool
      */
@@ -73,6 +76,7 @@ class CookieJar
     /**
      * Destroy cookie
      * 
+     * @codeCoverageIgnore
      * @param string $name
      * @return Symfony\Component\HttpFoundation\Response
      */

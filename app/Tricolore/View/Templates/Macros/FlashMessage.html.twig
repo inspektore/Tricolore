@@ -1,14 +1,15 @@
 {% macro getAllMessages() %}
-  {% for type, message in app.getSession().getFlashBag().all() %}
-    {% if type == 'alert-success' %}
+  {% for type, message in session.getFlashBag().all() %}
+    {% if type == 'alert-success' or type == 'alert-success alert-important' %}
       {% set icon_set = 'fa-check' %}
     {% endif %}
 
-    {% if type == 'alert-info' %}
+    {% if type == 'alert-info' or type == 'alert-info alert-important' %}
       {% set icon_set = 'fa-question-circle' %}
     {% endif %}
 
-    {% if type == 'alert-warning' or type == 'alert-danger' %}
+    {% if type == 'alert-warning' or type == 'alert-warning alert-important' 
+      or type == 'alert-danger' or type == 'alert-danger alert-important' %}
       {% set icon_set = 'fa-exclamation-circle' %}
     {% endif %}
 
