@@ -19,9 +19,9 @@ $ composer install
 ```
 
 ###Using Grunt to manage LESS
+
+Run in the root directory:
 ```
-$ git clone https://github.com/Macsch15/Tricolore.git
-$ cd Tricolore
 $ npm install
 ```
 
