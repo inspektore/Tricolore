@@ -8,7 +8,7 @@ class TwigIntegrationTest extends \PHPUnit_Framework_TestCase
     private function getView()
     {
         return $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator')
-        ->get('view');
+            ->get('view');
     }
 
     public function testAssetFunction()
