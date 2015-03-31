@@ -36,7 +36,12 @@
         </div>
 
         {% if exception_name != 'ErrorException' %}
-          <h4>Exception caught in <code>{{ exception.getTrace().0.class }}->{{ exception.getTrace().0.function }}()</code></h4>
+          <h4>
+            Exception caught in 
+            <code>
+              {{ exception.getTrace().0.class is defined ? exception.getTrace().0.class ~ "->" : null }}{{ exception.getTrace().0.function }}()
+            </code>
+          </h4>
         {% endif %}
 
         <small>
