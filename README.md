@@ -18,6 +18,16 @@ $ cd Tricolore
 $ composer install
 ```
 
+OR
+
+```
+$ git clone https://github.com/Macsch15/Tricolore.git
+$ cd Tricolore
+$ curl -sS https://getcomposer.org/installer | php
+$ php composer.phar install
+```
+
+
 ###Using Grunt to manage LESS
 
 Run in the root directory:
