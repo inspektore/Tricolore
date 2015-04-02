@@ -2,7 +2,7 @@
     "require": {
         "php": ">=5.5",
         "nesbot/carbon": "1.18.0",
-        "twig/twig": "1.13.1",
+        "twig/twig": "1.18.0",
         "symfony/config": "2.6.5",
         "symfony/event-dispatcher": "2.6.5",
         "symfony/filesystem": "2.6.5",
