@@ -5,10 +5,6 @@ server {
         deny all;
     }
 
-    location ^~ /lib {
-        deny all;
-    }
-
     location ^~ /storage {
         deny all;
     }

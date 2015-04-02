@@ -1,18 +1,15 @@
 <?php
-if(version_compare(phpversion(), '5.5.0', '<')) {
-    die('Tricolore requires PHP 5.5 or higher.');
+if (file_exists(__DIR__ . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php') === false) {
+    echo 'You must set up the project dependencies. 
+        <a href="https://github.com/Macsch15/Tricolore#downloading-and-installing-dependencies">Help</a>';
+
+    exit(1);
 }
 
-use Tricolore\Autoloader;
 use Tricolore\Application;
 
-require_once __DIR__ . DIRECTORY_SEPARATOR . 'app' .
-    DIRECTORY_SEPARATOR . 'Tricolore' .
-    DIRECTORY_SEPARATOR . 'Autoloader.php';
-
-require_once __DIR__ . DIRECTORY_SEPARATOR . '.helpers.php';
-
-Autoloader::getInstance()->register();
+require __DIR__ . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
+require __DIR__ . DIRECTORY_SEPARATOR . '.helpers.php';
 
 Application::register([
     'directory' => __DIR__ . DIRECTORY_SEPARATOR,

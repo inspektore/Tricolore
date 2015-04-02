@@ -1,27 +1,5 @@
 <?php
 use Tricolore\Exception\RuntimeException;
-use Symfony\Component\VarDumper\VarDumper;
-
-/**
- * Dump variable
- * 
- * @codeCoverageIgnore
- * @return mixed
- */
-function dump()
-{
-    if (function_exists('xdebug_var_dump') === true) {
-        foreach (func_get_args() as $variable) {
-            xdebug_var_dump($variable);
-        }
-
-        return;
-    }
-
-    foreach (func_get_args() as $variable) {
-        VarDumper::dump($variable);
-    }
-}
 
 /**
  * Starts with
