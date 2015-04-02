@@ -1,5 +1,9 @@
 language: php
 
+cache:
+  directories:
+    - $HOME/.composer/cache
+
 env:
   - POSTGRESQL_VERSION=9.1
   - POSTGRESQL_VERSION=9.2
