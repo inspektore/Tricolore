@@ -11,9 +11,7 @@
          syntaxCheck="true">
     <filter>
         <blacklist>
-            <directory>lib/Symfony</directory>
-            <directory>lib/Carbon</directory>
-            <directory>lib/Twig</directory>
+            <directory>vendor/</directory>
             <file>app/Application.php</file>
         </blacklist>
     </filter>
