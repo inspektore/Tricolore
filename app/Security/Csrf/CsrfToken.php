@@ -16,6 +16,6 @@ class CsrfToken
      */
     public static function isValid($intention, $token_field = '_token')
     {
-        return Session::csrfProvider()->isCsrfTokenValid($intention, Request::createFromGlobals()->get($token_field));
+        return Session::csrfProvider()->isCsrfTokenValid($intention, Request::createFromGlobals()->request->get($token_field));
     }
 }
