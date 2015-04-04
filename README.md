@@ -22,8 +22,7 @@ OR
 
 ```
 $ git clone https://github.com/Macsch15/Tricolore.git
-$ cd Tricolore
-$ curl -sS https://getcomposer.org/installer | php
+$ cd Tricolore/bin
 $ php composer.phar install
 ```
 
