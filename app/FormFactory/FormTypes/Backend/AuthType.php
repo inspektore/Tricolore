@@ -30,12 +30,6 @@ class AuthType extends AbstractType
                 'attr' => [
                     'placeholder' => $options['data']['translator']->trans('Password')
                 ]
-            ])
-            ->add('admincp_auth_submit', 'submit', [
-                'label' => $options['data']['translator']->trans('Log in'),
-                'attr' => [
-                    'class' => 'btn btn-primary backend-auth-button-continue full-width'
-                ]
             ]);
     }
 

@@ -1,7 +1,7 @@
 <?php
 namespace Tricolore\Tests;
 
-use Tricolore\Security\Encoder\BCrypt;
+use Tricolore\Security\PasswordEncoder\BCryptEncoder;
 use Carbon\Carbon;
 
 class MemberTest extends \PHPUnit_Framework_TestCase
@@ -27,11 +27,11 @@ class MemberTest extends \PHPUnit_Framework_TestCase
             ->into('members')
             ->values([
                 'username' => 'Testing',
-                'password' => BCrypt::hash('test_pass'),
+                'password' => BCryptEncoder::passwordHash('test_pass'),
                 'group_id' => 1,
                 'joined' => Carbon::now()->timestamp,
                 'email' => 'testing@example.com',
-                'token' => BCrypt::hash('test_token'),
+                'token' => BCryptEncoder::passwordHash('test_token'),
                 'ip_address' => '0.0.0.0'
             ])
             ->execute();

@@ -12,8 +12,9 @@
     <h1>{% trans %}Authorization{% endtrans %}</h1>
 
     <div class="frontend-auth-panel-background">
-      {{ form(form, {'action': url('auth')}) }}
-
+      <form action="{{ url('auth') }}" method="post" {{ form_enctype(form) }}>
+          {{ form_widget(form) }}
+      </form>
       <br />
       <a href="#"><b>{% trans %}Forgot your password?{% endtrans %}</b></a><br />
       <a href="{{ url('register') }}"><b>{% trans %}Don't have an account yet?{% endtrans %}</b></a><br />

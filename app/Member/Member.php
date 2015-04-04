@@ -4,7 +4,7 @@ namespace Tricolore\Member;
 use Tricolore\Services\ServiceLocator;
 use Tricolore\Member\LoadMember;
 use Tricolore\Exception\MemberException;
-use Tricolore\Security\Encoder\BCrypt;
+use Tricolore\Security\PasswordEncoder\BCryptEncoder;
 use Tricolore\Session\Session;
 use Symfony\Component\Security\Core\Util\StringUtils;
 use Symfony\Component\HttpFoundation\Request;
@@ -34,7 +34,7 @@ class Member extends ServiceLocator
             return $this->get('translator')->trans('Account with this username or email not exists.');
         }
 
-        $verify_password = BCrypt::hashVerify($raw_password, $member->container()['password']);
+        $verify_password = BCryptEncoder::passwordVerify($raw_password, $member->container()['password']);
 
         return ($verify_password) ?: $this->get('translator')->trans('Password for this account is not valid.');
     }

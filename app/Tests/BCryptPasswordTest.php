@@ -1,7 +1,7 @@
 <?php
 namespace Tricolore\Tests;
 
-use Tricolore\Security\Encoder\BCrypt;
+use Tricolore\Security\PasswordEncoder\BCryptEncoder;
 
 class BCryptPasswordTest extends \PHPUnit_Framework_TestCase
 {
@@ -12,7 +12,7 @@ class BCryptPasswordTest extends \PHPUnit_Framework_TestCase
         $cost = 10;
 
         $expected = '$2y$10$TG9yZW0gaXBzdW0gQW5pbOs6IDnjToYF4xRiNTmg5hBu8BljuL2Pu';
-        $actual = BCrypt::hash($my_password, [
+        $actual = BCryptEncoder::passwordHash($my_password, [
             'salt' => $salt,
             'cost' => $cost
         ]);
@@ -23,7 +23,7 @@ class BCryptPasswordTest extends \PHPUnit_Framework_TestCase
     public function testBcryptHasherLen()
     {
         $my_password = 'Example super password!';
-        $hash = BCrypt::hash($my_password);
+        $hash = BCryptEncoder::passwordHash($my_password);
 
         $expected = 60;
         $actual = strlen($hash);
@@ -34,18 +34,18 @@ class BCryptPasswordTest extends \PHPUnit_Framework_TestCase
     public function testPasswordVerify()
     {
         $my_password = 'Example super password!';
-        $hash = BCrypt::hash($my_password);
+        $hash = BCryptEncoder::passwordHash($my_password);
 
-        $this->assertTrue(BCrypt::hashVerify($my_password, $hash));
+        $this->assertTrue(BCryptEncoder::passwordVerify($my_password, $hash));
     }
 
     public function testAlgo()
     {
         $my_password = 'Example super password!';
-        $hash = BCrypt::hash($my_password);
+        $hash = BCryptEncoder::passwordHash($my_password);
 
         $expected = 'bcrypt';
-        $actual = BCrypt::hashInfo($hash)['algoName'];
+        $actual = BCryptEncoder::passwordInfo($hash)['algoName'];
 
         $this->assertEquals($expected, $actual);
     }
@@ -53,7 +53,7 @@ class BCryptPasswordTest extends \PHPUnit_Framework_TestCase
     public function testNeedsRehash()
     {
         $my_password = 'Example super password!';
-        $old_password_hash = BCrypt::hash($my_password, [
+        $old_password_hash = BCryptEncoder::passwordHash($my_password, [
             'salt' => 'Duis non ut exercitation in reprehenderit',
             'cost' => 11
         ]);
@@ -63,7 +63,7 @@ class BCryptPasswordTest extends \PHPUnit_Framework_TestCase
             'cost' => 10
         ];
 
-        $actual = BCrypt::needsRehash($old_password_hash, $new_options);
+        $actual = BCryptEncoder::passwordNeedsRehash($old_password_hash, $new_options);
 
         $this->assertTrue($actual);
     }
