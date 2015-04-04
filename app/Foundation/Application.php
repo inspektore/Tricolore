@@ -1,5 +1,5 @@
 <?php
-namespace Tricolore;
+namespace Tricolore\Foundation;
 
 use Tricolore\Config\Config;
 use Tricolore\RoutingProvider\RoutingProvider;
@@ -63,7 +63,9 @@ class Application extends ServiceLocator
     {
         if (self::getInstance()->getEnv() === 'prod') {
             error_reporting(0);
-        } elseif (self::getInstance()->getEnv() === 'dev') {
+        } elseif (self::getInstance()->getEnv() === 'dev' 
+            || self::getInstance()->getEnv() === 'test'
+        ) {
             error_reporting(E_ALL);
         }
 
@@ -79,7 +81,7 @@ class Application extends ServiceLocator
     /**
      * Application instance
      *
-     * @return Tricolore\Application
+     * @return Tricolore\Foundation\Application
      */
     public static function getInstance()
     {

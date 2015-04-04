@@ -1,7 +1,7 @@
 <?php
 namespace Tricolore\Config;
 
-use Tricolore\Application;
+use Tricolore\Foundation\Application;
 use Symfony\Component\Yaml\Yaml;
 
 class Config

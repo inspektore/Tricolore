@@ -1,7 +1,7 @@
 <?php
 namespace Tricolore\Session;
 
-use Tricolore\Application;
+use Tricolore\Foundation\Application;
 use Tricolore\Config\Config;
 use Tricolore\Services\ServiceLocator;
 use Symfony\Component\Form\Extension\Csrf\CsrfProvider\SessionCsrfProvider;

@@ -1,7 +1,7 @@
 <?php
 namespace Tricolore\Tests;
 
-use Tricolore\Application;
+use Tricolore\Foundation\Application;
 use Tricolore\Exception\InvalidArgumentException;
 
 class ExceptionTest extends \PHPUnit_Framework_TestCase

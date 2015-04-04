@@ -6,7 +6,7 @@ if (file_exists(__DIR__ . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR .
     exit(1);
 }
 
-use Tricolore\Application;
+use Tricolore\Foundation\Application;
 
 require __DIR__ . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
 require __DIR__ . DIRECTORY_SEPARATOR . '.helpers.php';

@@ -1,7 +1,7 @@
 <?php
 namespace Tricolore\DataSources;
 
-use Tricolore\Application;
+use Tricolore\Foundation\Application;
 use Tricolore\Config\Config;
 use Tricolore\Exception\LogicException;
 

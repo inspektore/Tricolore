@@ -1,7 +1,7 @@
 <?php
 namespace Tricolore\Controller\Frontend;
 
-use Tricolore\Application;
+use Tricolore\Foundation\Application;
 use Tricolore\Session\Session;
 use Tricolore\FormFactory\FormTypes\Frontend\AuthType;
 use Tricolore\Services\ServiceLocator;

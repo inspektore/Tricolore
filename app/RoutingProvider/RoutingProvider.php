@@ -1,7 +1,7 @@
 <?php
 namespace Tricolore\RoutingProvider;
 
-use Tricolore\Application;
+use Tricolore\Foundation\Application;
 use Tricolore\Config\Config;
 use Tricolore\Services\ServiceLocator;
 use Tricolore\Exception\RuntimeException;

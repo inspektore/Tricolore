@@ -1,7 +1,7 @@
 <?php
 namespace Tricolore\Tests;
 
-use Tricolore\Application;
+use Tricolore\Foundation\Application;
 
 class TranslationTest extends \PHPUnit_Framework_TestCase
 {

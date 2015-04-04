@@ -1,7 +1,7 @@
 <?php
 namespace Tricolore\Tests;
 
-use Tricolore\Application;
+use Tricolore\Foundation\Application;
 use Tricolore\Config\Config;
 
 class DatasourceTest extends \PHPUnit_Framework_TestCase

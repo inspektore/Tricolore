@@ -1,7 +1,7 @@
 <?php
 namespace Tricolore\Translation;
 
-use Tricolore\Application;
+use Tricolore\Foundation\Application;
 use Tricolore\Config\Config;
 use Tricolore\Exception\NotFoundResourceException;
 use Symfony\Component\Translation\Translator;

@@ -1,7 +1,7 @@
 <?php
 namespace Tricolore\Services;
 
-use Tricolore\Application;
+use Tricolore\Foundation\Application;
 use Tricolore\Exception\ServicesException;
 use Tricolore\Exception\NotFoundResourceException;
 use Symfony\Component\Yaml\Yaml;
