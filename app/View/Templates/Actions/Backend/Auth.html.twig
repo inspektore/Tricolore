@@ -12,10 +12,8 @@
         <div class="alert alert-success" role="alert"><i class="fa fa-check"></i> Welcome to AdminCP</div>
       {% endif %}
 
-      <form action="{{ url('admincp_auth') }}" method="post" {{ form_enctype(form) }}>
-          {{ form_widget(form) }}<br />
-          <button type="submit" class="btn btn-primary backend-auth-button-continue full-width">{% trans %}Log in{% endtrans %}</button>
-      </form>
+      {{ form(form, {'action': url('admincp_auth')}) }}
+
       <br />
       <a href="{{ url('home') }}"><span class="ion-arrow-return-left"></span> Return to homepage</a>
     </div>
