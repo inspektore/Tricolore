@@ -48,7 +48,7 @@ class RegisterType extends AbstractType
                     'placeholder' => $options['data']['translator']->trans('Type your password')
                 ]
             ])
-            ->add('password-repeat', 'password', [
+            ->add('password_repeat', 'password', [
                 'constraints' => [
                     new Assert\NotBlank(),
                     new Assert\Length([
@@ -60,7 +60,7 @@ class RegisterType extends AbstractType
                     'placeholder' => $options['data']['translator']->trans('Type your password')
                 ]
             ])
-            ->add('register-submit', 'submit', [
+            ->add('register_submit', 'submit', [
                 'label' => $options['data']['translator']->trans('Register'),
                 'attr' => [
                     'class' => 'btn-primary'

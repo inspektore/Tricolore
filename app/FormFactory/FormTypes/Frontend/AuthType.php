@@ -41,7 +41,7 @@ class AuthType extends AbstractType
                 ],
                 'required' => false
             ])
-            ->add('auth-submit', 'submit', [
+            ->add('auth_submit', 'submit', [
                 'label' => $options['data']['translator']->trans('Log in'),
                 'attr' => [
                     'class' => 'btn-primary frontend-auth-button-continue full-width'
