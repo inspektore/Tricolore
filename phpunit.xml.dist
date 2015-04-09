@@ -12,7 +12,7 @@
     <filter>
         <blacklist>
             <directory>vendor/</directory>
-            <file>app/Application.php</file>
+            <file>app/Foundation/Application.php</file>
         </blacklist>
     </filter>
     <testsuites>
