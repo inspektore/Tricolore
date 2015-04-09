@@ -2,6 +2,7 @@
 namespace Tricolore\Member;
 
 use Tricolore\Services\ServiceLocator;
+use Tricolore\Exception\LogicException;
 
 class LoadMember extends ServiceLocator
 {
@@ -64,27 +65,42 @@ class LoadMember extends ServiceLocator
     }
 
     /**
+     * Find member by email or username
+     * 
+     * @param string $user_input
+     * @return Tricolore\Member\LoadMember
+     */
+    public function findByStrategy($user_input)
+    {
+        if (filter_var($user_input, FILTER_VALIDATE_EMAIL) === $user_input) {
+            return $this->byEmail($user_input);
+        }
+
+        return $this->byUsername($user_input);
+    }
+
+    /**
      * Member container
      * 
-     * @throws Tricolore\Exception\MemberException
+     * @throws Tricolore\Exception\LogicException
      * @return array|bool
      */
     public function container()
     {
-        $results = [];
-    
-        if (is_array($this->collection)) {
-            $results = $this->get('datasource')->buildQuery('select')
-                ->select('id, username, password, group_id, joined, email, token, ip_address')
-                ->from('members')
-                ->where($this->collection['search_by'] . ' = ?', [
-                    1 => [
-                        'value' => $this->collection['value'],
-                        'type' => $this->collection['type']
-                    ]
-                ])
-            ->execute();
+        if (is_array($this->collection) === false || !count($this->collection)) {
+            throw new LogicException('The required strategy byId(), byEmail() or byUsername() is missing.');
         }
+
+        $results = $this->get('datasource')->buildQuery('select')
+            ->select('id, username, password, group_id, joined, email, token, ip_address')
+            ->from('members')
+            ->where($this->collection['search_by'] . ' = ?', [
+                1 => [
+                    'value' => $this->collection['value'],
+                    'type' => $this->collection['type']
+                ]
+            ])
+        ->execute();
 
         if (!count($results)) {
             return false;

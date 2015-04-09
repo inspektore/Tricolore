@@ -165,6 +165,52 @@ class MemberTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($status, 'Account with this username or email not exists.');
     }
 
+    public function testLoadMemberFindByStrategyEmail()
+    {
+        $email = 'testing@example.com';
+        $load_member = $this->getMemberLoad()->findByStrategy($email);
+
+        $this->assertTrue($load_member->exists());
+    }
+
+    public function testLoadMemberFindByStrategyUsername()
+    {
+        $username = 'Testing';
+        $load_member = $this->getMemberLoad()->findByStrategy($username);
+
+        $this->assertTrue($load_member->exists());
+    }
+
+    public function testLoadMemberFindByStrategyEmailFail()
+    {
+        $email = 'test@example.com';
+        $load_member = $this->getMemberLoad()->findByStrategy($email);
+
+        $this->assertFalse($load_member->exists());
+    }
+
+    public function testLoadMemberFindByStrategyUsernameFail()
+    {
+        $username = 'Test';
+        $load_member = $this->getMemberLoad()->findByStrategy($username);
+
+        $this->assertFalse($load_member->exists());
+    }
+
+    public function testMemberCreate()
+    {
+        $this->assertTrue($this->getMember()->create(null, null, null, null, null));
+    }
+
+    /**
+     * @expectedException Tricolore\Exception\LogicException
+     * @expectedExceptionMessage The required strategy byId(), byEmail() or byUsername() is missing.
+     */
+    public function testLoadMemberMissingStrategy()
+    {
+        $this->getMemberLoad()->container();
+    }
+
     protected function tearDown()
     {
         $this->getDataSource()->dropTable('members');
