@@ -123,6 +123,7 @@ class Member extends ServiceLocator
     /**
      * Create member
      * 
+     * @param string $role
      * @param int $group_id
      * @param string $email
      * @param string $username
@@ -130,8 +131,9 @@ class Member extends ServiceLocator
      * @throws \Exception
      * @return bool|string
      */
-    public function create($group_id, $email, $username, $raw_password)
+    public function create($role, $group_id, $email, $username, $raw_password)
     {
-
+        // Temporary
+        return true;
     }
 }
