@@ -100,7 +100,7 @@ class LoadMember extends ServiceLocator
                     'type' => $this->collection['type']
                 ]
             ])
-        ->execute();
+            ->execute();
 
         if (!count($results)) {
             return false;
