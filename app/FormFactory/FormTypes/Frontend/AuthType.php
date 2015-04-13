@@ -32,7 +32,7 @@ class AuthType extends AbstractType
                 ]
             ])
             ->add('autologin', 'checkbox', [
-                'label' => 'Remember me',
+                'label' => $options['data']['translator']->trans('Remember me'),
                 'label_attr' => [
                     'for' => 'auth_frontend_autologin'
                 ],

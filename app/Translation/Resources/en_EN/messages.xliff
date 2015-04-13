@@ -154,6 +154,10 @@
                 <source>Register</source>
                 <target>Register</target>
             </trans-unit>
+            <trans-unit id="40">
+                <source>Remember me</source>
+                <target>Remember me</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
