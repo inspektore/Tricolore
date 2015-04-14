@@ -35,14 +35,7 @@ class Auth extends ServiceLocator
         $form->handleRequest(Request::createFromGlobals());
 
         if ($form->isSubmitted() === true && $form->isValid() === true) {
-            if (filter_var($form->getData()['login'], FILTER_VALIDATE_EMAIL)) {
-                $load_member = $this->get('load_member')
-                    ->byEmail($form->getData()['login']);
-            } else {
-                $load_member = $this->get('load_member')
-                    ->byUsername($form->getData()['login']);
-            }
-
+            $load_member = $this->get('load_member')->findByStrategy($form->getData()['login']);
             $validation = $this->get('member')->validate($load_member, $form->getData()['password']);
 
             if ($validation === true) {
