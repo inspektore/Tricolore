@@ -31,36 +31,11 @@ class View extends ServiceLocator
      */
     public function register($safe_mode = false)
     {
-        $finder = $this->get('finder')
-            ->directories()
-            ->in(Application::createPath('app:View:Templates'));
-
-        foreach ($finder as $file) {
-            $directories[] = $file->getRealpath();
-        }
-
-        $directories = array_merge($directories, [
-            Application::createPath('app:View:Templates')
-        ]);
-
-        if (Application::getInstance()->getEnv() === 'test') {
-            $directories = array_merge($directories, [
-                Application::createPath('app:Tests:Fixtures:Templates') 
-            ]);
-        }
-
-        $loader = new \Twig_Loader_Filesystem($directories);
-
-        $in_prod = Application::getInstance()->getEnv() === 'prod';
-
-        $this->environment = new \Twig_Environment($loader, [
-            'cache' => ($in_prod === true) ? Application::createPath(Config::getParameter('directory.storage') . ':twig') : false,
-            'auto_reload' => ($in_prod === true) ? false : true,
-            'strict_variables' => ($in_prod === true) ? false : true
-        ]);
+        $this->environment = new \Twig_Environment($this->getLoader(), $this->environmentOptions());
 
         $this->registerGlobals();
         $this->registerFunctions();
+        $this->registerExtensions();
 
         if ($safe_mode === false) {
             $this->formIntegration();
@@ -111,6 +86,52 @@ class View extends ServiceLocator
     }
 
     /**
+     * Get loader
+     * 
+     * @return \Twig_Loader_Filesystem
+     */
+    private function getLoader()
+    {
+        $finder = $this->get('finder')
+            ->directories()
+            ->in(Application::createPath('app:View:Templates'));
+
+        foreach ($finder as $file) {
+            $directories[] = $file->getRealpath();
+        }
+
+        $directories = array_merge($directories, [
+            Application::createPath('app:View:Templates')
+        ]);
+
+        if (Application::getInstance()->getEnv() === 'test') {
+            $directories = array_merge($directories, [
+                Application::createPath('app:Tests:Fixtures:Templates') 
+            ]);
+        }
+
+        return new \Twig_Loader_Filesystem($directories);
+    }
+
+    /**
+     * Environment options
+     * 
+     * @return array
+     */
+    private function environmentOptions()
+    {
+        $in_prod = Application::getInstance()->getEnv() === 'prod';
+        $cache_directory = Application::createPath(Config::getParameter('directory.storage') . ':twig');
+
+        return [
+            'cache' => ($in_prod === true) ? $cache_directory : false,
+            'auto_reload' => ($in_prod === true) ? false : true,
+            'strict_variables' => ($in_prod === true) ? false : true,
+            'debug' => ($in_prod === true) ? false : true        
+        ];
+    }
+
+    /**
      * Register global variables
      * 
      * @return void
@@ -120,6 +141,18 @@ class View extends ServiceLocator
         $this->environment->addGlobal('app', Application::getInstance());
         $this->environment->addGlobal('session', Session::getSession());
         $this->environment->addGlobal('member', Member::getInstance());
+    }
+
+    /**
+     * Register extensions
+     * 
+     * @return void
+     */
+    private function registerExtensions()
+    {
+        if (Application::getInstance()->getEnv() !== 'prod') {
+            $this->environment->addExtension(new \Twig_Extension_Debug());
+        }
     }
 
     /**
