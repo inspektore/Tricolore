@@ -3,7 +3,7 @@ namespace Tricolore\Controller\Frontend;
 
 use Tricolore\Services\ServiceLocator;
 
-class HelloAction extends ServiceLocator
+class Hello extends ServiceLocator
 {
     /**
      * @Route('/hello/{name}', name="hello")

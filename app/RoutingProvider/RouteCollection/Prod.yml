@@ -2,7 +2,7 @@ home:
     path: /
     methods: [GET]
     defaults: 
-        _controller: Tricolore\Controller\Frontend\IndexAction:index
+        _controller: Tricolore\Controller\Frontend\Index:index
 
 hello:
     path: /hello/{name}
@@ -10,7 +10,7 @@ hello:
     requirements: 
         name: "[A-Za-z0-9-_]+"
     defaults: 
-        _controller: Tricolore\Controller\Frontend\HelloAction:sayHello
+        _controller: Tricolore\Controller\Frontend\Hello:sayHello
 
 auth:
     path: /auth

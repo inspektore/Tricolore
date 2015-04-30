@@ -3,7 +3,7 @@ namespace Tricolore\Controller\Frontend;
 
 use Tricolore\Services\ServiceLocator;
 
-class IndexAction extends ServiceLocator
+class Index extends ServiceLocator
 {
     /**
      * @Route('/', name="home")
