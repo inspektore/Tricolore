@@ -516,11 +516,11 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
 
         foreach ([1, 2, 3] as $name) {
             $this->getDataSource()->buildQuery('insert')
-            ->into('groupbytable')
-            ->values([
-                'groupby_col1' => $name
-            ])
-            ->execute();
+                ->into('groupbytable')
+                ->values([
+                    'groupby_col1' => $name
+                ])
+                ->execute();
         }
 
         $asc = $this->getDataSource()->buildQuery('select')
@@ -752,8 +752,8 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
     public function testExceptionInsertIntoRequired()
     {
         $this->getDataSource()->buildQuery('insert')
-                ->values([])
-                ->execute();
+            ->values([])
+            ->execute();
     }
 
     /**
