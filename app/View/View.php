@@ -13,6 +13,8 @@ use Symfony\Bridge\Twig\Form\TwigRenderer;
 use Symfony\Bridge\Twig\Form\TwigRendererEngine;
 use Symfony\Bridge\Twig\Extension\TranslationExtension;
 use Carbon\Carbon;
+use Cocur\Slugify\Bridge\Twig\SlugifyExtension;
+use Cocur\Slugify\Slugify;
 
 class View extends ServiceLocator
 {
@@ -153,6 +155,8 @@ class View extends ServiceLocator
         if (Application::getInstance()->getEnv() !== 'prod') {
             $this->environment->addExtension(new \Twig_Extension_Debug());
         }
+
+        $this->environment->addExtension(new SlugifyExtension(Slugify::create()));
     }
 
     /**
