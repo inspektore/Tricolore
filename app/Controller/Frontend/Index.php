@@ -10,6 +10,6 @@ class Index extends ServiceLocator
      */
     public function index()
     {
-        return $this->get('view')->display('Actions/Frontend', 'IndexAction');
+        return $this->get('view')->display('Actions/Frontend', 'Index');
     }
 }

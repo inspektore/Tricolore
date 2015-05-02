@@ -14,6 +14,6 @@ class Hello extends ServiceLocator
             'name' => $name
         ];
 
-        return $this->get('view')->display('Actions/Frontend', 'HelloAction', $render);
+        return $this->get('view')->display('Actions/Frontend', 'Hello', $render);
     }
 }
