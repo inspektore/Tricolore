@@ -118,7 +118,6 @@ class Member extends ServiceLocator
         $this->get('cookiejar')->destroy('member_id');
         $this->get('cookiejar')->destroy('token');
     }
-    
 
     /**
      * Create member
