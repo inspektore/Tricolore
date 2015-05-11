@@ -1,7 +1,7 @@
 {
     "require": {
         "php": ">=5.5",
-        "nesbot/carbon": "1.18.0",
+        "nesbot/carbon": "1.19.0",
         "twig/twig": "1.18.1",
         "cocur/slugify": "dev-master",
         "symfony/config": "2.6.6",
