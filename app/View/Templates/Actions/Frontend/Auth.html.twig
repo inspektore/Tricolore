@@ -1,15 +1,15 @@
 {% extends "BaseBlock.html.twig" %}
 
-{% block head_title %}{% trans %}Authorization{% endtrans %}{% endblock %}
+{% block head_title %}{% trans %}Authentication{% endtrans %}{% endblock %}
 {% block container_class %}frontend-auth-panel-width{% endblock %}
 
 {% block breadcrumb %}
-  {{ breadcrumb.addChild("Authorization"|trans) }}
+  {{ breadcrumb.addChild("Authentication"|trans) }}
 {% endblock %}
 
 {% block body_content %}
   <div class="frontend-auth-panel-top-space">
-    <h1>{% trans %}Authorization{% endtrans %}</h1>
+    <h1>{% trans %}Authentication{% endtrans %}</h1>
 
     <div class="frontend-auth-panel-background">
       {{ form(form, {'action': url('auth')}) }}

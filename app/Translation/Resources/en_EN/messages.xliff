@@ -39,8 +39,8 @@
                 <target>Log in</target>
             </trans-unit>
             <trans-unit id="10">
-                <source>AdminCP Authorization</source>
-                <target>AdminCP Authorization</target>
+                <source>AdminCP Authentication</source>
+                <target>AdminCP Authentication</target>
             </trans-unit>
             <trans-unit id="11">
                 <source>Homepage</source>
@@ -59,8 +59,8 @@
                 <target>Database queries</target>
             </trans-unit>
             <trans-unit id="15">
-                <source>Authorization</source>
-                <target>Authorization</target>
+                <source>Authentication</source>
+                <target>Authentication</target>
             </trans-unit>
             <trans-unit id="16">
                 <source>Forgot your password?</source>

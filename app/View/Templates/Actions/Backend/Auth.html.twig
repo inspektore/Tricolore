@@ -1,13 +1,13 @@
 {% extends "BaseBlockOnlyAssets.html.twig" %}
 
-{% block head_title %}{% trans %}AdminCP Authorization{% endtrans %}{% endblock %}
+{% block head_title %}{% trans %}Authentication{% endtrans %}{% endblock %}
 {% block container_class %}backend-auth-panel-width{% endblock %}
 
 {% block body_content %}
   <div class="backend-auth-panel-top-space">
-    <h1>{% trans %}AdminCP Authorization{% endtrans %}</h1>
-
     <div class="backend-auth-panel-background">
+      <h1>{% trans %}Authentication{% endtrans %}</h1>
+      
       {% if is_valid %}
         <div class="alert alert-success" role="alert"><i class="fa fa-check"></i> Welcome to AdminCP</div>
       {% endif %}
