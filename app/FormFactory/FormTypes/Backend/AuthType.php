@@ -17,24 +17,26 @@ class AuthType extends AbstractType
                 'constraints' => [
                     new Assert\NotBlank()
                 ],
-                'label' => $options['data']['translator']->trans('Login'),
+                'label' => false,
                 'attr' => [
-                    'placeholder' => $options['data']['translator']->trans('Email address or username')
+                    'placeholder' => $options['data']['translator']->trans('Email address or username'),
+                    'class' => 'backend-auth-input'
                 ]
             ])
             ->add('password', 'password', [
                 'constraints' => [
                     new Assert\NotBlank()
                 ],
-                'label' => $options['data']['translator']->trans('Password'),
+                'label' => false,
                 'attr' => [
-                    'placeholder' => $options['data']['translator']->trans('Password')
+                    'placeholder' => $options['data']['translator']->trans('Password'),
+                    'class' => 'backend-auth-input'
                 ]
             ])
             ->add('admincp_auth_submit', 'submit', [
                 'label' => $options['data']['translator']->trans('Log in'),
                 'attr' => [
-                    'class' => 'btn btn-primary backend-auth-button-continue full-width'
+                    'class' => 'btn btn-success backend-auth-button-continue full-width'
                 ]
             ]);
     }

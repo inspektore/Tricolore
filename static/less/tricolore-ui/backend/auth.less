@@ -10,9 +10,24 @@
   background: @auth-backend-auth-panel-background;
   border: @auth-backend-auth-panel-border;
   padding: @auth-backend-auth-panel-padding;
+
+  &,
+  & a {
+    color: @auth-backend-auth-panel-background-link-color;
+  }
 }
 
 .backend-auth-button-continue {
   font-size: @auth-backend-auth-button-continue-font-size;
   font-weight: @auth-backend-auth-button-continue-font-weight;
+  height: @auth-backend-auth-button-continue-height;
+  width: @auth-backend-auth-button-continue-width;
+  float: right;
+}
+
+.backend-auth-input {
+  height: @auth-backend-auth-input-height;
+  font-size: @auth-backend-auth-input-font-size;
+  font-weight: @auth-backend-auth-input-font-weight;
+  text-align: center;
 }
