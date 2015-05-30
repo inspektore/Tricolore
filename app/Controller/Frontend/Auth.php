@@ -6,7 +6,6 @@ use Tricolore\Session\Session;
 use Tricolore\FormFactory\FormTypes\Frontend\AuthType;
 use Tricolore\Services\ServiceLocator;
 use Tricolore\Member\Member;
-use Tricolore\Member\LoadMember;
 use Tricolore\Config\Config;
 use Tricolore\Security\Csrf\CsrfToken;
 use Tricolore\Exception\NoPermissionException;
@@ -35,16 +34,16 @@ class Auth extends ServiceLocator
         $form->handleRequest(Request::createFromGlobals());
 
         if ($form->isSubmitted() === true && $form->isValid() === true) {
-            $load_member = $this->get('load_member')->findByStrategy($form->getData()['login']);
-            $validation = $this->get('member')->validate($load_member, $form->getData()['password']);
+            $member_finder = $this->get('member.finder')->findByStrategy($form->getData()['login']);
+            $validation = $this->get('member')->validate($member_finder, $form->getData()['password']);
 
             if ($validation === true) {
                 if ($form->getData()['autologin'] === true) {
-                    $this->get('cookiejar')->set('member_id', $load_member->container()['id'], 31556926);
-                    $this->get('cookiejar')->set('token', $load_member->container()['token'], 31556926);
+                    $this->get('cookiejar')->set('member_id', $member_finder->container()['id'], 31556926);
+                    $this->get('cookiejar')->set('token', $member_finder->container()['token'], 31556926);
                 }
 
-                Session::getSession()->set('member_id', $load_member->container()['id']);
+                Session::getSession()->set('member_id', $member_finder->container()['id']);
 
                 Session::getSession()
                     ->getFlashBag()

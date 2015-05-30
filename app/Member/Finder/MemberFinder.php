@@ -1,10 +1,10 @@
 <?php
-namespace Tricolore\Member;
+namespace Tricolore\Member\Finder;
 
 use Tricolore\Services\ServiceLocator;
 use Tricolore\Exception\LogicException;
 
-class LoadMember extends ServiceLocator
+class MemberFinder extends ServiceLocator
 {
     /**
      * Collection
@@ -17,7 +17,7 @@ class LoadMember extends ServiceLocator
      * Search by id
      * 
      * @param int $member_id
-     * @return Tricolore\Member\LoadMember
+     * @return Tricolore\Member\Finder\MemberFinder
      */
     public function byId($member_id)
     {
@@ -34,7 +34,7 @@ class LoadMember extends ServiceLocator
      * Search by email
      * 
      * @param string $member_email
-     * @return Tricolore\Member\LoadMember
+     * @return Tricolore\Finder\MemberFinder
      */
     public function byEmail($member_email)
     {
@@ -51,7 +51,7 @@ class LoadMember extends ServiceLocator
      * Search by username
      * 
      * @param string $member_username
-     * @return Tricolore\Member\LoadMember
+     * @return Tricolore\Finder\MemberFinder
      */
     public function byUsername($member_username)
     {
@@ -68,7 +68,7 @@ class LoadMember extends ServiceLocator
      * Find member by email or username
      * 
      * @param string $user_input
-     * @return Tricolore\Member\LoadMember
+     * @return Tricolore\Finder\MemberFinder
      */
     public function findByStrategy($user_input)
     {

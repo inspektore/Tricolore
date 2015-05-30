@@ -27,7 +27,7 @@ service-locator:
         static: true
 
     member:
-        class: Tricolore\Member\member
+        class: Tricolore\Member\Member
 
-    load_member:
-        class: Tricolore\Member\LoadMember
+    member.finder:
+        class: Tricolore\Member\Finder\MemberFinder

@@ -49,15 +49,15 @@ class MemberTest extends \PHPUnit_Framework_TestCase
             ->get('member');  
     }
 
-    private function getMemberLoad()
+    private function getMemberFinder()
     {
         return $this->getMockForAbstractClass('Tricolore\Services\ServiceLocator')
-            ->get('load_member');  
+            ->get('member.finder');  
     }
 
     public function testMemberExistsByEmail()
     {
-        $exists = $this->getMemberLoad()
+        $exists = $this->getMemberFinder()
             ->byEmail('testing@example.com')
             ->exists();
 
@@ -66,7 +66,7 @@ class MemberTest extends \PHPUnit_Framework_TestCase
 
     public function testMemberExistsByEmailFail()
     {
-        $exists = $this->getMemberLoad()
+        $exists = $this->getMemberFinder()
             ->byEmail('testingexample.com')
             ->exists();
 
@@ -75,7 +75,7 @@ class MemberTest extends \PHPUnit_Framework_TestCase
 
     public function testMemberExistsById()
     {
-        $exists = $this->getMemberLoad()
+        $exists = $this->getMemberFinder()
             ->byId(1)
             ->exists();
 
@@ -84,7 +84,7 @@ class MemberTest extends \PHPUnit_Framework_TestCase
 
     public function testMemberExistsByIdFail()
     {
-        $exists = $this->getMemberLoad()
+        $exists = $this->getMemberFinder()
             ->byId(99)
             ->exists();
 
@@ -93,7 +93,7 @@ class MemberTest extends \PHPUnit_Framework_TestCase
 
     public function testMemberExistsByUsername()
     {
-        $exists = $this->getMemberLoad()
+        $exists = $this->getMemberFinder()
             ->byUsername('Testing')
             ->exists();
 
@@ -102,7 +102,7 @@ class MemberTest extends \PHPUnit_Framework_TestCase
 
     public function testMemberExistsByUsernameFail()
     {
-        $exists = $this->getMemberLoad()
+        $exists = $this->getMemberFinder()
             ->byUsername('testing')
             ->exists();
 
@@ -111,7 +111,7 @@ class MemberTest extends \PHPUnit_Framework_TestCase
 
     public function testMemberData()
     {
-        $data = $this->getMemberLoad()
+        $data = $this->getMemberFinder()
             ->byEmail('testing@example.com')
             ->container();
 
@@ -122,7 +122,7 @@ class MemberTest extends \PHPUnit_Framework_TestCase
 
     public function testMemberDataNoResults()
     {
-        $data = $this->getMemberLoad()
+        $data = $this->getMemberFinder()
             ->byEmail('testingexample.com')
             ->container();
 
@@ -131,7 +131,7 @@ class MemberTest extends \PHPUnit_Framework_TestCase
 
     public function testMemberValidate()
     {
-        $load_member = $this->getMemberLoad()
+        $load_member = $this->getMemberFinder()
             ->byEmail('testing@example.com');
 
         $password = 'test_pass';
@@ -143,7 +143,7 @@ class MemberTest extends \PHPUnit_Framework_TestCase
 
     public function testMemberValidateFail()
     {
-        $load_member = $this->getMemberLoad()
+        $load_member = $this->getMemberFinder()
             ->byEmail('testing@example.com');
 
         $password = 'testpass';
@@ -155,7 +155,7 @@ class MemberTest extends \PHPUnit_Framework_TestCase
 
     public function testMemberValidateFailNotFoundMember()
     {
-        $load_member = $this->getMemberLoad()
+        $load_member = $this->getMemberFinder()
             ->byEmail('test@example.com');
 
         $password = 'test_pass';
@@ -168,7 +168,7 @@ class MemberTest extends \PHPUnit_Framework_TestCase
     public function testLoadMemberFindByStrategyEmail()
     {
         $email = 'testing@example.com';
-        $load_member = $this->getMemberLoad()->findByStrategy($email);
+        $load_member = $this->getMemberFinder()->findByStrategy($email);
 
         $this->assertTrue($load_member->exists());
     }
@@ -176,7 +176,7 @@ class MemberTest extends \PHPUnit_Framework_TestCase
     public function testLoadMemberFindByStrategyUsername()
     {
         $username = 'Testing';
-        $load_member = $this->getMemberLoad()->findByStrategy($username);
+        $load_member = $this->getMemberFinder()->findByStrategy($username);
 
         $this->assertTrue($load_member->exists());
     }
@@ -184,7 +184,7 @@ class MemberTest extends \PHPUnit_Framework_TestCase
     public function testLoadMemberFindByStrategyEmailFail()
     {
         $email = 'test@example.com';
-        $load_member = $this->getMemberLoad()->findByStrategy($email);
+        $load_member = $this->getMemberFinder()->findByStrategy($email);
 
         $this->assertFalse($load_member->exists());
     }
@@ -192,7 +192,7 @@ class MemberTest extends \PHPUnit_Framework_TestCase
     public function testLoadMemberFindByStrategyUsernameFail()
     {
         $username = 'Test';
-        $load_member = $this->getMemberLoad()->findByStrategy($username);
+        $load_member = $this->getMemberFinder()->findByStrategy($username);
 
         $this->assertFalse($load_member->exists());
     }
@@ -208,7 +208,7 @@ class MemberTest extends \PHPUnit_Framework_TestCase
      */
     public function testLoadMemberMissingStrategy()
     {
-        $this->getMemberLoad()->container();
+        $this->getMemberFinder()->container();
     }
 
     protected function tearDown()
