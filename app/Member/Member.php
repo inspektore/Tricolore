@@ -36,7 +36,11 @@ class Member extends ServiceLocator
 
         $verify_password = BCrypt::hashVerify($raw_password, $member->container()['password']);
 
-        return ($verify_password) ?: $this->get('translator')->trans('Password for this account is not valid.');
+        if ($verify_password === true) {
+            return true;
+        }
+
+        return $this->get('translator')->trans('Password for this account is not valid.');
     }
 
     /**
