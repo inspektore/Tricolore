@@ -4,7 +4,7 @@ namespace Tricolore\Session;
 use Tricolore\Foundation\Application;
 use Tricolore\Config\Config;
 use Tricolore\Services\ServiceLocator;
-use Symfony\Component\Form\Extension\Csrf\CsrfProvider\SessionCsrfProvider;
+use Symfony\Component\Security\Csrf\CsrfTokenManager;
 use Symfony\Component\HttpFoundation\Session\Session as SessionProvider;
 use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
 use Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler;
@@ -53,11 +53,11 @@ class Session extends ServiceLocator
      * CSRF provider
      * 
      * @codeCoverageIgnore
-     * @return Symfony\Component\Form\Extension\Csrf\CsrfProvider\SessionCsrfProvider
+     * @return Symfony\Component\Security\Csrf\CsrfTokenManager
      */
     public static function csrfProvider()
     {
-        return new SessionCsrfProvider(self::getSession(), 'some_secret_token');
+        return new CsrfTokenManager();
     }
 
     /**

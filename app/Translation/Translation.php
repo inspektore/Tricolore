@@ -26,7 +26,7 @@ class Translation
         $this->addResource($translator, $resource, $locale);
         $this->addValidatorResource($translator, $locale);
 
-        $translator->setFallbackLocale(['en_EN']);
+        $translator->setFallbackLocales(['en_EN']);
 
         return $translator;
     }

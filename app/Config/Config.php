@@ -18,7 +18,7 @@ class Config
             return false;
         }
 
-        $collection_parsed = Yaml::parse(sprintf(Application::createPath('app:Config:Resources:%s.yml'), $collection));
+        $collection_parsed = Yaml::parse(file_get_contents(sprintf(Application::createPath('app:Config:Resources:%s.yml'), $collection)));
 
         if (isset($collection_parsed[Application::getInstance()->getEnv()][$key]) === false) {
             return false;
@@ -37,7 +37,7 @@ class Config
     {
         if (self::collectionExists($collection) === false ||
             !count($collection_parsed = Yaml::parse(
-                sprintf(Application::createPath('app:Config:Resources:%s.yml'), $collection)))
+                file_get_contents(sprintf(Application::createPath('app:Config:Resources:%s.yml'), $collection))))
         ) {
             return [];
         }

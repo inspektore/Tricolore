@@ -3,6 +3,7 @@ namespace Tricolore\Security\Csrf;
 
 use Tricolore\Session\Session;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Csrf\CsrfToken as Token;
 
 class CsrfToken
 {
@@ -16,6 +17,8 @@ class CsrfToken
      */
     public static function isValid($intention, $token_field = '_token')
     {
-        return Session::csrfProvider()->isCsrfTokenValid($intention, Request::createFromGlobals()->request->get($token_field));
+        $token = new Token($intention, Request::createFromGlobals()->request->get($token_field));
+
+        return Session::csrfProvider()->isTokenValid($token);
     }
 }
