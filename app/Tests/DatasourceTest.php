@@ -877,21 +877,172 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
             ->execute();
     }
 
-    public function testGetAllTables()
-    {
-        $expected = 11;
-        $actual = $this->getDataSource()->getAllTables();
-
-        $this->assertEquals($expected, count($actual));
-
-        $this->getDataSource()->dropTable($this->getDataSource()->getAllTables());
-    }
-
     public function testPdoAccessor()
     {
         $expected = 'PDO';
         $actual = $this->getDataSource()->getPdo();
 
         $this->assertInstanceOf($expected, $actual);
+    }
+
+    public function testDataFiltersBool()
+    {
+        $this->getDataSource()->buildQuery('create_table')
+            ->name('test_filters_bool')
+            ->columns([
+                'tmp_col' => 'BOOLEAN'
+            ])
+            ->ifNotExists()
+            ->execute();
+
+        $this->getDataSource()->buildQuery('insert')
+            ->into('test_filters_bool')
+            ->values([
+                'tmp_col' => true
+            ])
+            ->execute();
+
+        $this->getDataSource()->buildQuery('select')
+            ->select('*')
+            ->from('test_filters_bool')
+            ->where('tmp_col = ?', [
+                1 => [
+                    'value' => true,
+                    'type' => 'BOOL'
+                ]
+            ])
+            ->execute();
+    }
+
+    /**
+     * @expectedException Tricolore\Exception\DatabaseException
+     */
+    public function testDataFiltersBoolFail()
+    {
+        $this->getDataSource()->buildQuery('create_table')
+            ->name('test_filters_bool')
+            ->columns([
+                'tmp_col' => 'BOOLEAN'
+            ])
+            ->ifNotExists()
+            ->execute();
+
+        $this->getDataSource()->buildQuery('insert')
+            ->into('test_filters_bool')
+            ->values([
+                'tmp_col' => true
+            ])
+            ->execute();
+
+        $this->getDataSource()->buildQuery('select')
+            ->select('*')
+            ->from('test_filters_bool')
+            ->where('tmp_col = ?', [
+                1 => [
+                    'value' => 'cat',
+                    'type' => 'BOOL'
+                ]
+            ])
+            ->execute();
+    }
+
+    public function testDataFiltersInt()
+    {
+        $this->getDataSource()->buildQuery('create_table')
+            ->name('test_filters_int')
+            ->columns([
+                'tmp_col' => 'INTEGER'
+            ])
+            ->ifNotExists()
+            ->execute();
+
+        $this->getDataSource()->buildQuery('insert')
+            ->into('test_filters_int')
+            ->values([
+                'tmp_col' => 155
+            ])
+            ->execute();
+
+        $this->getDataSource()->buildQuery('select')
+            ->select('*')
+            ->from('test_filters_int')
+            ->where('tmp_col = ?', [
+                1 => [
+                    'value' => 155,
+                    'type' => 'INT'
+                ]
+            ])
+            ->execute();
+    }
+
+    /**
+     * @expectedException Tricolore\Exception\DatabaseException
+     */
+    public function testDataFiltersIntFail()
+    {
+        $this->getDataSource()->buildQuery('create_table')
+            ->name('test_filters_int')
+            ->columns([
+                'tmp_col' => 'INTEGER'
+            ])
+            ->ifNotExists()
+            ->execute();
+
+        $this->getDataSource()->buildQuery('insert')
+            ->into('test_filters_int')
+            ->values([
+                'tmp_col' => 155
+            ])
+            ->execute();
+
+        $this->getDataSource()->buildQuery('select')
+            ->select('*')
+            ->from('test_filters_int')
+            ->where('tmp_col = ?', [
+                1 => [
+                    'value' => 'string',
+                    'type' => 'INT'
+                ]
+            ])
+            ->execute();
+    }
+
+    public function testDataFiltersString()
+    {
+        $this->getDataSource()->buildQuery('create_table')
+            ->name('test_filters_str')
+            ->columns([
+                'tmp_col' => 'TEXT'
+            ])
+            ->ifNotExists()
+            ->execute();
+
+        $this->getDataSource()->buildQuery('insert')
+            ->into('test_filters_str')
+            ->values([
+                'tmp_col' => 155
+            ])
+            ->execute();
+
+        $this->getDataSource()->buildQuery('select')
+            ->select('*')
+            ->from('test_filters_str')
+            ->where('tmp_col = ?', [
+                1 => [
+                    'value' => 'string',
+                    'type' => 'STR'
+                ]
+            ])
+            ->execute();
+    }
+
+    public function testGetAllTables()
+    {
+        $expected = 14;
+        $actual = $this->getDataSource()->getAllTables();
+
+        $this->assertEquals($expected, count($actual));
+
+        $this->getDataSource()->dropTable($this->getDataSource()->getAllTables());
     }
 }
