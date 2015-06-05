@@ -1,14 +1,14 @@
 <?php
-namespace Tricolore\Translation;
+namespace Tricolore\Translator;
 
 use Tricolore\Foundation\Application;
 use Tricolore\Config\Config;
 use Tricolore\Exception\NotFoundResourceException;
-use Symfony\Component\Translation\Translator;
+use Symfony\Component\Translation\Translator as TranslatorService;
 use Symfony\Component\Translation\MessageSelector;
 use Symfony\Component\Translation\Loader\XliffFileLoader;
 
-class Translation
+class Translator
 {
     /**
      * Get translator
@@ -20,7 +20,7 @@ class Translation
     {
         $locale = Config::getParameter('trans.locale');
 
-        $translator = new Translator($locale, new MessageSelector());
+        $translator = new TranslatorService($locale, new MessageSelector());
         $translator->addLoader('xliff', new XliffFileLoader());
 
         $this->addResource($translator, $resource, $locale);
@@ -40,7 +40,7 @@ class Translation
      * @throws Tricolore\Exception\NotFoundResourceException
      * @return void
      */
-    private function addResource(Translator $translator, $resource, $locale)
+    private function addResource(TranslatorService $translator, $resource, $locale)
     {
         if ($resource === null) {
             $translator->addResource('xliff', 
@@ -63,7 +63,7 @@ class Translation
      * @param string $locale
      * @return void
      */
-    private function addValidatorResource(Translator $translator, $locale)
+    private function addValidatorResource(TranslatorService $translator, $locale)
     {
         $translator->addResource('xliff', 
             Application::getInstance()->createPath(

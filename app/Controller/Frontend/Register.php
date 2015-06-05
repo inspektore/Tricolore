@@ -2,7 +2,7 @@
 namespace Tricolore\Controller\Frontend;
 
 use Tricolore\Services\ServiceLocator;
-use Tricolore\FormFactory\FormTypes\Frontend\RegisterType;
+use Tricolore\Form\FormTypes\Frontend\RegisterType;
 use Tricolore\Member\Member;
 use Symfony\Component\HttpFoundation\Request;
 

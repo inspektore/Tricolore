@@ -1,5 +1,5 @@
 <?php
-namespace Tricolore\RoutingProvider;
+namespace Tricolore\Routing;
 
 use Tricolore\Foundation\Application;
 use Tricolore\Config\Config;
@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Loader\YamlFileLoader;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 use Symfony\Component\Routing\Exception\MethodNotAllowedException;
 
-class RoutingProvider extends ServiceLocator
+class Routing extends ServiceLocator
 {
     /**
      * Router

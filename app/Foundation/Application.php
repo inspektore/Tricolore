@@ -2,7 +2,7 @@
 namespace Tricolore\Foundation;
 
 use Tricolore\Config\Config;
-use Tricolore\RoutingProvider\RoutingProvider;
+use Tricolore\Routing\Routing;
 use Tricolore\Services\ServiceLocator;
 use Tricolore\Exception\ErrorException;
 use Tricolore\Exception\RuntimeException;
@@ -21,7 +21,7 @@ class Application extends ServiceLocator
     /**
      * Routing object
      *
-     * @var Tricolore\RoutingProvider\RoutingProvider
+     * @var Tricolore\Routing\Routing
      */
     private static $routing;
 
@@ -47,7 +47,7 @@ class Application extends ServiceLocator
 
             Session::begin();
 
-            self::$routing = new RoutingProvider();
+            self::$routing = new Routing();
             self::$routing->register();
         } catch (\Exception $exception) {
             self::getInstance()->get('view', [true])->handleException($exception);

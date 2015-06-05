@@ -3,7 +3,7 @@ namespace Tricolore\Controller\Frontend;
 
 use Tricolore\Foundation\Application;
 use Tricolore\Session\Session;
-use Tricolore\FormFactory\FormTypes\Frontend\AuthType;
+use Tricolore\Form\FormTypes\Frontend\AuthType;
 use Tricolore\Services\ServiceLocator;
 use Tricolore\Member\Member;
 use Tricolore\Config\Config;

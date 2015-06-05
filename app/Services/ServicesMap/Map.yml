@@ -4,11 +4,11 @@ service-locator:
         function: register
 
     form:
-        class: Tricolore\FormFactory\FormFactory
+        class: Tricolore\Form\Form
         function: getFactory
 
     translator:
-        class: Tricolore\Translation\Translation
+        class: Tricolore\Translator\Translator
         function: getTranslator
 
     finder:

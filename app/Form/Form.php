@@ -1,5 +1,5 @@
 <?php
-namespace Tricolore\FormFactory;
+namespace Tricolore\Form;
 
 use Tricolore\Session\Session;
 use Symfony\Component\Validator\Validation;
@@ -8,7 +8,7 @@ use Symfony\Component\Form\Extension\Csrf\CsrfExtension;
 use Symfony\Component\Form\Extension\Validator\ValidatorExtension;
 use Symfony\Component\Form\Extension\HttpFoundation\HttpFoundationExtension;
 
-class FormFactory
+class Form
 {
     /**
      * Get form factory
