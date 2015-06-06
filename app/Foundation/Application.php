@@ -7,6 +7,7 @@ use Tricolore\Services\ServiceLocator;
 use Tricolore\Exception\ErrorException;
 use Tricolore\Exception\RuntimeException;
 use Tricolore\Session\Session;
+use Tricolore\View\ExceptionHandler\ExceptionHandler;
 use Symfony\Component\Routing\Generator\UrlGenerator;
 
 class Application extends ServiceLocator
@@ -50,7 +51,9 @@ class Application extends ServiceLocator
             self::$routing = new Routing();
             self::$routing->register();
         } catch (\Exception $exception) {
-            self::getInstance()->get('view', [true])->handleException($exception);
+            $handler = new ExceptionHandler();
+
+            $handler->handle($exception);
         }
     }
 
