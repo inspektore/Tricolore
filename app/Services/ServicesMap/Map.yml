@@ -1,4 +1,4 @@
-service-locator:
+services:
     view:
         class: Tricolore\View\View
         function: register

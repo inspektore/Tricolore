@@ -21,30 +21,30 @@ abstract class ServiceLocator
     {
         $service_map = $this->parseServicesMap($service_file);
 
-        if (isset($service_map['service-locator'][$key]) === false) {
+        if (isset($service_map['services'][$key]) === false) {
             throw new ServicesException(sprintf('Service "%s" not exists.', $key));
         }
 
-        if (class_exists($service_map['service-locator'][$key]['class']) === false) {
-            throw new ServicesException(sprintf('Class "%s" not exists.', $service_map['service-locator'][$key]['class']));
+        if (class_exists($service_map['services'][$key]['class']) === false) {
+            throw new ServicesException(sprintf('Class "%s" not exists.', $service_map['services'][$key]['class']));
         }
 
         $service_load = $this->serviceClassLoad($service_map, $key);
 
-        if (isset($service_map['service-locator'][$key]['function']) === false) {
+        if (isset($service_map['services'][$key]['function']) === false) {
             return $service_load;
         }
 
-        if (method_exists($service_load, $service_map['service-locator'][$key]['function']) === false) {
+        if (method_exists($service_load, $service_map['services'][$key]['function']) === false) {
             throw new ServicesException(sprintf('Method "%s" in class "%s" not exists.', 
-                $service_map['service-locator'][$key]['function'], $service_map['service-locator'][$key]['class']));
+                $service_map['services'][$key]['function'], $service_map['services'][$key]['class']));
         }
 
         if ($this->isStatic($service_map, $key) === true) {
-            return $this->callStatic([$service_load, $service_map['service-locator'][$key]['function']], $arguments);
+            return $this->callStatic([$service_load, $service_map['services'][$key]['function']], $arguments);
         }
 
-        return $this->callDynamic([$service_load, $service_map['service-locator'][$key]['function']], $arguments);
+        return $this->callDynamic([$service_load, $service_map['services'][$key]['function']], $arguments);
     }
 
     /**
@@ -80,7 +80,7 @@ abstract class ServiceLocator
      */
     private function isStatic(array $service_map, $key)
     {
-        return isset($service_map['service-locator'][$key]['static']) && $service_map['service-locator'][$key]['static'] === true;
+        return isset($service_map['services'][$key]['static']) && $service_map['services'][$key]['static'] === true;
     }
 
     /**
@@ -93,10 +93,10 @@ abstract class ServiceLocator
     private function serviceClassLoad(array $service_map, $key)
     {
         if ($this->isStatic($service_map, $key) === true) {
-            return $service_map['service-locator'][$key]['class'];
+            return $service_map['services'][$key]['class'];
         }
 
-        return new $service_map['service-locator'][$key]['class'];
+        return new $service_map['services'][$key]['class'];
     }
 
     /**
