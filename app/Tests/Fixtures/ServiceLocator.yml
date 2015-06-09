@@ -1,4 +1,4 @@
-service-locator:
+services:
     extra: { class: Tricolore\Tests\Fixtures\ServiceLocatorExtra }
     extra_func: { class: Tricolore\Tests\Fixtures\ServiceLocatorExtra, function: myFunc }
     class_not_exists: { class: Not\Existing\Class }
