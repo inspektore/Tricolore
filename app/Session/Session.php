@@ -5,7 +5,7 @@ use Tricolore\Foundation\Application;
 use Tricolore\Config\Config;
 use Tricolore\Services\ServiceLocator;
 use Symfony\Component\Security\Csrf\CsrfTokenManager;
-use Symfony\Component\HttpFoundation\Session\Session as SessionProvider;
+use Symfony\Component\HttpFoundation\Session\Session as SessionService;
 use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
 use Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler;
 
@@ -39,7 +39,7 @@ class Session extends ServiceLocator
 
         $storage = new NativeSessionStorage([], self::$pdo_handler);
 
-        self::$session = new SessionProvider($storage);
+        self::$session = new SessionService($storage);
 
         if (Application::getInstance()->getEnv() !== 'test') {
             self::$session->setName('session_id');
