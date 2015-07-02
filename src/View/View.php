@@ -93,19 +93,19 @@ class View extends ServiceLocator
     {
         $finder = $this->get('finder')
             ->directories()
-            ->in(Application::createPath('app:View:Templates'));
+            ->in(Application::createPath('src:View:Templates'));
 
         foreach ($finder as $file) {
             $directories[] = $file->getRealpath();
         }
 
         $directories = array_merge($directories, [
-            Application::createPath('app:View:Templates')
+            Application::createPath('src:View:Templates')
         ]);
 
         if (Application::getInstance()->getEnv() === 'test') {
             $directories = array_merge($directories, [
-                Application::createPath('app:Tests:Fixtures:Templates') 
+                Application::createPath('src:Tests:Fixtures:Templates') 
             ]);
         }
 
@@ -198,7 +198,7 @@ class View extends ServiceLocator
     {
         if (Application::getInstance()->getEnv() === 'test') {
             $this->environment->addExtension(new TranslationExtension($this->get('translator', [
-                Application::createPath('app:Tests:Fixtures:Translation_enEN.xliff'),
+                Application::createPath('src:Tests:Fixtures:Translation_enEN.xliff'),
                 'en_EN'
             ])));
         } else {

@@ -1,7 +1,7 @@
 {
     "require": {
         "php": ">=5.5",
-        "nesbot/carbon": "1.19.0",
+        "nesbot/carbon": "1.20.0",
         "twig/twig": "1.18.2",
         "cocur/slugify": "dev-master",
         "symfony/config": "2.7.1",
@@ -25,6 +25,6 @@
     },
 
     "autoload": {
-        "psr-4": { "Tricolore\\": "app/" }
+        "psr-4": { "Tricolore\\": "src/" }
     }
 }

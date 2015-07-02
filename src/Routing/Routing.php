@@ -43,17 +43,17 @@ class Routing extends ServiceLocator
             $request = '/';
         }
 
-        $locator = new FileLocator([__DIR__]);
+        $locator = new FileLocator([Application::createPath('app')]);
         $loader = new YamlFileLoader($locator);
 
-        $collection_filename = ucfirst(Application::getInstance()->getEnv());
+        $collection_filename = strtolower(Application::getInstance()->getEnv());
 
         $request_context = new RequestContext();
         $request_context->fromRequest(Request::createFromGlobals());
 
         $in_prod = Application::getInstance()->getEnv() === 'prod';
 
-        $this->router = new Router($loader, sprintf('RouteCollection/%s.yml', $collection_filename), [
+        $this->router = new Router($loader, sprintf('routing/%s.yml', $collection_filename), [
             'cache_dir' => ($in_prod === true) ? Application::createPath(Config::getParameter('directory.storage') . ':router') : null
         ], $request_context);
 

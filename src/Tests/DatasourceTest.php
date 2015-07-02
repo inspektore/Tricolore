@@ -71,7 +71,7 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
     public function testDatabaseExists()
     {
         $config_key = (Application::getInstance()->inTravis() === true) ? 'travis' : 'default';
-        $database_name = Config::all('Database')[Application::getInstance()->getEnv()][$config_key]['database_name'];
+        $database_name = Config::all('database')[Application::getInstance()->getEnv()][$config_key]['database_name'];
 
         $actual = $this->getDataSource()->databaseExists($database_name);
 

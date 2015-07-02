@@ -19,7 +19,7 @@ class DatabaseAdapter
         if (count($custom_config)) {
             $database_config = $custom_config;
         } else {
-            $database_config = Config::all('Database'); 
+            $database_config = Config::all('database'); 
         }
 
         $allowed_adapters = ['PostgreSQL'];

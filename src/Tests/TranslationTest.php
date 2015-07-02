@@ -13,7 +13,7 @@ class TranslationTest extends \PHPUnit_Framework_TestCase
     private function getTranslator()
     {
         return $this->getServiceLocator()->get('translator', [
-            Application::createPath('app:Tests:Fixtures:Translation_enEN.xliff'),
+            Application::createPath('src:Tests:Fixtures:Translation_enEN.xliff'),
         ]);
     }
 

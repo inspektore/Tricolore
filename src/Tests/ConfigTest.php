@@ -36,7 +36,7 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
             'directory.storage' => 'storage',
             'directory.assets' => 'static'
         ];
-        $actual = Config::all('Configuration')['test'];
+        $actual = Config::all('configuration')['test'];
 
         $this->assertEquals($expected, $actual);
     }
