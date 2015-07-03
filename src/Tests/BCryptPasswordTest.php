@@ -7,6 +7,10 @@ class BCryptPasswordTest extends \PHPUnit_Framework_TestCase
 {
     public function testBcryptHasher()
     {
+        if (phpversion() >= 7) {
+            $this->markTestSkipped('Use of the \'salt\' option to password_hash is deprecated');
+        }
+
         $my_password = 'Example super password!';
         $salt = 'Lorem ipsum Anim ullamco magna Duis non ut exercitation in reprehenderit';
         $cost = 10;
@@ -52,6 +56,10 @@ class BCryptPasswordTest extends \PHPUnit_Framework_TestCase
 
     public function testNeedsRehash()
     {
+        if (phpversion() >= 7) {
+            $this->markTestSkipped('Use of the \'salt\' option to password_hash is deprecated');
+        }
+
         $my_password = 'Example super password!';
         $old_password_hash = BCrypt::hash($my_password, [
             'salt' => 'Duis non ut exercitation in reprehenderit',
