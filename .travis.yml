@@ -9,6 +9,7 @@ env:
   - POSTGRESQL_VERSION=9.2
   - POSTGRESQL_VERSION=9.3
   - POSTGRESQL_VERSION=9.4
+  - POSTGRESQL_VERSION=9.5
 
 before_install:
   - echo 'hhvm.libxml.ext_entity_whitelist = file,http,https' > travis.hhvm.ini
