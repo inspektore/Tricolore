@@ -44,6 +44,41 @@ class Member extends ServiceLocator
     }
 
     /**
+     * Get logged in member role
+     * 
+     * @codeCoverageIgnore
+     * @return string
+     */
+    public function getRole()
+    {
+        if ($this->isLoggedIn() === false) {
+            if ($this->isCrawler() === true) {
+                return 'ROLE_CRAWLER';
+            }
+
+            return 'ROLE_GUEST';
+        }
+
+        $finder = $this->get('member.finder')
+            ->byId($this->getCurrentLoggedInMemberId())
+            ->container();
+
+        return $finder['role'];
+    }
+
+    /**
+     * Check if current client is a crawler
+     * 
+     * @codeCoverageIgnore
+     * @return bool
+     */
+    public function isCrawler()
+    {
+        // temp
+        return false;
+    }
+
+    /**
      * Member is logged in
      * 
      * @codeCoverageIgnore
@@ -58,6 +93,16 @@ class Member extends ServiceLocator
         }
 
         return false;
+    }
+
+    /**
+     * Get current logged in member id
+     * 
+     * @return int
+     */
+    public function getCurrentLoggedInMemberId()
+    {
+        return Session::getSession()->get('member_id');
     }
 
     /**

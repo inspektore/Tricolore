@@ -1,11 +1,12 @@
 <?php
 namespace Tricolore\Controller\Frontend;
 
-use Tricolore\Services\ServiceLocator;
+use Tricolore\Controller\ControllerAbstract;
 
-class Hello extends ServiceLocator
+class Hello extends ControllerAbstract
 {
     /**
+     * @Access admincp_access
      * @Route('/hello/{name}', name="hello")
      */
     public function sayHello($name)

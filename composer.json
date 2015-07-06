@@ -4,6 +4,7 @@
         "nesbot/carbon": "1.20.0",
         "twig/twig": "1.18.2",
         "cocur/slugify": "dev-master",
+        "phpdocumentor/reflection-docblock": "2.0.4",
         "symfony/config": "2.7.1",
         "symfony/event-dispatcher": "2.7.1",
         "symfony/filesystem": "2.7.1",

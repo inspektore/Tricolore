@@ -1,11 +1,12 @@
 <?php
 namespace Tricolore\Controller\Frontend;
 
-use Tricolore\Services\ServiceLocator;
+use Tricolore\Controller\ControllerAbstract;
 
-class Index extends ServiceLocator
+class Index extends ControllerAbstract
 {
     /**
+     * @Access can_see_index
      * @Route('/', name="home")
      */
     public function index()

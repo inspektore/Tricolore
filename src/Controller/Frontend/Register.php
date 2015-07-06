@@ -1,14 +1,15 @@
 <?php
 namespace Tricolore\Controller\Frontend;
 
-use Tricolore\Services\ServiceLocator;
+use Tricolore\Controller\ControllerAbstract;
 use Tricolore\Form\FormTypes\Frontend\RegisterType;
 use Tricolore\Member\Member;
 use Symfony\Component\HttpFoundation\Request;
 
-class Register extends ServiceLocator
+class Register extends ControllerAbstract
 {
     /**
+     * @Access can_see_index
      * @Route('/register', name="register")
      */
     public function process()

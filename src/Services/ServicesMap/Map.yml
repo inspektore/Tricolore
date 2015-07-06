@@ -31,3 +31,6 @@ services:
 
     member.finder:
         class: Tricolore\Member\Finder\MemberFinder
+
+    acl.manager:
+        class: Tricolore\ACL\AclManager

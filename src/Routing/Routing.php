@@ -5,6 +5,8 @@ use Tricolore\Foundation\Application;
 use Tricolore\Config\Config;
 use Tricolore\Services\ServiceLocator;
 use Tricolore\Exception\RuntimeException;
+use Tricolore\Exception\NoPermissionException;
+use phpDocumentor\Reflection\DocBlock;
 use Symfony\Component\Routing\Router;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Matcher\UrlMatcher;
@@ -120,6 +122,8 @@ class Routing extends ServiceLocator
                 throw new RuntimeException(sprintf('Action method "%s" in "%s" does not exists.', $controller[1], $controller[0]));
             }
 
+            $this->checkControllerAccess($call, $controller[1]);
+
             return call_user_func_array([$call, $controller[1]], $arguments);
         } catch (ResourceNotFoundException $exception) {
             http_response_code(404);
@@ -133,6 +137,31 @@ class Routing extends ServiceLocator
             ];
 
             $this->get('view')->display('Errors', 'MethodNotAllowed', $render);
+        }
+    }
+
+    /**
+     * Check access for controller
+     * 
+     * @param object $controller
+     * @param string $method
+     * @throws Tricolore\Exception\NoPermissionException
+     * @return void
+     */
+    private function checkControllerAccess($controller, $method)
+    {
+        $class = new \ReflectionClass(get_class($controller));
+        $phpdoc = new DocBlock($class->getMethod($method)->getDocComment());
+        $tag = $phpdoc->getTagsByName('Access');
+
+        if (!count($tag)) {
+            throw new NoPermissionException('You have no permission to do this');
+        }
+
+        $access = $tag[0]->getDescription();
+
+        if ($this->get('acl.manager')->isGranded($access) === false) {
+            throw new NoPermissionException('You have no permission to do this');
         }
     }
 }

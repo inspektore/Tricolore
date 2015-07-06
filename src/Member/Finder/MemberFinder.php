@@ -92,7 +92,7 @@ class MemberFinder extends ServiceLocator
         }
 
         $results = $this->get('datasource')->buildQuery('select')
-            ->select('id, username, password, group_id, joined, email, token, ip_address')
+            ->select('id, username, password, role, group_id, joined, email, token, ip_address')
             ->from('members')
             ->where($this->collection['search_by'] . ' = ?', [
                 1 => [

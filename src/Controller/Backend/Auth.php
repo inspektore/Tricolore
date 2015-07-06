@@ -2,12 +2,13 @@
 namespace Tricolore\Controller\Backend;
 
 use Tricolore\Form\FormTypes\Backend\AuthType;
-use Tricolore\Services\ServiceLocator;
+use Tricolore\Controller\ControllerAbstract;
 use Symfony\Component\HttpFoundation\Request;
 
-class Auth extends ServiceLocator
+class Auth extends ControllerAbstract
 {
     /**
+     * @Access can_see_index
      * @Route('/admincp/auth', name="admincp_auth")
      */
     public function process()

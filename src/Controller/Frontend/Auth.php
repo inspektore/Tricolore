@@ -4,7 +4,7 @@ namespace Tricolore\Controller\Frontend;
 use Tricolore\Foundation\Application;
 use Tricolore\Session\Session;
 use Tricolore\Form\FormTypes\Frontend\AuthType;
-use Tricolore\Services\ServiceLocator;
+use Tricolore\Controller\ControllerAbstract;
 use Tricolore\Member\Member;
 use Tricolore\Config\Config;
 use Tricolore\Security\Csrf\CsrfToken;
@@ -12,9 +12,10 @@ use Tricolore\Exception\NoPermissionException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\FormError;
 
-class Auth extends ServiceLocator
+class Auth extends ControllerAbstract
 {
     /**
+     * @Access can_see_index
      * @Route('/auth', name="auth")
      */
     public function login()
@@ -63,6 +64,7 @@ class Auth extends ServiceLocator
     }
 
     /**
+     * @Access can_see_index
      * @Route('/auth/logout', name="auth_logout")
      */
     public function logout()
