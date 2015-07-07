@@ -6,6 +6,7 @@ use Tricolore\Member\Finder\MemberFinder;
 use Tricolore\Exception\MemberException;
 use Tricolore\Security\Encoder\BCrypt;
 use Tricolore\Session\Session;
+use CrawlerDetector\Detector\CrawlerDetector;
 use Symfony\Component\Security\Core\Util\StringUtils;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -74,8 +75,9 @@ class Member extends ServiceLocator
      */
     public function isCrawler()
     {
-        // temp
-        return false;
+        $detector = new CrawlerDetector();
+
+        return $detector->isCrawler(Request::createFromGlobals()->headers->get('User-Agent'));
     }
 
     /**
@@ -98,6 +100,7 @@ class Member extends ServiceLocator
     /**
      * Get current logged in member id
      * 
+     * @codeCoverageIgnore
      * @return int
      */
     public function getCurrentLoggedInMemberId()
