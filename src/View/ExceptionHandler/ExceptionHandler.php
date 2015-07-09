@@ -28,7 +28,7 @@ class ExceptionHandler extends ServiceLocator
         }
 
         if (Application::getInstance()->getEnv() === 'prod') {
-            return $this->display('Exceptions', 'HandleClientException');
+            return $this->get('view')->display('Exceptions', 'HandleClientException');
         }
 
         $error_file = $exception->getFile();
