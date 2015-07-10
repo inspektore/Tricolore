@@ -152,13 +152,12 @@ class Routing extends ServiceLocator
     {
         $class = new \ReflectionClass(get_class($controller));
         $phpdoc = new DocBlock($class->getMethod($method)->getDocComment());
-        $tag = $phpdoc->getTagsByName('Access');
 
-        if (!count($tag)) {
+        if (!count($phpdoc->getTagsByName('Access'))) {
             throw new NoPermissionException('You have no permission to do this');
         }
 
-        $access = $tag[0]->getDescription();
+        $access = $phpdoc->getTagsByName('Access')[0]->getDescription();
 
         if ($this->get('acl.manager')->isGranded($access) === false) {
             throw new NoPermissionException('You have no permission to do this');
