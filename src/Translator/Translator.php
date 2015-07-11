@@ -45,11 +45,11 @@ class Translator
         if ($resource === null) {
             $translator->addResource('xliff', 
                 Application::getInstance()->createPath(
-                    sprintf('src:Translation:Resources:%s:messages.xliff', $locale)), 
+                    sprintf('src:Translator:Resources:%s:messages.xliff', $locale)), 
                 $locale);           
         } else {
             if (file_exists($resource) === false) {
-                throw new NotFoundResourceException(sprintf('Translation resource "%s" not found.', $resource));
+                throw new NotFoundResourceException(sprintf('Translator resource "%s" not found.', $resource));
             }
 
             $translator->addResource('xliff', $resource, $locale);
@@ -67,7 +67,7 @@ class Translator
     {
         $translator->addResource('xliff', 
             Application::getInstance()->createPath(
-                sprintf('src:Translation:Resources:%s:validators.xliff', $locale)), 
+                sprintf('src:Translator:Resources:%s:validators.xliff', $locale)), 
             $locale);  
     }
 }
