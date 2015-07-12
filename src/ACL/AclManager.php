@@ -27,4 +27,31 @@ class AclManager extends AclDataCollectorAbstract
 
         return true;
     }
+
+    /**
+     * Check if role exists
+     * 
+     * @param string $role
+     * @return bool
+     */
+    public function roleExists($role)
+    {
+        $results = $this->get('datasource')->buildQuery('select')
+            ->select('role_key')
+            ->from('acl_roles')
+            ->where('role_key = ?', [
+                1 => [
+                    'value' => $role
+                ]
+            ])
+            ->maxResults(1)
+            ->execute();
+
+        if (count($results)) {
+            return true;
+        }
+
+        return false;
+    }
+    
 }
