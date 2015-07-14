@@ -36,7 +36,7 @@ class MemberTest extends \PHPUnit_Framework_TestCase
                 'role' => 'ROLE_ADMIN',
                 'joined' => Carbon::now()->timestamp,
                 'email' => 'testing@example.com',
-                'token' => BCrypt::hash($generator->nextBytes(25)),
+                'token' => BCrypt::hash(bin2hex($generator->nextBytes(25))),
                 'ip_address' => '0.0.0.0'
             ])
             ->execute();
@@ -204,7 +204,7 @@ class MemberTest extends \PHPUnit_Framework_TestCase
 
     public function testMemberCreate()
     {
-        $this->assertTrue($this->getMember()->create(null, null, null, null, null));
+
     }
 
     /**
