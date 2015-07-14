@@ -9,6 +9,8 @@ use Tricolore\Session\Session;
 use CrawlerDetector\Detector\CrawlerDetector;
 use Symfony\Component\Security\Core\Util\StringUtils;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Util\SecureRandom;
+use Carbon\Carbon;
 
 class Member extends ServiceLocator
 {
@@ -154,7 +156,7 @@ class Member extends ServiceLocator
         }
 
         return $this->get('member.finder')
-            ->byId(Session::getSession()->get('member_id'))
+            ->byId($this->getCurrentLoggedInMemberId())
             ->container();
     }
 
@@ -180,11 +182,32 @@ class Member extends ServiceLocator
      * @param string $username
      * @param string $raw_password
      * @throws \Exception
-     * @return bool|string
+     * @return void
      */
     public function create($role, $group_id, $email, $username, $raw_password)
     {
-        // Temporary
-        return true;
+        if ($this->get('acl.manager')->roleExists($role) === false) {
+            throw new \Exception(sprintf('Role "%s" not exists', $role));
+        }
+
+        if (filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
+            throw new \Exception(sprintf('Email "%s" is not valid', $email));
+        }
+
+        $generator = new SecureRandom();
+
+        $this->get('datasource')->buildQuery('insert')
+            ->into('members')
+            ->values([
+                'username' => $username,
+                'password' => BCrypt::hash($raw_password),
+                'group_id' => $group_id,
+                'role' => $role,
+                'joined' => Carbon::now()->timestamp,
+                'email' => $email,
+                'token' => BCrypt::hash(bin2hex($generator->nextBytes(25))),
+                'ip_address' => Request::createFromGlobals()->getClientIp()
+            ])
+            ->execute();
     }
 }
