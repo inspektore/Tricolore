@@ -7,5 +7,5 @@ require __DIR__ . DIRECTORY_SEPARATOR . '.helpers.php';
 Application::register([
     'directory' => __DIR__ . DIRECTORY_SEPARATOR,
     'environment' => 'dev',
-    'version' => '0.1'
+    'version' => '0.1.1'
 ]);
