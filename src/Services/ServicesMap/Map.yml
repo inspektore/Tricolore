@@ -29,6 +29,15 @@ services:
     member:
         class: Tricolore\Member\Member
 
+    session:
+        class: Tricolore\Session\Session
+        function: getSession
+
+    session.instance:
+        class: Tricolore\Session\Session
+        function: getInstance
+        static: true
+
     member.finder:
         class: Tricolore\Member\Finder\MemberFinder
 

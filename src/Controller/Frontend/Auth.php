@@ -1,11 +1,9 @@
 <?php
 namespace Tricolore\Controller\Frontend;
 
-use Tricolore\Foundation\Application;
-use Tricolore\Session\Session;
+use Tricolore\Member\Auth\Auth as AuthService;
 use Tricolore\Form\FormTypes\Frontend\AuthType;
 use Tricolore\Controller\ControllerAbstract;
-use Tricolore\Member\Member;
 use Tricolore\Config\Config;
 use Tricolore\Security\Csrf\CsrfToken;
 use Tricolore\Exception\NoPermissionException;
@@ -20,14 +18,6 @@ class Auth extends ControllerAbstract
      */
     public function login()
     {
-        if (Member::getInstance()->isLoggedIn() === true) {
-            Session::getSession()
-                ->getFlashBag()
-                ->add('alert-warning alert-important', $this->get('translator')->trans('You have an existing session. Please logout first.'));
-
-            redirect(Config::getParameter('base.full_url'));
-        }
-
         $form = $this->get('form')->create(new AuthType(), [
             'translator' => $this->get('translator')
         ]);
@@ -35,25 +25,10 @@ class Auth extends ControllerAbstract
         $form->handleRequest(Request::createFromGlobals());
 
         if ($form->isSubmitted() === true && $form->isValid() === true) {
-            $member_finder = $this->get('member.finder')->findByStrategy($form->getData()['login']);
-            $validation = $this->get('member')->validate($member_finder, $form->getData()['password']);
+            $auth = new AuthService();
+            $auth->loginAttempt($form->getData()['login'], $form->getData()['password'], $form->getData()['autologin']);
 
-            if ($validation === true) {
-                if ($form->getData()['autologin'] === true) {
-                    $this->get('cookiejar')->set('member_id', $member_finder->container()['id'], 31556926);
-                    $this->get('cookiejar')->set('token', $member_finder->container()['token'], 31556926);
-                }
-
-                Session::getSession()->set('member_id', $member_finder->container()['id']);
-
-                Session::getSession()
-                    ->getFlashBag()
-                    ->add('alert-success', $this->get('translator')->trans('You are successfully logged in.'));
-
-                redirect(Config::getParameter('base.full_url'));
-            }
-
-            $form->addError(new FormError($validation));
+            $form->addError(new FormError($auth->validationError()));
         }
 
         $render = [
@@ -70,12 +45,12 @@ class Auth extends ControllerAbstract
     public function logout()
     {
         if (CsrfToken::isValid('logout') === false) {
-            throw new NoPermissionException('CSRF token is invalid.');
+            throw new NoPermissionException('Request authorization is invalid.');
         }
 
         $this->get('member')->killCurrentSession();
 
-        Session::getSession()
+        $this->get('session')
             ->getFlashBag()
             ->add('alert-info', $this->get('translator')->trans('You are successfully logged out.'));
 
