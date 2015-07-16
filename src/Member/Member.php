@@ -5,7 +5,6 @@ use Tricolore\Services\ServiceLocator;
 use Tricolore\Member\Finder\MemberFinder;
 use Tricolore\Exception\MemberException;
 use Tricolore\Security\Encoder\BCrypt;
-use Tricolore\Session\Session;
 use CrawlerDetector\Detector\CrawlerDetector;
 use Symfony\Component\Security\Core\Util\StringUtils;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,13 +24,13 @@ class Member extends ServiceLocator
     }
 
     /**
-     * Validate member
+     * Validate member password
      * 
      * @param Tricolore\Member\Finder\MemberFinder $member
      * @param string $raw_password
      * @return bool|string
      */
-    public function validate(MemberFinder $member, $raw_password)
+    public function validatePassword(MemberFinder $member, $raw_password)
     {
         if ($member->exists() === false) {
             return $this->get('translator')->trans('Account with this username or email not exists.');
@@ -92,7 +91,7 @@ class Member extends ServiceLocator
     {
         $this->checkAutologin();
 
-        if (Session::getSession()->has('member_id') === true && Session::getSession()->get('member_id') > 0) {
+        if ($this->get('session')->has('member_id') === true && $this->get('session')->get('member_id') > 0) {
             return true;
         }
 
@@ -107,7 +106,7 @@ class Member extends ServiceLocator
      */
     public function getCurrentLoggedInMemberId()
     {
-        return Session::getSession()->get('member_id');
+        return $this->get('session')->get('member_id');
     }
 
     /**
@@ -118,7 +117,7 @@ class Member extends ServiceLocator
      */
     private function checkAutologin()
     {
-        if (Session::getSession()->has('member_id') === false
+        if ($this->get('session')->has('member_id') === false
             && $this->get('cookiejar')->get('member_id') != null 
             && $this->get('cookiejar')->get('token') != null
         ) {
@@ -134,9 +133,9 @@ class Member extends ServiceLocator
             }
 
             if ($validation === true) {
-                Session::getSession()->set('member_id', $member_finder->container()['id']);
+                $this->get('session')->set('member_id', $member_finder->container()['id']);
 
-                Session::getSession()
+                $this->get('session')
                     ->getFlashBag()
                     ->add('alert-info', $this->get('translator')->trans(sprintf('Welcome back, %s!', $member_finder->container()['username'])));
             }
@@ -168,7 +167,7 @@ class Member extends ServiceLocator
      */
     public function killCurrentSession()
     {
-        Session::getSession()->remove('member_id');
+        $this->get('session')->remove('member_id');
         $this->get('cookiejar')->destroy('member_id');
         $this->get('cookiejar')->destroy('token');
     }

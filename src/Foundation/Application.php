@@ -46,7 +46,7 @@ class Application extends ServiceLocator
                 throw new RuntimeException('Setting "base.full_url" cannot end with a slash.');
             }
 
-            Session::begin();
+            self::getInstance()->get('session.instance')->begin();
 
             self::$routing = new Routing();
             self::$routing->register();

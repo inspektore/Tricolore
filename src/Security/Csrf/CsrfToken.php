@@ -19,6 +19,6 @@ class CsrfToken
     {
         $token = new Token($intention, Request::createFromGlobals()->request->get($token_field));
 
-        return Session::csrfProvider()->isTokenValid($token);
+        return Session::getInstance()->csrfProvider()->isTokenValid($token);
     }
 }

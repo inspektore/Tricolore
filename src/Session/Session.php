@@ -31,14 +31,11 @@ class Session extends ServiceLocator
      * @codeCoverageIgnore
      * @return void
      */
-    public static function begin()
+    public function begin()
     {
-        $pdo = self::getInstance()->get('datasource')->getPdo();
-
+        $pdo = $this->get('datasource')->getPdo();
         self::$pdo_handler = new PdoSessionHandler($pdo);
-
         $storage = new NativeSessionStorage([], self::$pdo_handler);
-
         self::$session = new SessionService($storage);
 
         if (Application::getInstance()->getEnv() !== 'test') {
@@ -55,7 +52,7 @@ class Session extends ServiceLocator
      * @codeCoverageIgnore
      * @return Symfony\Component\Security\Csrf\CsrfTokenManager
      */
-    public static function csrfProvider()
+    public function csrfProvider()
     {
         return new CsrfTokenManager();
     }
@@ -77,7 +74,7 @@ class Session extends ServiceLocator
      * @codeCoverageIgnore
      * @return Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler
      */
-    public static function handler()
+    public function handler()
     {
         return self::$pdo_handler;
     }
@@ -88,7 +85,7 @@ class Session extends ServiceLocator
      * @codeCoverageIgnore
      * @return Symfony\Component\HttpFoundation\Session\Session
      */
-    public static function getSession()
+    public function getSession()
     {
         return self::$session;
     }
@@ -101,9 +98,9 @@ class Session extends ServiceLocator
      * @throws \Exception
      * @return void
      */
-    public static function getSessionId()
+    public function getSessionId()
     {
-        return self::getSession()->getId();
+        return $this->getSession()->getId();
     }
 
     /**
@@ -112,8 +109,8 @@ class Session extends ServiceLocator
      * @codeCoverageIgnore
      * @return bool
      */
-    public static function expired()
+    public function expired()
     {
-        return self::$pdo_handler->isSessionExpired();
+        return $this->pdo_handler->isSessionExpired();
     }
 }

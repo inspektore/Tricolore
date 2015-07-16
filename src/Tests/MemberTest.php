@@ -141,7 +141,7 @@ class MemberTest extends \PHPUnit_Framework_TestCase
 
         $password = 'test_pass';
 
-        $status = $this->getMember()->validate($load_member, $password);
+        $status = $this->getMember()->validatePassword($load_member, $password);
 
         $this->assertTrue($status);
     }
@@ -153,7 +153,7 @@ class MemberTest extends \PHPUnit_Framework_TestCase
 
         $password = 'testpass';
 
-        $status = $this->getMember()->validate($load_member, $password);
+        $status = $this->getMember()->validatePassword($load_member, $password);
 
         $this->assertSame($status, 'Password for this account is not valid.');
     }
@@ -165,7 +165,7 @@ class MemberTest extends \PHPUnit_Framework_TestCase
 
         $password = 'test_pass';
 
-        $status = $this->getMember()->validate($load_member, $password);
+        $status = $this->getMember()->validatePassword($load_member, $password);
 
         $this->assertSame($status, 'Account with this username or email not exists.');
     }

@@ -33,7 +33,7 @@ class Form
      */
     private function getCsrfExtension()
     {
-        return new CsrfExtension(Session::csrfProvider());
+        return new CsrfExtension(Session::getInstance()->csrfProvider());
     }
 
     /**

@@ -4,7 +4,6 @@ namespace Tricolore\View;
 use Tricolore\Foundation\Application;
 use Tricolore\Config\Config;
 use Tricolore\Services\ServiceLocator;
-use Tricolore\Session\Session;
 use Tricolore\Member\Member;
 use Symfony\Bridge\Twig\Extension\FormExtension;
 use Symfony\Bridge\Twig\Form\TwigRenderer;
@@ -138,7 +137,7 @@ class View extends ServiceLocator
     private function registerGlobals()
     {
         $this->environment->addGlobal('app', Application::getInstance());
-        $this->environment->addGlobal('session', Session::getSession());
+        $this->environment->addGlobal('session', $this->get('session'));
         $this->environment->addGlobal('member', Member::getInstance());
     }
 
@@ -186,7 +185,7 @@ class View extends ServiceLocator
         $form = new TwigRendererEngine(['bootstrap_3_layout.html.twig']);
         $form->setEnvironment($this->environment);
 
-        $this->environment->addExtension(new FormExtension(new TwigRenderer($form, Session::csrfProvider())));        
+        $this->environment->addExtension(new FormExtension(new TwigRenderer($form, $this->get('session.instance')->csrfProvider())));        
     }
 
     /**
