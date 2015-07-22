@@ -1,8 +1,17 @@
++function registerMaterialDesign()
+{
+  "use strict";
+
+  $.material.init();
+  $("#dropdown-menu select").dropdown();
+}();
+
 +function registerBootstrapUtils()
 {
   "use strict";
 
   $('[data-toggle="tooltip"]').tooltip({container: 'body'});
+  $('[data-toggle="popover"]').popover();
 }();
 
 +function destroyAllFlashMessages()

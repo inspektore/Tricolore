@@ -12,7 +12,7 @@
   font-weight: @badge-font-weight;
   color: @badge-color;
   line-height: @badge-line-height;
-  vertical-align: baseline;
+  vertical-align: middle;
   white-space: nowrap;
   text-align: center;
   background-color: @badge-bg;
@@ -29,7 +29,8 @@
     top: -1px;
   }
 
-  .btn-xs & {
+  .btn-xs &,
+  .btn-group-xs > .btn & {
     top: 0;
     padding: 1px 5px;
   }
