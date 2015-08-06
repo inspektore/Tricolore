@@ -30,8 +30,8 @@ matrix:
 
 before_script:
   - composer install
-  - sudo service postgresql stop
-  - sudo service postgresql start $POSTGRESQL_VERSION
+  - service postgresql stop
+  - service postgresql start $POSTGRESQL_VERSION
   - psql -c 'create database travis_ci_test;' -U postgres
 
 script:
