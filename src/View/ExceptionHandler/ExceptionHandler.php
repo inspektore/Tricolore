@@ -11,6 +11,23 @@ use Carbon\Carbon;
 class ExceptionHandler extends ServiceLocator
 {
     /**
+     * Filesystem
+     * 
+     * @var Symfony\Component\Filesystem\Filesystem
+     */
+    private $filesystem;
+
+    /**
+     * Constructor
+     * 
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->filesystem = new Filesystem();
+    }
+    
+    /**
      * Handle exception
      * 
      * @param \Exception $exception 
@@ -39,13 +56,11 @@ class ExceptionHandler extends ServiceLocator
             $error_line = $exception->getErrorLine();
         }
 
-        $file_array = new \SplFileObject($error_file, 'r');
-
         $request = Request::createFromGlobals();
 
         $response = $this->get('view')->display('Exceptions', 'HandleDevException', [
             'exception' => $exception,
-            'file_array' => iterator_to_array($file_array),
+            'file_lines' => $this->getFileLines($error_file, $error_line - 5, 10),
             'error_line' => $error_line,
             'error_file' => $error_file,
             'exception_name' => $reflection->getShortName(),
@@ -56,6 +71,29 @@ class ExceptionHandler extends ServiceLocator
     }
 
     /**
+     * Get file lines
+     * 
+     * @param string $file
+     * @param int $start
+     * @param int $length
+     * @return array
+     */
+    private function getFileLines($file, $start, $length)
+    {
+        if ($this->filesystem->exists($file) === false) {
+            return [];
+        }
+
+        $file_array = new \SplFileObject($file, 'r');
+        $lines = iterator_to_array($file_array);
+
+        array_unshift($lines, null);
+        unset($lines[0]);
+
+        return array_slice($lines, $start, $length, true);
+    }
+
+    /**
      * Log exception
      * 
      * @param \Exception $exception 
@@ -63,8 +101,6 @@ class ExceptionHandler extends ServiceLocator
      */
     private function logException($exception)
     {
-        $filesystem = new Filesystem();
-
         $exception_log = str_repeat('-', 20) . ' LAST EXCEPTION LOG ' . str_repeat('-', 20) . PHP_EOL . PHP_EOL;
         $exception_log .= 'MESSAGE: ' . $exception->getMessage() . PHP_EOL;
         $exception_log .= 'FILE: ' . $exception->getFile() . PHP_EOL;
@@ -73,7 +109,7 @@ class ExceptionHandler extends ServiceLocator
         $exception_log .= str_repeat('-', 20) . ' LAST EXCEPTION LOG ' . str_repeat('-', 20);
 
         if (Application::getInstance()->getEnv() !== 'test') {
-            $filesystem->dumpFile(Application::createPath(Config::getParameter('directory.storage') . ':last_exception.txt'), $exception_log);
+            $this->filesystem->dumpFile(Application::createPath(Config::getParameter('directory.storage') . ':last_exception.txt'), $exception_log);
         }
     }
 }
