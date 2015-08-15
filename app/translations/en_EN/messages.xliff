@@ -4,7 +4,7 @@
         <body>
             <trans-unit id="1">
                 <source>Page not found</source>
-                <target>Page not found</target>
+                <target>FOIOOOF</target>
             </trans-unit>
             <trans-unit id="2">
                 <source>The resource requested could not be found!</source>
