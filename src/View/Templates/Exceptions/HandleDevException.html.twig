@@ -53,9 +53,9 @@
         </small>
 
         {% if file_lines|length > 1 %}
-          <pre class="exception-code"><code class="php">
-            {%- for line, code in file_lines -%}
-              <div {{ line == error_line ? 'class="redline"' : null }}>{{ line }}: {{ code|e }}</div>
+          <pre data-line-offset="{{ error_line - 5 }}" data-line="{{ error_line }}" class="exception-code"><code class="language-php">
+            {%- for code in file_lines -%}
+              {{ code|e }}
             {%- endfor -%}
           </code></pre>
         {% endif %}
@@ -86,7 +86,6 @@
       </div>
     </footer>
 
-    <script src="{{ assets('js', 'highlight.min.js') }}"></script>
-    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="{{ assets('js', 'prism.js') }}"></script>
   </body>
 </html>
