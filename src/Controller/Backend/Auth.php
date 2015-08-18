@@ -9,7 +9,7 @@ class Auth extends ControllerAbstract
 {
     /**
      * @Access can_see_index
-     * @Route('/admincp/auth', name="admincp_auth")
+     * @NoPermissionMessage You have no permission to see this page
      */
     public function process()
     {

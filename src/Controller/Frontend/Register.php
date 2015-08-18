@@ -10,7 +10,7 @@ class Register extends ControllerAbstract
 {
     /**
      * @Access can_see_index
-     * @Route('/register', name="register")
+     * @NoPermissionMessage You have no permission to see this page
      */
     public function process()
     {

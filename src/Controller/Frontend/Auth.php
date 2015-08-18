@@ -14,7 +14,7 @@ class Auth extends ControllerAbstract
 {
     /**
      * @Access can_see_index
-     * @Route('/auth', name="auth")
+     * @NoPermissionMessage You have no permission to see this page
      */
     public function login()
     {
@@ -40,7 +40,7 @@ class Auth extends ControllerAbstract
 
     /**
      * @Access can_see_index
-     * @Route('/auth/logout', name="auth_logout")
+     * @NoPermissionMessage You have no permission to see this page
      */
     public function logout()
     {

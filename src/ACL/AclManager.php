@@ -17,6 +17,10 @@ class AclManager extends AclDataCollectorAbstract
         $client_role = $this->get('member')->getRole();
         $permission_role = $this->getPermission($permission_key, $client_role)['permission_role'];
 
+        if ($permission_role === false) {
+            return false;
+        }
+
         if (StringUtils::equals($client_role, $permission_role) === false) {
             return false;
         }

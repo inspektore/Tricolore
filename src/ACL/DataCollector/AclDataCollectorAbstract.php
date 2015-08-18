@@ -14,7 +14,7 @@ abstract class AclDataCollectorAbstract extends ServiceLocator
      */
     public function getPermission($permission_key, $client_role)
     {
-        return $this->get('datasource')->buildQuery('select')
+        $permission = $this->get('datasource')->buildQuery('select')
             ->select('permission_key, permission_value, permission_role')
             ->from('acl_permissions')
             ->where('permission_key = ? AND permission_role = ?', [
@@ -27,6 +27,12 @@ abstract class AclDataCollectorAbstract extends ServiceLocator
                 ]
             ])
             ->maxResults(1)
-            ->execute()[0];
+            ->execute();
+
+        if (isset($permission[0]) === false) {
+            return false;
+        }
+
+        return $permission[0];
     }
 }

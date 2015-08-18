@@ -6,7 +6,7 @@ use Tricolore\Config\Config;
 use Tricolore\Services\ServiceLocator;
 use Tricolore\Exception\RuntimeException;
 use Tricolore\Exception\NoPermissionException;
-use phpDocumentor\Reflection\DocBlock;
+use Tricolore\Routing\ControllerAccess\CheckControllerAccess;
 use Symfony\Component\Routing\Router;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Matcher\UrlMatcher;
@@ -99,7 +99,6 @@ class Routing extends ServiceLocator
     {
         try {
             $parameters = $router->match($request);
-
             $controller = explode(':', $parameters['_controller']);
 
             if (class_exists($controller[0]) === false) {
@@ -107,7 +106,6 @@ class Routing extends ServiceLocator
             }
 
             $call = new $controller[0]();
-
             $arguments = [];
             
             foreach ($parameters as $key => $value) {
@@ -122,7 +120,7 @@ class Routing extends ServiceLocator
                 throw new RuntimeException(sprintf('Action method "%s" in "%s" does not exists.', $controller[1], $controller[0]));
             }
 
-            $this->checkControllerAccess($call, $controller[1]);
+            new CheckControllerAccess($call, $controller[1]);
 
             return call_user_func_array([$call, $controller[1]], $arguments);
         } catch (ResourceNotFoundException $exception) {
@@ -137,30 +135,14 @@ class Routing extends ServiceLocator
             ];
 
             $this->get('view')->display('Errors', 'MethodNotAllowed', $render);
-        }
-    }
+        } catch (NoPermissionException $exception) {
+            http_response_code(401);
 
-    /**
-     * Check access for controller
-     * 
-     * @param object $controller
-     * @param string $method
-     * @throws Tricolore\Exception\NoPermissionException
-     * @return void
-     */
-    private function checkControllerAccess($controller, $method)
-    {
-        $class = new \ReflectionClass(get_class($controller));
-        $phpdoc = new DocBlock($class->getMethod($method)->getDocComment());
+            $render = [
+                'message' => $exception->getMessage()
+            ];
 
-        if (!count($phpdoc->getTagsByName('Access'))) {
-            throw new NoPermissionException('You have no permission to do this');
-        }
-
-        $access = $phpdoc->getTagsByName('Access')[0]->getDescription();
-
-        if ($this->get('acl.manager')->isGranded($access) === false) {
-            throw new NoPermissionException('You have no permission to do this');
+            $this->get('view')->display('Errors', 'NoPermission', $render);
         }
     }
 }

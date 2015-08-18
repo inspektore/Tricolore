@@ -7,7 +7,7 @@ class Index extends ControllerAbstract
 {
     /**
      * @Access can_see_index
-     * @Route('/', name="home")
+     * @NoPermissionMessage You have no permission to see this page
      */
     public function index()
     {

@@ -158,6 +158,14 @@
                 <source>Remember me</source>
                 <target>Remember me</target>
             </trans-unit>
+            <trans-unit id="41">
+                <source>No Permission</source>
+                <target>No Permission</target>
+            </trans-unit>
+            <trans-unit id="42">
+                <source>You have no permission to see this page</source>
+                <target>You have no permission to see this page</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
