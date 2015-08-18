@@ -35,8 +35,7 @@ class CheckControllerAccess extends ServiceLocator
      * Try get error message
      * 
      * @param phpDocumentor\Reflection\DocBlock $phpdoc 
-     * @throws \Exception
-     * @return void
+     * @return string
      */
     private function errorMessage(DocBlock $phpdoc)
     {
