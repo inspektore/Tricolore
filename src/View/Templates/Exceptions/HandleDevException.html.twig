@@ -53,7 +53,7 @@
         </small>
 
         {% if file_lines|length > 1 %}
-          <pre data-line-offset="{{ error_line - 5 }}" data-line="{{ error_line }}" class="exception-code"><code class="language-php">
+          <pre data-line-offset="{{ error_line - 5 }}" data-line="{{ error_line }}"><code class="language-php">
             {%- for code in file_lines -%}
               {{ code|e }}
             {%- endfor -%}
