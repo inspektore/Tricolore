@@ -6,8 +6,8 @@ use Tricolore\Controller\ControllerAbstract;
 class Hello extends ControllerAbstract
 {
     /**
-     * @Access admincp_access
-     * @NoPermissionMessage You have no permission to see this page
+     * @Role ROLE_ADMIN
+     * @NoPermissionMessage Test admin role
      */
     public function sayHello($name)
     {
