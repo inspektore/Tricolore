@@ -7,7 +7,7 @@ class Hello extends ControllerAbstract
 {
     /**
      * @Access admincp_access
-     * @Route('/hello/{name}', name="hello")
+     * @NoPermissionMessage You have no permission to see this page
      */
     public function sayHello($name)
     {

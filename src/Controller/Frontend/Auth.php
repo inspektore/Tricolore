@@ -40,7 +40,6 @@ class Auth extends ControllerAbstract
 
     /**
      * @Access can_see_index
-     * @NoPermissionMessage You have no permission to see this page
      */
     public function logout()
     {
