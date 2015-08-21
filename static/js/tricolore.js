@@ -14,6 +14,8 @@
 
 +function setUpNotificationPopover()
 {
+  "use strict";
+
   $('#notification-popover').popover({
     container: 'body',
     html : true,
