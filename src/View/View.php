@@ -138,7 +138,8 @@ class View extends ServiceLocator
     {
         $this->environment->addGlobal('app', Application::getInstance());
         $this->environment->addGlobal('session', $this->get('session'));
-        $this->environment->addGlobal('member', Member::getInstance());
+        $this->environment->addGlobal('memberInstance', Member::getInstance());
+        $this->environment->addGlobal('member', Member::getInstance()->dataCollector());
     }
 
     /**
