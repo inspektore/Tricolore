@@ -35,6 +35,10 @@ class View extends ServiceLocator
         $this->registerFunctions();
         $this->registerExtensions();
 
+        if (Application::getInstance()->getEnv() !== 'test') {
+            $this->registerGlobalsIsolated();
+        }
+
         if ($safe_mode === false) {
             $this->formIntegration();
             $this->transIntegration();
@@ -139,6 +143,15 @@ class View extends ServiceLocator
         $this->environment->addGlobal('app', Application::getInstance());
         $this->environment->addGlobal('session', $this->get('session'));
         $this->environment->addGlobal('memberInstance', Member::getInstance());
+    }
+
+    /**
+     * Register global variables except for test environment
+     * 
+     * @return void
+     */
+    private function registerGlobalsIsolated()
+    {
         $this->environment->addGlobal('member', Member::getInstance()->dataCollector());
     }
 
