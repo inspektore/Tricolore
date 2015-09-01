@@ -54,7 +54,7 @@ class CookieJar
                 Config::getParameter('cookie.domain'), 
                 Config::getParameter('cookie.secure')));
 
-        return $this->response->send();
+        return $this->response->sendHeaders();
     }
 
     /**
@@ -94,6 +94,6 @@ class CookieJar
                 Config::getParameter('cookie.domain'), 
                 Config::getParameter('cookie.secure')));
 
-        return $this->response->send();
+        return $this->response->sendHeaders();
     }
 }
