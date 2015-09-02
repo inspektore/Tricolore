@@ -18,6 +18,38 @@ $ cd Tricolore
 $ composer install
 ```
 
+###Example Nginx configuration
+```
+server {
+    # Nginx configuration
+
+    location ~ /tricolore_directory/(app|storage|src) {
+        deny all;
+        return 405;
+    }
+
+    location /tricolore_directory {
+        if ( $uri !~ /(static)/ ) {
+            rewrite /tricolore_directory/([A-Za-z0-9/]+) /tricolore_directory/index.php?/$1;
+        }
+    }
+
+    # Nginx configuration
+}
+```
+
+###Unit testing
+
+Create database for tests
+```
+$ createdb tricolore_tests
+```
+
+Then run tests
+```
+$ phpunit
+```
+
 ###Using Grunt to manage LESS
 
 Run in the root directory:
