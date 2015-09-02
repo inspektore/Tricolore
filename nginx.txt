@@ -1,21 +1,24 @@
 server {
     # Nginx configuration
 
-    location ^~ /app {
+    location ^~ /tricolore_directory/app {
         deny all;
+        return 405;
     }
 
-    location ^~ /storage {
+    location ^~ /tricolore_directory/storage {
         deny all;
+        return 405;
     }
 
-    location ^~ /src {
+    location ^~ /tricolore_directory/src {
         deny all;
+        return 405;
     }
 
-    location / {
-        if(!-e $request_filename) {
-            rewrite ^(.*)$ /index.php?/$1 break;
+    location /tricolore_directory {
+        if ( $uri !~ /(static)/ ) {
+            rewrite /tricolore_directory/([A-Za-z0-9/]+) /tricolore_directory/index.php?/$1;
         }
     }
 
