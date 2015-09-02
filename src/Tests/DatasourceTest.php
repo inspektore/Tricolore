@@ -12,11 +12,6 @@ class DatasourceTest extends \PHPUnit_Framework_TestCase
             ->get('datasource', $arguments);
     }
 
-    public function testConnection()
-    {
-        $this->getDataSource();
-    }
-
     /**
      * @expectedException Tricolore\Exception\LogicException
      */
