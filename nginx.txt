@@ -1,17 +1,7 @@
 server {
     # Nginx configuration
 
-    location ^~ /tricolore_directory/app {
-        deny all;
-        return 405;
-    }
-
-    location ^~ /tricolore_directory/storage {
-        deny all;
-        return 405;
-    }
-
-    location ^~ /tricolore_directory/src {
+    location ~ /tricolore_directory/(app|storage|src) {
         deny all;
         return 405;
     }
