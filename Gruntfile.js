@@ -5,7 +5,7 @@ module.exports = function(grunt) {
         options: {
           compress: true,
           sourceMap: true,
-          sourceMapFilename: './static/css/ui.map'
+          sourceMapFilename: 'ui.map'
         },
         files: {
           './static/css/ui.css': './static/less/ui.less'
