@@ -16,33 +16,37 @@
   </head>
   <body itemscope itemtype="http://schema.org/WebPage">
     <main class="container" role="main">
-      <h1>
-        <i class="fa fa-exclamation-triangle"></i> Tricolore has crashed <small>{{ exception_name }}</small>
+      <div class="exception-prod-maintitle">
+        <h4>
+          <i class="fa fa-exclamation-triangle"></i> Tricolore has crashed <small>{{ exception_name }}</small>
 
-        <div class="pull-right server-error">
-          500 Internal Server Error
-        </div>
-      </h1>
+          <div class="pull-right server-error">
+            500 Internal Server Error
+          </div>
+        </h4>
+      </div>
 
       <div class="jumbotron jumbotron-exception">
         <div class="exception-message">
-          <h2 {{ exception.getMessage()|length > 80 ? 'class="less-font-size"' : null }}><i class="muted-text fa fa-quote-left"></i>
-            {% if exception.getMessage() is empty %} 
-              <em>(No message)</em>
-            {% else %}
-              {{ exception.getMessage() }}
-            {% endif %}
+          <h2 {{ exception.getMessage()|length > 80 ? 'class="less-font-size"' : null }}>
+            <blockquote>
+              {% if exception.getMessage() is empty %} 
+                <em>(No message)</em>
+              {% else %}
+                {{ exception.getMessage() }}
+              {% endif %}
+
+              <footer>
+                {% if exception_name != 'ErrorException' %}
+                  Caught in 
+                  <code>
+                    {{ exception.getTrace().0.class is defined ? exception.getTrace().0.class ~ "->" : null }}{{ exception.getTrace().0.function }}()
+                  </code>
+                {% endif %}
+              </footer>
+            </blockquote>
           </h2>
         </div>
-
-        {% if exception_name != 'ErrorException' %}
-          <h4>
-            Exception caught in 
-            <code>
-              {{ exception.getTrace().0.class is defined ? exception.getTrace().0.class ~ "->" : null }}{{ exception.getTrace().0.function }}()
-            </code>
-          </h4>
-        {% endif %}
 
         <small>
           <em>
@@ -61,9 +65,11 @@
         {% endif %}
       </div>
 
-      <div class="jumbotron jumbotron-exception">
-        <h3 class="exception-helpers"><i class="fa fa-code-fork"></i> Call stack</h3>
+      <div class="exception-prod-maintitle">
+        <h4><i class="fa fa-code-fork"></i> Call stack</h4>
+      </div>
 
+      <div class="jumbotron jumbotron-exception">
         {% for key, value in exception.getTrace() %}
           <div style="margin-left: 20px">
             <span style="font-size: 41px; float:left; color: #808080; margin-right: 15px">{{ loop.index }}</span>
