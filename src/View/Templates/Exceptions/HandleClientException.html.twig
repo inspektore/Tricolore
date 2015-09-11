@@ -15,8 +15,16 @@
     <![endif]-->
   </head>
   <body>
-    <div class="client-exception-message">
-      <h1><i class="fa fa-exclamation-circle"></i> 500 Internal Server Error</h1>
+    <div class="exception-prod-container">
+      <div class="exception-prod-maintitle">
+        <h4><i class="fa fa-exclamation-circle"></i> 500 Internal Server Error</h4>
+      </div>
+      
+      <div class="exception-prod-message">
+        {% trans %}Temporary technical error has occurred which means we cannot display this site right now.{% endtrans %}<br />
+        {% trans %}You can try refresh page by clicking the button below, or try again later.{% endtrans %}<br />
+        <a class="btn btn-primary btn-no-shadow exception-prod-button" href="{{ url() }}">{% trans %}Try again{% endtrans %}</a>
+      </div>
     </div>
   </body>
 </html>

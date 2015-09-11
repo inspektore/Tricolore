@@ -166,6 +166,18 @@
                 <source>You have no permission to see this page</source>
                 <target>You have no permission to see this page</target>
             </trans-unit>
+            <trans-unit id="43">
+                <source>Temporary technical error has occurred which means we cannot display this site right now.</source>
+                <target>Temporary technical error has occurred which means we cannot display this site right now.</target>
+            </trans-unit>
+            <trans-unit id="44">
+                <source>You can try refresh page by clicking the button below, or try again later.</source>
+                <target>You can try refresh page by clicking the button below, or try again later.</target>
+            </trans-unit>
+            <trans-unit id="45">
+                <source>Try again</source>
+                <target>Try again</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
