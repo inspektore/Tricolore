@@ -48,13 +48,8 @@
           </h2>
         </div>
 
-        <small>
-          <em>
-            <b>Location:</b> {{ path_info }}<br />
-            
-            {{ error_file }}:{{ error_line }}
-          </em>
-        </small>
+        <i class="fa fa-circle-o"></i> <b>Location:</b> <em>{{ path_info }}</em><br />
+        <i class="fa fa-circle-o"></i> <b>Source:</b> <em>{{ error_file }}:{{ error_line }}</em>
 
         {% if file_lines|length > 1 %}
           <pre data-line-offset="{{ error_line - 5 }}" data-line="{{ error_line }}"><code class="language-php">
