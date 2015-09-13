@@ -30,11 +30,11 @@ class ExceptionHandler extends ServiceLocator
     /**
      * Handle exception
      * 
-     * @param \Exception $exception 
+     * @param \Exception $exception
      * @param bool $return
      * @return void
      */
-    public function handle($exception, $return = false)
+    public function handle(\Exception $exception, $return = false)
     {
         http_response_code(500);
 
@@ -96,10 +96,10 @@ class ExceptionHandler extends ServiceLocator
     /**
      * Log exception
      * 
-     * @param \Exception $exception 
+     * @param \Exception $exception
      * @return void
      */
-    private function logException($exception)
+    private function logException(\Exception $exception)
     {
         $exception_log = str_repeat('-', 20) . ' LAST EXCEPTION LOG ' . str_repeat('-', 20) . PHP_EOL . PHP_EOL;
         $exception_log .= 'MESSAGE: ' . $exception->getMessage() . PHP_EOL;
