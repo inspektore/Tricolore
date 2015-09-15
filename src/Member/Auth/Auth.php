@@ -32,9 +32,9 @@ class Auth extends ServiceLocator
         }
 
         $finder = $this->get('member.finder')->findByStrategy($login);
-        $password_validator = $this->get('member')->validatePassword($finder, $password);
+        $this->validator_error = $this->get('member')->validatePassword($finder, $password);
 
-        if ($password_validator === true) {
+        if ($this->validator_error === true) {
             if ($autologin === true) {
                 $this->setAutologinCookies($finder->container()['id'], $finder->container()['token']);
             }
@@ -47,8 +47,6 @@ class Auth extends ServiceLocator
 
             redirect(Config::getParameter('base.full_url'));
         }
-
-        $this->validator_error = $password_validator;
     }
 
     /**
