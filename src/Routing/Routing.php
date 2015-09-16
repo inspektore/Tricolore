@@ -7,6 +7,7 @@ use Tricolore\Services\ServiceLocator;
 use Tricolore\Exception\RuntimeException;
 use Tricolore\Exception\NoPermissionException;
 use Tricolore\Routing\ControllerAccess\CheckControllerAccess;
+use Tricolore\Routing\ControllerToken\CheckControllerToken;
 use Symfony\Component\Routing\Router;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Matcher\UrlMatcher;
@@ -121,6 +122,7 @@ class Routing extends ServiceLocator
             }
 
             new CheckControllerAccess($call, $controller[1]);
+            new CheckControllerToken($call, $controller[1]);
 
             return call_user_func_array([$call, $controller[1]], $arguments);
         } catch (ResourceNotFoundException $exception) {

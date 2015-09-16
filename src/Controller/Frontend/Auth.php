@@ -39,14 +39,11 @@ class Auth extends ControllerAbstract
     }
 
     /**
+     * @CsrfToken logout
      * @Access can_see_index
      */
     public function logout()
     {
-        if (CsrfToken::isValid('logout') === false) {
-            throw new NoPermissionException('Request authorization is invalid.');
-        }
-
         $this->get('member')->killCurrentSession();
 
         $this->get('session')
