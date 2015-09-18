@@ -124,7 +124,7 @@ class HelpersTest extends \PHPUnit_Framework_TestCase
     {
         redirect('go');
 
-        if (function_exists('xdebug_get_headers')) {
+        if (function_exists('xdebug_get_headers') === true) {
             $this->assertContains('Location: go', xdebug_get_headers());    
         }
     }

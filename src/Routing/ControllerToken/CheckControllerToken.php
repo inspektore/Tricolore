@@ -19,7 +19,7 @@ class CheckControllerToken extends ServiceLocator
     public function __construct($controller, $method)
     {
         $class = new \ReflectionClass(get_class($controller));
-        $phpdoc = new DocBlock($class->getMethod($method)->getDocComment());
+        $phpdoc = new DocBlock($class->getMethod($method));
 
         if (count($phpdoc->getTagsByName('CsrfToken'))) {
             $token = $phpdoc->getTagsByName('CsrfToken')[0]->getDescription();
