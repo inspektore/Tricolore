@@ -35,3 +35,9 @@ admincp_auth:
     methods: [GET, POST]
     defaults:
         _controller: Tricolore\Controller\Backend\Auth:process
+
+installer_start:
+    path: /installer
+    methods: [GET]
+    defaults:
+        _controller: Tricolore\Controller\Installer\Install:start

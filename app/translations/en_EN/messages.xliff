@@ -178,6 +178,54 @@
                 <source>Try again</source>
                 <target>Try again</target>
             </trans-unit>
+            <trans-unit id="46">
+                <source>PHP 5.5 (current %version%)</source>
+                <target>PHP 5.5 (current %version%)</target>
+            </trans-unit>
+            <trans-unit id="47">
+                <source>INTL extension</source>
+                <target>INTL extension</target>
+            </trans-unit>
+            <trans-unit id="48">
+                <source>Enabled pdo_pgsql extension</source>
+                <target>Enabled pdo_pgsql extension</target>
+            </trans-unit>
+            <trans-unit id="49">
+                <source>zlib (optional)</source>
+                <target>zlib (optional)</target>
+            </trans-unit>
+            <trans-unit id="50">
+                <source>Xdebug (optional)</source>
+                <target>Xdebug (optional)</target>
+            </trans-unit>
+            <trans-unit id="51">
+                <source>Welcome to Tricolore Installer</source>
+                <target>Welcome to Tricolore Installer</target>
+            </trans-unit>
+            <trans-unit id="52">
+                <source>A robust discussion software</source>
+                <target>A robust discussion software</target>
+            </trans-unit>
+            <trans-unit id="53">
+                <source>You cannot continue installation because your server not meets the minimum requirements.</source>
+                <target>You cannot continue installation because your server not meets the minimum requirements.</target>
+            </trans-unit>
+            <trans-unit id="54">
+                <source>Tricolore server requirements:</source>
+                <target>Tricolore server requirements:</target>
+            </trans-unit>
+            <trans-unit id="55">
+                <source>Tricolore uses PostgreSQL as primary data source provider.</source>
+                <target>Tricolore uses PostgreSQL as primary data source provider.</target>
+            </trans-unit>
+            <trans-unit id="56">
+                <source>Version of PostgreSQL must be 9.2 or higher.</source>
+                <target>Version of PostgreSQL must be 9.2 or higher.</target>
+            </trans-unit>
+            <trans-unit id="57">
+                <source>Start installation</source>
+                <target>Start installation</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
