@@ -13,6 +13,13 @@ use Symfony\Component\Routing\Generator\UrlGenerator;
 class Application extends ServiceLocator
 {
     /**
+     * Version of application
+     *
+     * @var string
+     */
+    private $version = '0.1.579';
+
+    /**
      * Application options
      *
      * @var array
@@ -165,11 +172,7 @@ class Application extends ServiceLocator
      */
     public function getVersion()
     {
-        if (isset(self::$options['version']) === false || self::$options['version'] == null) {
-            return 'undefined';
-        }
-
-        return self::$options['version'];
+        return $this->version;
     }
 
     /**
