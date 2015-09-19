@@ -32,7 +32,7 @@
         {% endfor %}
       </ul>
 
-      <a href="#step1" class="{{ can_install == true ?: 'disabled' }} btn-primary btn">
+      <a href="{{ url('installer_collect_data') }}" class="{{ can_install == true ?: 'disabled' }} btn-primary btn">
         {% trans %}Start installation{% endtrans %}
       </a>
     </div>
