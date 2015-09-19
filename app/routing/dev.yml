@@ -41,3 +41,9 @@ installer_start:
     methods: [GET]
     defaults:
         _controller: Tricolore\Controller\Installer\Install:start
+
+installer_collect_data:
+    path: /installer/collect-data
+    methods: [GET, POST]
+    defaults:
+        _controller: Tricolore\Controller\Installer\Install:collectData

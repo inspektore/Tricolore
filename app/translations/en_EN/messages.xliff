@@ -226,6 +226,106 @@
                 <source>Start installation</source>
                 <target>Start installation</target>
             </trans-unit>
+            <trans-unit id="58">
+                <source>Installation detalis</source>
+                <target>Installation detalis</target>
+            </trans-unit>
+            <trans-unit id="59">
+                <source>You must create database before installing.</source>
+                <target>You must create database before installing.</target>
+            </trans-unit>
+            <trans-unit id="60">
+                <source>General settings</source>
+                <target>General settings</target>
+            </trans-unit>
+            <trans-unit id="61">
+                <source>Full URL address (without trailing slash)</source>
+                <target>Full URL address (without trailing slash)</target>
+            </trans-unit>
+            <trans-unit id="62">
+                <source>http://example.com</source>
+                <target>http://example.com</target>
+            </trans-unit>
+            <trans-unit id="63">
+                <source>Database</source>
+                <target>Database</target>
+            </trans-unit>
+            <trans-unit id="64">
+                <source>Database host</source>
+                <target>Database host</target>
+            </trans-unit>
+            <trans-unit id="65">
+                <source>Database name</source>
+                <target>Database name</target>
+            </trans-unit>
+            <trans-unit id="66">
+                <source>Database username</source>
+                <target>Database username</target>
+            </trans-unit>
+            <trans-unit id="67">
+                <source>PostgreSQL username</source>
+                <target>PostgreSQL username</target>
+            </trans-unit>
+            <trans-unit id="68">
+                <source>Database password</source>
+                <target>Database password</target>
+            </trans-unit>
+            <trans-unit id="69">
+                <source>PostgreSQL password</source>
+                <target>PostgreSQL password</target>
+            </trans-unit>
+            <trans-unit id="70">
+                <source>Prefix for tables (optional)</source>
+                <target>Prefix for tables (optional)</target>
+            </trans-unit>
+            <trans-unit id="71">
+                <source>Administrator account</source>
+                <target>Administrator account</target>
+            </trans-unit>
+            <trans-unit id="72">
+                <source>Username</source>
+                <target>Username</target>
+            </trans-unit>
+            <trans-unit id="73">
+                <source>Administrator username</source>
+                <target>Administrator username</target>
+            </trans-unit>
+            <trans-unit id="74">
+                <source>Password</source>
+                <target>Password</target>
+            </trans-unit>
+            <trans-unit id="75">
+                <source>Administrator password</source>
+                <target>Administrator password</target>
+            </trans-unit>
+            <trans-unit id="76">
+                <source>Confirm password</source>
+                <target>Confirm password</target>
+            </trans-unit>
+            <trans-unit id="77">
+                <source>E-Mail</source>
+                <target>E-Mail</target>
+            </trans-unit>
+            <trans-unit id="78">
+                <source>Administrator e-mail</source>
+                <target>Administrator e-mail</target>
+            </trans-unit>
+            <trans-unit id="79">
+                <source>Continue installation</source>
+                <target>Continue installation</target>
+            </trans-unit>
+            <trans-unit id="80">
+                <source>Tricolore needs some information to continue process of installation.</source>
+                <target>Tricolore needs some information to continue process of installation.</target>
+            </trans-unit>
+            <trans-unit id="81">
+                <source>Database for unit testing (optional)</source>
+                <target>Database for unit testing (optional)</target>
+            </trans-unit>
+            <trans-unit id="82">
+                <source>Database port</source>
+                <target>Database port</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
