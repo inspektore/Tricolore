@@ -67,6 +67,12 @@ Watch:
 $ grunt watch
 ```
 
+###Console commands
+
+```
+$ php app/console app:version
+```
+
 ###MIT Licence
 
 Copyright (c) 2015 Maciej Schmidt
