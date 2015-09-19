@@ -60,6 +60,7 @@ class Routing extends ServiceLocator
     /**
      * Get query string from current request
      *
+     * @codeCoverageIgnore
      * @return string
      */
     public function getQueryString()
