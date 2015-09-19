@@ -36,16 +36,7 @@ class Routing extends ServiceLocator
      */
     public function register()
     {
-        $request = str_replace(dirname(getenv('SCRIPT_NAME')), '/', getenv('REQUEST_URI'));
-        $request = substr($request, 1);
-
-        if (endsWith('/', $request) === true) {
-            $request = substr($request, 0, -1);
-        }
-
-        if (startsWith('/', $request) === false) {
-            $request = '/' . $request;
-        }
+        $request = $this->getQueryString();
 
         $locator = new FileLocator([Application::createPath('app')]);
         $loader = new YamlFileLoader($locator);
@@ -64,6 +55,27 @@ class Routing extends ServiceLocator
         if (Application::getInstance()->getEnv() !== 'test') {
             $this->call($this->router, $request);
         }
+    }
+
+    /**
+     * Get query string from current request
+     *
+     * @return string
+     */
+    public function getQueryString()
+    {
+        $request = str_replace(dirname(getenv('SCRIPT_NAME')), '/', getenv('REQUEST_URI'));
+        $request = substr($request, 1);
+
+        if (endsWith('/', $request) === true) {
+            $request = substr($request, 0, -1);
+        }
+
+        if (startsWith('/', $request) === false) {
+            $request = '/' . $request;
+        }
+
+        return $request;        
     }
 
     /**
