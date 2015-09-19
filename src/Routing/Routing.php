@@ -36,7 +36,7 @@ class Routing extends ServiceLocator
      */
     public function register()
     {
-        $request = getenv('QUERY_STRING');
+        $request = str_replace(dirname(getenv('SCRIPT_NAME')), '', getenv('REQUEST_URI'));
 
         if (endsWith('/', $request) === true) {
             $request = substr($request, 0, -1);
