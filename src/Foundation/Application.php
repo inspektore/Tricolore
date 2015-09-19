@@ -42,10 +42,6 @@ class Application extends ServiceLocator
         date_default_timezone_set(Config::getParameter('base.timezone'));
 
         try {
-            if (endsWith('/', Config::getParameter('base.full_url')) === true) {
-                throw new RuntimeException('Setting "base.full_url" cannot end with a slash.');
-            }
-
             self::getInstance()->get('session.instance')->begin();
 
             self::$routing = new Routing();

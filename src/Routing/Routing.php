@@ -36,14 +36,15 @@ class Routing extends ServiceLocator
      */
     public function register()
     {
-        $request = str_replace(dirname(getenv('SCRIPT_NAME')), '', getenv('REQUEST_URI'));
+        $request = str_replace(dirname(getenv('SCRIPT_NAME')), '/', getenv('REQUEST_URI'));
+        $request = substr($request, 1);
 
         if (endsWith('/', $request) === true) {
             $request = substr($request, 0, -1);
         }
 
-        if ($request == null) {
-            $request = '/';
+        if (startsWith('/', $request) === false) {
+            $request = '/' . $request;
         }
 
         $locator = new FileLocator([Application::createPath('app')]);
