@@ -40,7 +40,9 @@ class ExceptionHandler extends ServiceLocator
 
         $reflection = new \ReflectionClass(get_class($exception));
 
-        if ($reflection->getName() !== 'Tricolore\Exception\ErrorException') {
+        if ($reflection->getName() !== 'Tricolore\Exception\ErrorException'
+            && Config::getParameter('base.log_exceptions') === true
+        ) {
             $this->logException($exception);
         }
 
