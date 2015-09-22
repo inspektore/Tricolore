@@ -7,13 +7,6 @@ use Tricolore\Config\Config;
 class Auth extends ServiceLocator
 {
     /**
-     * Validator error message
-     * 
-     * @var string
-     */
-    private $validator_error;
-
-    /**
      * Login attempt
      * 
      * @param string $login
@@ -32,9 +25,8 @@ class Auth extends ServiceLocator
         }
 
         $finder = $this->get('member.finder')->findByStrategy($login);
-        $this->validator_error = $this->get('member')->validatePassword($finder, $password);
 
-        if ($this->validator_error === true) {
+        if ($this->get('member')->validatePassword($finder, $password) === true) {
             if ($autologin === true) {
                 $this->setAutologinCookies($finder->container()['id'], $finder->container()['token']);
             }
@@ -47,16 +39,6 @@ class Auth extends ServiceLocator
 
             redirect(Config::getParameter('base.full_url'));
         }
-    }
-
-    /**
-     * Validator error message
-     * 
-     * @return string
-     */
-    public function validationError()
-    {
-        return $this->validator_error;
     }
 
     /**

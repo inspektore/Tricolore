@@ -3,7 +3,8 @@ namespace Tricolore\Member;
 
 use Tricolore\Services\ServiceLocator;
 use Tricolore\Member\Finder\MemberFinder;
-use Tricolore\Exception\MemberException;
+use Tricolore\Exception\AclException;
+use Tricolore\Exception\ValidationException;
 use Tricolore\Security\Encoder\BCrypt;
 use CrawlerDetector\Detector\CrawlerDetector;
 use Symfony\Component\Security\Core\Util\StringUtils;
@@ -28,12 +29,13 @@ class Member extends ServiceLocator
      * 
      * @param Tricolore\Member\Finder\MemberFinder $member
      * @param string $raw_password
-     * @return bool|string
+     * @throws Tricolore\Exception\ValidationException
+     * @return bool
      */
     public function validatePassword(MemberFinder $member, $raw_password)
     {
         if ($member->exists() === false) {
-            return $this->get('translator')->trans('Account with this username or email not exists.');
+            throw new ValidationException($this->get('translator')->trans('Account with this username or email not exists.'));
         }
 
         $verify_password = BCrypt::hashVerify($raw_password, $member->container()['password']);
@@ -42,7 +44,7 @@ class Member extends ServiceLocator
             return true;
         }
 
-        return $this->get('translator')->trans('Password for this account is not valid.');
+        throw new ValidationException($this->get('translator')->trans('Password for this account is not valid.'));
     }
 
     /**
@@ -180,17 +182,17 @@ class Member extends ServiceLocator
      * @param string $email
      * @param string $username
      * @param string $raw_password
-     * @throws \Exception
+     * @throws Tricolore\Exception\AclException
      * @return void
      */
     public function create($role, $group_id, $email, $username, $raw_password)
     {
         if ($this->get('acl.manager')->roleExists($role) === false) {
-            throw new \Exception(sprintf('Role "%s" not exists', $role));
+            throw new AclException(sprintf('Role "%s" not exists', $role));
         }
 
         if (filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
-            throw new \Exception(sprintf('Email "%s" is not valid', $email));
+            throw new AclException(sprintf('Email "%s" is not valid', $email));
         }
 
         $generator = new SecureRandom();

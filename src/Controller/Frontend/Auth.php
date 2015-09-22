@@ -7,6 +7,7 @@ use Tricolore\Controller\ControllerAbstract;
 use Tricolore\Config\Config;
 use Tricolore\Security\Csrf\CsrfToken;
 use Tricolore\Exception\NoPermissionException;
+use Tricolore\Exception\ValidationException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\FormError;
 
@@ -25,10 +26,12 @@ class Auth extends ControllerAbstract
         $form->handleRequest(Request::createFromGlobals());
 
         if ($form->isSubmitted() === true && $form->isValid() === true) {
-            $auth = new AuthService();
-            $auth->loginAttempt($form->getData()['login'], $form->getData()['password'], $form->getData()['autologin']);
-
-            $form->addError(new FormError($auth->validationError()));
+            try {
+                $auth = new AuthService();
+                $auth->loginAttempt($form->getData()['login'], $form->getData()['password'], $form->getData()['autologin']);
+            } catch (ValidationException $exception) {
+                $form->addError(new FormError($exception->getMessage()));
+            }
         }
 
         $render = [

@@ -146,6 +146,10 @@ class MemberTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($status);
     }
 
+    /**
+     * @expectedException Tricolore\Exception\ValidationException
+     * @expectedExceptionMessage Password for this account is not valid.
+     */
     public function testMemberValidateFail()
     {
         $load_member = $this->getMemberFinder()
@@ -153,11 +157,13 @@ class MemberTest extends \PHPUnit_Framework_TestCase
 
         $password = 'testpass';
 
-        $status = $this->getMember()->validatePassword($load_member, $password);
-
-        $this->assertSame($status, 'Password for this account is not valid.');
+        $this->getMember()->validatePassword($load_member, $password);
     }
 
+    /**
+     * @expectedException Tricolore\Exception\ValidationException
+     * @expectedExceptionMessage Account with this username or email not exists.
+     */
     public function testMemberValidateFailNotFoundMember()
     {
         $load_member = $this->getMemberFinder()
@@ -165,9 +171,7 @@ class MemberTest extends \PHPUnit_Framework_TestCase
 
         $password = 'test_pass';
 
-        $status = $this->getMember()->validatePassword($load_member, $password);
-
-        $this->assertSame($status, 'Account with this username or email not exists.');
+        $this->getMember()->validatePassword($load_member, $password);
     }
 
     public function testLoadMemberFindByStrategyEmail()
