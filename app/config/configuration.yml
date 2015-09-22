@@ -1,11 +1,12 @@
 prod:
-    base.full_url: "http://localhost"
+    base.full_url: "http://php.dev/tricolore"
     base.locale: "en"
     base.charset: "utf-8"
     base.timezone: "Europe/Warsaw"
+    base.log_exceptions: false
 
     router.host: ~
-    router.use_httpd_rewrite: true
+    router.use_httpd_rewrite: false
 
     cookie.path: ~
     cookie.domain: ~
@@ -19,10 +20,11 @@ prod:
     directory.assets: "static"
 
 dev:
-    base.full_url: "http://localhost/Tricolore/develop"
+    base.full_url: "http://php.dev/tricolore"
     base.locale: "en"
     base.charset: "utf-8"
     base.timezone: "Europe/Warsaw"
+    base.log_exceptions: false
 
     router.host: ~
     router.use_httpd_rewrite: true
