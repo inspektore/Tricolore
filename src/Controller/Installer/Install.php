@@ -9,15 +9,30 @@ use Symfony\Component\HttpFoundation\Request;
 class Install extends ControllerAbstract
 {
     /**
+     * Installer
+     *
+     * @var Tricolore\Installer\Installer
+     */
+    private $installer;
+    
+    /**
+     * Construct
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->installer = new Installer();
+    }
+
+    /**
      * @Access can_see_index
      */
     public function start()
     {
-        $installer = new Installer();
-
         $render = [
-            'requirements' => $installer->checkRequirements(),
-            'can_install' => $installer->canInstall()
+            'requirements' => $this->installer->checkRequirements(),
+            'can_install' => $this->installer->canInstall()
         ];
 
         return $this->get('view')->display('Actions/Installer', 'Start', $render);
