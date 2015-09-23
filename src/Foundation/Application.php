@@ -17,7 +17,7 @@ class Application extends ServiceLocator
      *
      * @var string
      */
-    private $version = '0.1.579';
+    private $version = '0.1.608';
 
     /**
      * Application options
