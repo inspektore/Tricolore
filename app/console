@@ -1,10 +1,20 @@
 #!/usr/bin/env php
 <?php
+use Tricolore\Foundation\Application;
 use Tricolore\Console\Version;
-use Symfony\Component\Console\Application;
+use Tricolore\Console\RebuildTransUnitId;
+use Symfony\Component\Console\Application as ConsoleApp;
 
-require_once __DIR__  . '/../vendor/autoload.php';
+require __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
+require __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '.helpers.php';
 
-$application = new Application();
+Application::register([
+    'directory' => __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR,
+    'environment' => 'dev',
+    'in_cli' => true
+]);
+
+$application = new ConsoleApp();
 $application->add(new Version());
+$application->add(new RebuildTransUnitId());
 $application->run();
