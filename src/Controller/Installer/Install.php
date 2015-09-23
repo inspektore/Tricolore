@@ -32,7 +32,8 @@ class Install extends ControllerAbstract
     {
         $render = [
             'requirements' => $this->installer->checkRequirements(),
-            'can_install' => $this->installer->canInstall()
+            'can_install' => $this->installer->canInstall(),
+            'phpversion' => phpversion()
         ];
 
         return $this->get('view')->display('Actions/Installer', 'Start', $render);

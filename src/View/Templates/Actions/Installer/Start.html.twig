@@ -1,40 +1,48 @@
 {% extends "BaseBlockOnlyAssets.html.twig" %}
 
 {% block head_title %}{% trans %}Tricolore Installer{% endtrans %}{% endblock %}
+{% block container_class %}installer-container{% endblock %}
+{% block body_class %}installer-body{% endblock %}
 
 {% block body_content %}
-  <div class="installer-container">
-    <div class="installer-title">
-      <h3>{% trans %}Welcome to Tricolore Installer{% endtrans %}</h3>
+  <div class="installer-title">
+    <h3>{% trans %}Welcome to Tricolore Installer{% endtrans %}</h3>
 
-      <div class="installer-description">
-        {% trans %}A robust discussion software{% endtrans %}
+    <div class="installer-description">
+      {% trans %}A robust discussion software{% endtrans %}
+    </div>
+  </div>
+
+  <div class="installer-content">
+    {% if can_install == false %}
+      <div class="alert alert-danger" role="alert">
+        {% trans %}You cannot continue installation because your server not meets the minimum requirements.{% endtrans %}
       </div>
+    {% endif %}
+
+    <div class="alert alert-info" role="alert">
+      {% trans %}Tricolore uses PostgreSQL as primary data source provider.{% endtrans %}
+      <b>{% trans %}Version of PostgreSQL must be 9.1 or higher.{% endtrans %}</b>
     </div>
 
-    <div class="installer-content">
-      {% if can_install == false %}
-        <div class="alert alert-danger" role="alert">
-          <i class="fa fa-times"></i> {% trans %}You cannot continue installation because your server not meets the minimum requirements.{% endtrans %}
-        </div>
-      {% endif %}
+    <ul class="list-group list-unstyled">
+      <li class="list-group-item"><i class="fa fa-puzzle-piece"></i> {% trans with {'%version%': app.getInstance().getVersion()} %}Tricolore version: %version%{% endtrans %}</li>
+    </ul>
 
-      <div class="alert alert-info" role="alert">
-        <i class="fa fa-exclamation-triangle"></i>
-        {% trans %}Tricolore uses PostgreSQL as primary data source provider.{% endtrans %}
-        <b>{% trans %}Version of PostgreSQL must be 9.1 or higher.{% endtrans %}</b>
-      </div>
+    <ul class="list-group list-unstyled">
+      {% for component, requirement in requirements %}
+        <li class="list-group-item {{ requirement.status == 'ok' ? 'list-group-item list-group-item-success' : 'list-group-item list-group-item-danger' }}">
+          {{ requirement.status == 'ok' ? '<i class="fa installer-ok"></i>' : '<i class="fa installer-fail"></i>' }} {{ requirement.name }}
 
-      <b>{% trans %}Tricolore server requirements:{% endtrans %}</b>
-      <ul class="installer-requirements-list list-unstyled">
-        {% for requirement in requirements %}
-          <li>{{ requirement.status == 'ok' ? '<i class="fa installer-ok"></i>' : '<i class="fa installer-fail"></i>' }} {{ requirement.name }}</li>
-        {% endfor %}
-      </ul>
+          {% if component == 'php' %}
+            <span class="badge">{% trans with {'%phpversion%': phpversion} %}current %phpversion%{% endtrans %}</span>
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
 
-      <a href="{{ url('installer_collect_data') }}" class="{{ can_install == true ?: 'disabled' }} btn-primary btn">
-        {% trans %}Start installation{% endtrans %}
-      </a>
-    </div>
+    <a href="{{ url('installer_collect_data') }}" class="{{ can_install == true ?: 'disabled' }} btn-default btn">
+      {% trans %}Start installation{% endtrans %}
+    </a>
   </div>
 {% endblock %}

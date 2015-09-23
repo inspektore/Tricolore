@@ -24,6 +24,7 @@ class InstallerType extends AbstractType
                 ],
                 'label' => $options['data']['translator']->trans('Full URL address (without trailing slash)'),
                 'attr' => [
+                    'class' => 'input-lg',
                     'placeholder' => $options['data']['translator']->trans('http://example.com')
                 ]
             ])
@@ -38,6 +39,7 @@ class InstallerType extends AbstractType
                 ],
                 'label' => $options['data']['translator']->trans('Database host'),
                 'attr' => [
+                    'class' => 'input-lg',
                     'placeholder' => $options['data']['translator']->trans('localhost')
                 ]
             ])
@@ -47,6 +49,7 @@ class InstallerType extends AbstractType
                 ],
                 'label' => $options['data']['translator']->trans('Database name'),
                 'attr' => [
+                    'class' => 'input-lg',
                     'placeholder' => $options['data']['translator']->trans('tricolore')
                 ]
             ])
@@ -56,6 +59,7 @@ class InstallerType extends AbstractType
                 ],
                 'label' => $options['data']['translator']->trans('Database for unit testing (optional)'),
                 'attr' => [
+                    'class' => 'input-lg',
                     'placeholder' => $options['data']['translator']->trans('tricolore_tests')
                 ]
             ])
@@ -65,6 +69,7 @@ class InstallerType extends AbstractType
                 ],
                 'label' => $options['data']['translator']->trans('Database username'),
                 'attr' => [
+                    'class' => 'input-lg',
                     'placeholder' => $options['data']['translator']->trans('PostgreSQL username')
                 ]
             ])
@@ -74,6 +79,7 @@ class InstallerType extends AbstractType
                 ],
                 'label' => $options['data']['translator']->trans('Database password'),
                 'attr' => [
+                    'class' => 'input-lg',
                     'placeholder' => $options['data']['translator']->trans('PostgreSQL password')
                 ]
             ])
@@ -83,6 +89,7 @@ class InstallerType extends AbstractType
                 ],
                 'label' => $options['data']['translator']->trans('Prefix for tables (optional)'),
                 'attr' => [
+                    'class' => 'input-lg',
                     'placeholder' => $options['data']['translator']->trans('tricolore_')
                 ]
             ])
@@ -97,6 +104,7 @@ class InstallerType extends AbstractType
                 ],
                 'label' => $options['data']['translator']->trans('Username'),
                 'attr' => [
+                    'class' => 'input-lg',
                     'placeholder' => $options['data']['translator']->trans('Administrator username')
                 ]
             ])
@@ -106,6 +114,7 @@ class InstallerType extends AbstractType
                 ],
                 'label' => $options['data']['translator']->trans('Password'),
                 'attr' => [
+                    'class' => 'input-lg',
                     'placeholder' => $options['data']['translator']->trans('Administrator password')
                 ]
             ])
@@ -115,6 +124,7 @@ class InstallerType extends AbstractType
                 ],
                 'label' => $options['data']['translator']->trans('Confirm password'),
                 'attr' => [
+                    'class' => 'input-lg',
                     'placeholder' => $options['data']['translator']->trans('Confirm password')
                 ]
             ])
@@ -124,13 +134,14 @@ class InstallerType extends AbstractType
                 ],
                 'label' => $options['data']['translator']->trans('E-Mail'),
                 'attr' => [
+                    'class' => 'input-lg',
                     'placeholder' => $options['data']['translator']->trans('Administrator e-mail')
                 ]
             ])
             ->add('auth_submit', 'submit', [
                 'label' => $options['data']['translator']->trans('Continue installation'),
                 'attr' => [
-                    'class' => 'btn-primary btn installer-step-button'
+                    'class' => 'btn-default btn installer-step-button'
                 ]
             ]);
     }

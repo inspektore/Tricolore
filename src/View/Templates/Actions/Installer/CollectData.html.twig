@@ -1,24 +1,23 @@
 {% extends "BaseBlockOnlyAssets.html.twig" %}
 
 {% block head_title %}{% trans %}Tricolore Installer{% endtrans %}{% endblock %}
+{% block container_class %}installer-container{% endblock %}
+{% block body_class %}installer-body{% endblock %}
 
 {% block body_content %}
-  <div class="installer-container">
-    <div class="installer-title">
-      <h3>{% trans %}Installation detalis{% endtrans %}</h3>
+  <div class="installer-title">
+    <h3>{% trans %}Installation detalis{% endtrans %}</h3>
 
-      <div class="installer-description">
-        {% trans %}Tricolore needs some information to continue process of installation.{% endtrans %}
-      </div>
+    <div class="installer-description">
+      {% trans %}Tricolore needs some information to continue process of installation.{% endtrans %}
+    </div>
+  </div>
+
+  <div class="installer-content">
+    <div class="alert alert-info" role="alert">
+      {% trans %}You must create database before installing.{% endtrans %}
     </div>
 
-    <div class="installer-content">
-      <div class="alert alert-info" role="alert">
-        <i class="fa fa-exclamation-triangle"></i>
-        {% trans %}You must create database before installing.{% endtrans %}
-      </div>
-
-      {{ form(form, {'action': url('installer_collect_data')}) }}
-    </div>
+    {{ form(form, {'action': url('installer_collect_data')}) }}
   </div>
 {% endblock %}

@@ -15,31 +15,27 @@ class Installer extends ServiceLocator
         $components = [];
 
         if (version_compare(phpversion(), '5.5.0', '>') === true) {
-            $components[] = [
-                'name' => $this->get('translator')->trans('PHP 5.5 (current %version%)', [
-                    '%version%' => phpversion()
-                ]),
+            $components['php'] = [
+                'name' => $this->get('translator')->trans('PHP 5.5'),
                 'status' => 'ok',
                 'required' => true
             ];
         } else {
-            $components[] = [
-                'name' => $this->get('translator')->trans('PHP 5.5 (current %version%)', [
-                    '%version%' => phpversion()
-                ]),
+            $components['php'] = [
+                'name' => $this->get('translator')->trans('PHP 5.5'),
                 'status' => 'fail',
                 'required' => true
             ];
         }
         
         if (extension_loaded('intl') === true) {
-            $components[] = [
+            $components['intl'] = [
                 'name' => $this->get('translator')->trans('INTL extension'),
                 'status' => 'ok',
                 'required' => true
             ];
         } else {
-            $components[] = [
+            $components['intl'] = [
                 'name' => $this->get('translator')->trans('INTL extension'),
                 'status' => 'fail',
                 'required' => true
@@ -47,13 +43,13 @@ class Installer extends ServiceLocator
         }
 
         if (extension_loaded('pdo_pgsql') === true) {
-            $components[] = [
+            $components['pgsql'] = [
                 'name' => $this->get('translator')->trans('Enabled pdo_pgsql extension'),
                 'status' => 'ok',
                 'required' => true
             ];
         } else {
-            $components[] = [
+            $components['pgsql'] = [
                 'name' => $this->get('translator')->trans('Enabled pdo_pgsql extension'),
                 'status' => 'fail',
                 'required' => true
@@ -61,13 +57,13 @@ class Installer extends ServiceLocator
         }
 
         if (extension_loaded('zlib') === true) {
-            $components[] = [
+            $components['zlib'] = [
                 'name' => $this->get('translator')->trans('zlib (optional)'),
                 'status' => 'ok',
                 'required' => false
             ];
         } else {
-            $components[] = [
+            $components['zlib'] = [
                 'name' => $this->get('translator')->trans('zlib (optional)'),
                 'status' => 'fail',
                 'required' => false
@@ -75,13 +71,13 @@ class Installer extends ServiceLocator
         }
 
         if (function_exists('xdebug_get_headers') === true) {
-            $components[] = [
+            $components['xdebug'] = [
                 'name' => $this->get('translator')->trans('Xdebug (optional)'),
                 'status' => 'ok',
                 'required' => false
             ];
         } else {
-            $components[] = [
+            $components['xdebug'] = [
                 'name' => $this->get('translator')->trans('Xdebug (optional)'),
                 'status' => 'fail',
                 'required' => false
