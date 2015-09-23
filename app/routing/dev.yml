@@ -4,13 +4,11 @@ home:
     defaults: 
         _controller: Tricolore\Controller\Frontend\Index:index
 
-hello:
-    path: /hello/{name}
+kitchensink:
+    path: /kitchensink
     methods: [GET]
-    requirements: 
-        name: "[A-Za-z0-9-_]+"
     defaults: 
-        _controller: Tricolore\Controller\Frontend\Hello:sayHello
+        _controller: Tricolore\Controller\Frontend\KitchenSink:woah
 
 auth:
     path: /auth

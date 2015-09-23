@@ -2,7 +2,7 @@
   <div class="container">
     <div class="navbar-header">
       <div class="dropdown pull-left" style="padding: 8px">
-        <button class="btn btn-link btn-no-shadow navbar-menu-dropdown-link dropdown-toggle" type="button" id="dp-menu" data-toggle="dropdown" aria-expanded="true">
+        <button class="btn btn-link navbar-menu-dropdown-link dropdown-toggle" type="button" id="dp-menu" data-toggle="dropdown" aria-expanded="true">
           <i class="fa fa-bars"></i>
         </button>
 
@@ -11,7 +11,7 @@
             <a href="{{ url('home') }}"><i class="fa fa-home"></i> {% trans %}Home{% endtrans %}</a>
           </li>
           <li role="presentation">
-            <a href="{{ url('hello', {'name': name is defined ? name : 'Jurij'}) }}"><i class="fa fa-heart"></i> Example page</a>
+            <a href="{{ url('kitchensink') }}"><i class="fa fa-heart"></i> Kitchen Sink</a>
           </li>
           <li role="presentation">
             <a href="https://github.com/Macsch15/Tricolore"><i class="fa fa-github"></i> Project on GitHub</a>
@@ -68,7 +68,7 @@
             </div>
           </div>
 
-          <button class="btn btn-primary btn-no-shadow dropdown-toggle" type="button" id="member-panel" data-toggle="dropdown" aria-expanded="true">
+          <button class="btn btn-primary dropdown-toggle" type="button" id="member-panel" data-toggle="dropdown" aria-expanded="true">
             <i class="fa fa-user"></i> {{ member['username'] }} 
             <span class="caret"></span>
           </button>
@@ -84,7 +84,7 @@
         <div class="pull-right">
           <form action="{{ url('auth_logout') }}" method="post">
             <input type="hidden" name="_token" value="{{ csrf_token('logout') }}">
-            <button type="submit" class="btn btn-link btn-no-shadow"><i class="fa fa-sign-out"></i> {% trans %}Logout{% endtrans %}</button>
+            <button type="submit" class="btn btn-link"><i class="fa fa-sign-out"></i> {% trans %}Logout{% endtrans %}</button>
           </form>
         </div>
       {% else %}
