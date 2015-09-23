@@ -29,8 +29,8 @@ class RebuildTransUnitId extends Command
         $locale = Config::getParameter('trans.locale');
 
         $translation_files = [
-            Application::getInstance()->createPath(sprintf('app:translations:%s:messages.xliff', $locale)),
-            Application::getInstance()->createPath(sprintf('app:translations:%s:validators.xliff', $locale))
+            Application::createPath(sprintf('app:translations:%s:messages.xliff', $locale)),
+            Application::createPath(sprintf('app:translations:%s:validators.xliff', $locale))
         ];
 
         $output->writeln('Loaded files:');
