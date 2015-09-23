@@ -7,7 +7,7 @@
     <title>{{ app.getEnv() == 'dev' ? '(Dev mode) ' : null }}{% block head_title %}{% endblock %}</title>
     <link href="{{ assets('css', 'ui.css') }}" rel="stylesheet">
   </head>
-  <body itemscope itemtype="http://schema.org/WebPage">
+  <body class="{% block body_class %}{% endblock %}" itemscope itemtype="http://schema.org/WebPage">
     {% include "NavbarBlock.html.twig" %}
 
     {% import "Macros/Breadcrumb.html.twig" as breadcrumb %}

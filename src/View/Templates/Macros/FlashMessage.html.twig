@@ -1,20 +1,7 @@
 {% macro getAllMessages() %}
   {% for type, message in session.getFlashBag().all() %}
-    {% if type == 'alert-success' or type == 'alert-success alert-important' %}
-      {% set icon_set = 'fa-check' %}
-    {% endif %}
-
-    {% if type == 'alert-info' or type == 'alert-info alert-important' %}
-      {% set icon_set = 'fa-question-circle' %}
-    {% endif %}
-
-    {% if type == 'alert-warning' or type == 'alert-warning alert-important' 
-      or type == 'alert-danger' or type == 'alert-danger alert-important' %}
-      {% set icon_set = 'fa-exclamation-circle' %}
-    {% endif %}
-
     <div class="flash-message alert {{ type }}">
-      <i class="fa {{ icon_set|default('fa-question-circle') }}"></i> <b>{{ message.0 }}</b>
+      <b>{{ message.0 }}</b>
     </div>
   {% endfor %}
 {% endmacro %}

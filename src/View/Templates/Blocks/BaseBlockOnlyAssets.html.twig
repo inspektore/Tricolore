@@ -14,7 +14,7 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
-  <body itemscope itemtype="http://schema.org/WebPage">
+  <body class="{% block body_class %}{% endblock %}" itemscope itemtype="http://schema.org/WebPage">
     <main class="container {% block container_class %}{% endblock %}" role="main">
       {% block body_content %}{% endblock %}
     </main>

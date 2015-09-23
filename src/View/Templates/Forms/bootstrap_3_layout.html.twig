@@ -229,11 +229,9 @@
 {% block form_errors -%}
     {% if errors|length > 0 -%}
     {% if form.parent %}<span class="help-block">{% else %}<div class="alert alert-danger">{% endif %}
-    <ul class="list-unstyled">
-        {%- for error in errors -%}
-            <li>{% if not form.parent %}<span class="glyphicon glyphicon-exclamation-sign"></span> {% endif %}<b>{{ error.message|trans({}, translation_domain) }}</b></li>
-        {%- endfor -%}
-    </ul>
+    {%- for error in errors -%}
+        <b>{{ error.message|trans({}, translation_domain) }}</b><br />
+    {%- endfor -%}
     {% if form.parent %}</span>{% else %}</div>{% endif %}
     {%- endif %}
 {%- endblock form_errors %}
