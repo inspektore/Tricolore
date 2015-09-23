@@ -51,8 +51,10 @@ class Application extends ServiceLocator
         try {
             self::getInstance()->get('session.instance')->begin();
 
-            self::$routing = new Routing();
-            self::$routing->register();
+            if (self::getInstance()->inCli() === false) {
+                self::$routing = new Routing();
+                self::$routing->register();                
+            }
         } catch (\Exception $exception) {
             $handler = new ExceptionHandler();
 
@@ -163,6 +165,20 @@ class Application extends ServiceLocator
         }
 
         return self::$options['environment'];
+    }
+
+    /**
+     * Is CLI request
+     *
+     * @return bool
+     */
+    public function inCli()
+    {
+        if (isset(self::$options['in_cli']) && self::$options['in_cli'] === true) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
