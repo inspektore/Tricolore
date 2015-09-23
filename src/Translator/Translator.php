@@ -19,8 +19,11 @@ class Translator
     public function getTranslator($resource = null)
     {
         $locale = Config::getParameter('trans.locale');
+        $in_prod = Application::getInstance()->getEnv() === 'prod';
+        $cache_dir = ($in_prod === true) ? Application::createPath(
+            Config::getParameter('directory.storage') . ':translations') : null;
 
-        $translator = new TranslatorService($locale, new MessageSelector());
+        $translator = new TranslatorService($locale, new MessageSelector(), $cache_dir);
         $translator->addLoader('xliff', new XliffFileLoader());
 
         $this->addResource($translator, $resource, $locale);
@@ -44,7 +47,7 @@ class Translator
     {
         if ($resource === null) {
             $translator->addResource('xliff', 
-                Application::getInstance()->createPath(
+                Application::createPath(
                     sprintf('app:translations:%s:messages.xliff', $locale)), 
                 $locale);           
         } else {
@@ -66,7 +69,7 @@ class Translator
     private function addValidatorResource(TranslatorService $translator, $locale)
     {
         $translator->addResource('xliff', 
-            Application::getInstance()->createPath(
+            Application::createPath(
                 sprintf('app:translations:%s:validators.xliff', $locale)), 
             $locale);  
     }
