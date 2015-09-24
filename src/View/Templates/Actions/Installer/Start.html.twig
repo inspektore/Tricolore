@@ -31,7 +31,7 @@
 
     <ul class="list-group list-unstyled">
       {% for component, requirement in requirements %}
-        <li class="list-group-item {{ requirement.status == 'ok' ? 'list-group-item list-group-item-success' : 'list-group-item list-group-item-danger' }}">
+        <li class="list-group-item {{ requirement.status == 'ok' ? 'list-group-item list-group-item-success' : requirement.required == true ? 'list-group-item list-group-item-danger' : 'list-group-item list-group-item-warning' }}">
           {{ requirement.status == 'ok' ? '<i class="fa installer-ok"></i>' : '<i class="fa installer-fail"></i>' }} {{ requirement.name }}
 
           {% if component == 'php' %}
