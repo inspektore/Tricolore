@@ -36,14 +36,14 @@
                 {{ exception.getMessage() }}
               {% endif %}
 
-              <footer>
-                {% if exception_name != 'ErrorException' %}
+              {% if exception_name != 'ErrorException' %}
+                <footer>
                   Caught in 
                   <code>
                     {{ exception.getTrace().0.class is defined ? exception.getTrace().0.class ~ "->" : null }}{{ exception.getTrace().0.function }}()
                   </code>
-                {% endif %}
-              </footer>
+                </footer>
+              {% endif %}
             </blockquote>
           </h2>
         </div>

@@ -4,6 +4,7 @@ namespace Tricolore\Controller\Installer;
 use Tricolore\Controller\ControllerAbstract;
 use Tricolore\Installer\Installer;
 use Tricolore\Form\FormTypes\Installer\InstallerType;
+use Tricolore\Exception\RuntimeException;
 use Symfony\Component\HttpFoundation\Request;
 
 class Install extends ControllerAbstract
@@ -44,6 +45,10 @@ class Install extends ControllerAbstract
      */
     public function collectData()
     {
+        if ($this->installer->canInstall() === false) {
+            throw new RuntimeException('You cannot continue installation because your server not meets the minimum requirements.');
+        }
+
         $form = $this->get('form')->create(new InstallerType(), [
             'translator' => $this->get('translator')
         ]);
