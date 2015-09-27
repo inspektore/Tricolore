@@ -73,6 +73,14 @@ $ grunt watch
 $ php app/console app:version
 ```
 
+```
+$ php app/console trans:rebuild-trans-unit-id
+```
+
+```
+$ php app/console app:clear-cache
+```
+
 ###MIT Licence
 
 Copyright (c) 2015 Maciej Schmidt
