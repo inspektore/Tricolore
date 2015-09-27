@@ -7,6 +7,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Finder\Finder;
 
 class CacheClear extends Command
 {
@@ -26,12 +27,25 @@ class CacheClear extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $filesystem = new Filesystem();
-        
-        $filesystem->remove([
-            Application::createPath('storage/twig'),
-            Application::createPath('storage/router'),
-            Application::createPath('storage/translations')
-        ]);
+        $finder = new Finder();
+
+        $directories = $finder
+            ->directories()
+            ->in(Application::createPath('storage'));
+
+        $output->writeln('Detecting cache folders...');
+
+        if (count($directories) === 0) {
+            return $output->writeln('<info>No cache folders detected. Aborting.</info>');
+        }
+
+        foreach ($directories as $directory) {
+            $output->writeln(sprintf('<comment>%s</comment>', $directory->getRealpath()));
+
+            $cache_folders[] = $directory->getRealpath();
+        }
+
+        $filesystem->remove($cache_folders);
 
         $output->writeln('<info>Caches cleared.</info>');
     }
