@@ -43,3 +43,7 @@ services:
 
     acl.manager:
         class: Tricolore\ACL\AclManager
+
+    cache:
+        class: Tricolore\Cache\Cache
+        function: getProvider

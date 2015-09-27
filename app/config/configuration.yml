@@ -19,6 +19,8 @@ prod:
     directory.storage: "storage"
     directory.assets: "static"
 
+    cache.provider: "PhpFile"
+
 dev:
     base.full_url: "http://php.dev/tricolore"
     base.locale: "en"
@@ -39,6 +41,8 @@ dev:
 
     directory.storage: "storage"
     directory.assets: "static"
+
+    cache.provider: "PhpFile"
 
 test:
     base.full_url: "http://localhost/Tricolore/tests"

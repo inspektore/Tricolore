@@ -6,6 +6,7 @@
         "cocur/slugify": "dev-master",
         "phpdocumentor/reflection-docblock": "2.0.4",
         "macsch15/crawler-detector": "dev-master",
+        "doctrine/cache": "1.4.2",
         "symfony/config": "2.7.5",
         "symfony/event-dispatcher": "2.7.5",
         "symfony/filesystem": "2.7.5",
