@@ -12,7 +12,7 @@ class ServiceLocatorTest extends \PHPUnit_Framework_TestCase
 
     public function testServiceInstanceOf()
     {
-        $service_path = Application::createPath('src:Tests:Fixtures:ServiceLocator.yml');
+        $service_path = Application::createPath('src/Tests/Fixtures/ServiceLocator.yml');
         $service_extra = $this->getServiceLocator()->get('extra', [], $service_path);
 
         $expected = 'Tricolore\Tests\Fixtures\ServiceLocatorExtra';
@@ -26,7 +26,7 @@ class ServiceLocatorTest extends \PHPUnit_Framework_TestCase
      */
     public function testExceptionServiceNotExists()
     {
-        $service_path = Application::createPath('src:Tests:Fixtures:ServiceLocator.yml');
+        $service_path = Application::createPath('src/Tests/Fixtures/ServiceLocator.yml');
 
         return $this->getServiceLocator()->get('fake_foo', [], $service_path);
     }
@@ -41,7 +41,7 @@ class ServiceLocatorTest extends \PHPUnit_Framework_TestCase
 
     public function testMethodReturn()
     {
-        $service_path = Application::createPath('src:Tests:Fixtures:ServiceLocator.yml');
+        $service_path = Application::createPath('src/Tests/Fixtures/ServiceLocator.yml');
         $service_extra = $this->getServiceLocator()->get('extra', [], $service_path);
 
         $expected = 'Hello World';
@@ -52,7 +52,7 @@ class ServiceLocatorTest extends \PHPUnit_Framework_TestCase
 
     public function testServiceFunction()
     {
-        $service_path = Application::createPath('src:Tests:Fixtures:ServiceLocator.yml');
+        $service_path = Application::createPath('src/Tests/Fixtures/ServiceLocator.yml');
 
         $expected = 'myFunc';
         $actual = $this->getServiceLocator()->get('extra_func', [], $service_path);
@@ -65,7 +65,7 @@ class ServiceLocatorTest extends \PHPUnit_Framework_TestCase
      */
     public function testServiceClassNotExists()
     {
-        $service_path = Application::createPath('src:Tests:Fixtures:ServiceLocator.yml');
+        $service_path = Application::createPath('src/Tests/Fixtures/ServiceLocator.yml');
 
         $this->getServiceLocator()->get('class_not_exists', [], $service_path);
     }
@@ -75,14 +75,14 @@ class ServiceLocatorTest extends \PHPUnit_Framework_TestCase
      */
     public function testServiceMethodNotExists()
     {
-        $service_path = Application::createPath('src:Tests:Fixtures:ServiceLocator.yml');
+        $service_path = Application::createPath('src/Tests/Fixtures/ServiceLocator.yml');
 
         $this->getServiceLocator()->get('method_not_exists', [], $service_path);
     }
 
     public function testServiceStaticFunction()
     {
-        $service_path = Application::createPath('src:Tests:Fixtures:ServiceLocator.yml');
+        $service_path = Application::createPath('src/Tests/Fixtures/ServiceLocator.yml');
 
         $expected = 'staticFunc';
         $actual = $this->getServiceLocator()->get('static_func', [], $service_path);

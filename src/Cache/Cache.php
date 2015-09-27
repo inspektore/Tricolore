@@ -23,6 +23,6 @@ class Cache
             throw new RuntimeException(sprintf('Cache provider "%s" do not exists.', $provider_name));
         }
 
-        return new $provider_class(Application::createPath(Config::getParameter('directory.storage') . ':' . $cache_folder));
+        return new $provider_class(Application::createPath(Config::getParameter('directory.storage') . '/' . $cache_folder));
     }
 }

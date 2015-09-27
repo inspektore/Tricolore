@@ -96,19 +96,19 @@ class View extends ServiceLocator
     {
         $finder = $this->get('finder')
             ->directories()
-            ->in(Application::createPath('src:View:Templates'));
+            ->in(Application::createPath('src/View/Templates'));
 
         foreach ($finder as $file) {
             $directories[] = $file->getRealpath();
         }
 
         $directories = array_merge($directories, [
-            Application::createPath('src:View:Templates')
+            Application::createPath('src/View/Templates')
         ]);
 
         if (Application::getInstance()->getEnv() === 'test') {
             $directories = array_merge($directories, [
-                Application::createPath('src:Tests:Fixtures:Templates') 
+                Application::createPath('src/Tests/Fixtures/Templates') 
             ]);
         }
 
@@ -123,7 +123,7 @@ class View extends ServiceLocator
     private function environmentOptions()
     {
         $in_prod = Application::getInstance()->getEnv() === 'prod';
-        $cache_directory = Application::createPath(Config::getParameter('directory.storage') . ':twig');
+        $cache_directory = Application::createPath(Config::getParameter('directory.storage') . '/twig');
 
         return [
             'cache' => ($in_prod === true) ? $cache_directory : false,
@@ -211,7 +211,7 @@ class View extends ServiceLocator
     {
         if (Application::getInstance()->getEnv() === 'test') {
             $this->environment->addExtension(new TranslationExtension($this->get('translator', [
-                Application::createPath('src:Tests:Fixtures:Translation_enEN.xliff'),
+                Application::createPath('src/Tests/Fixtures/Translation_enEN.xliff'),
                 'en_EN'
             ])));
         } else {

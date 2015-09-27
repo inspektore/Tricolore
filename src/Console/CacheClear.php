@@ -28,9 +28,9 @@ class CacheClear extends Command
         $filesystem = new Filesystem();
         
         $filesystem->remove([
-            Application::createPath('storage:twig'),
-            Application::createPath('storage:router'),
-            Application::createPath('storage:translations')
+            Application::createPath('storage/twig'),
+            Application::createPath('storage/router'),
+            Application::createPath('storage/translations')
         ]);
 
         $output->writeln('<info>Caches cleared.</info>');

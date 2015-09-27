@@ -144,7 +144,7 @@ class Application extends ServiceLocator
             return self::$options['directory'];
         }
 
-        $path = str_replace(':', DIRECTORY_SEPARATOR, $path);
+        $path = str_replace('/', DIRECTORY_SEPARATOR, $path);
 
         return self::$options['directory'] . $path;
     }

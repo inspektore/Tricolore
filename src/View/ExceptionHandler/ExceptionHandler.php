@@ -111,7 +111,7 @@ class ExceptionHandler extends ServiceLocator
         $exception_log .= str_repeat('-', 20) . ' LAST EXCEPTION LOG ' . str_repeat('-', 20);
 
         if (Application::getInstance()->getEnv() !== 'test') {
-            $this->filesystem->dumpFile(Application::createPath(Config::getParameter('directory.storage') . ':last_exception.txt'), $exception_log);
+            $this->filesystem->dumpFile(Application::createPath(Config::getParameter('directory.storage') . '/last_exception.txt'), $exception_log);
         }
     }
 }

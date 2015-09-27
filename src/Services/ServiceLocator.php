@@ -109,7 +109,7 @@ abstract class ServiceLocator
     private function parseServicesMap($service_file)
     {
         if ($service_file === null) {
-            $service_map = Yaml::parse(file_get_contents(Application::createPath('app:services:services.yml')));
+            $service_map = Yaml::parse(file_get_contents(Application::createPath('app/services/services.yml')));
         } else {
             if (file_exists($service_file) === false) {
                 throw new NotFoundResourceException(sprintf('File "%s" does not exists.', $service_file));
