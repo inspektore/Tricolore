@@ -15,16 +15,6 @@ use Carbon\Carbon;
 class Member extends ServiceLocator
 {
     /**
-     * Member instance
-     *
-     * @return Tricolore\Member\Member
-     */
-    public static function getInstance()
-    {
-        return new static();
-    }
-
-    /**
      * Validate member password
      * 
      * @param Tricolore\Member\Finder\MemberFinder $member

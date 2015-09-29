@@ -142,7 +142,8 @@ class View extends ServiceLocator
     {
         $this->environment->addGlobal('app', Application::getInstance());
         $this->environment->addGlobal('session', $this->get('session'));
-        $this->environment->addGlobal('member', Member::getInstance());
+        $this->environment->addGlobal('member', $this->get('member'));
+        $this->environment->addGlobal('acl', $this->get('acl.manager'));
     }
 
     /**
@@ -152,7 +153,7 @@ class View extends ServiceLocator
      */
     private function registerGlobalsIsolated()
     {
-        $this->environment->addGlobal('currentMember', Member::getInstance()->currentMember());
+        $this->environment->addGlobal('currentMember', $this->get('member')->currentMember());
     }
 
     /**
