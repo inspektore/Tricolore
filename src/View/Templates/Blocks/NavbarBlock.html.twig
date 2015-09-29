@@ -24,7 +24,7 @@
       </div>
     </div>
     <div class="auth-buttons pull-right">
-      {% if memberInstance.isLoggedIn() %}
+      {% if member.isLoggedIn() %}
         <div class="dropdown pull-left">
           <div class="member-important-icons">
             <a title="Notifications" id="notification-popover" href="#"><i class="fa fa-bell fa-lg"></i></a>
@@ -69,7 +69,7 @@
           </div>
 
           <button class="btn btn-primary dropdown-toggle" type="button" id="member-panel" data-toggle="dropdown" aria-expanded="true">
-            <i class="fa fa-user"></i> {{ member['username'] }} 
+            <i class="fa fa-user"></i> {{ currentMember['username'] }} 
             <span class="caret"></span>
           </button>
           <ul class="dropdown-menu" role="menu" aria-labelledby="member-panel">

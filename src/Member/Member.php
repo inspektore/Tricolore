@@ -150,7 +150,7 @@ class Member extends ServiceLocator
      * @codeCoverageIgnore
      * @return array
      */
-    public function dataCollector()
+    public function currentMember()
     {
         if ($this->isLoggedIn() === false) {
             return [];
