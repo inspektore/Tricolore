@@ -10,7 +10,7 @@
 - pdo_pgsql extension **(currently unsupported by HHVM)**
 - zlib (optional)
 - xdebug (optional)
-- Memcache, Memcached or Redis (optional)
+- Memcache, Memcached, XCache or Redis (optional)
 
 ###Downloading and installing dependencies
 ```
