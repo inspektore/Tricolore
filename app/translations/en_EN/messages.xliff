@@ -342,6 +342,14 @@
                 <source>Redis (optional)</source>
                 <target>Redis (optional)</target>
             </trans-unit>
+            <trans-unit id="86">
+                <source>Writable storage directory</source>
+                <target>Writable storage directory</target>
+            </trans-unit>
+            <trans-unit id="87">
+                <source>Writable configuration file</source>
+                <target>Writable configuration file</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

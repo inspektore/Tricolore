@@ -1,6 +1,8 @@
 <?php
 namespace Tricolore\Installer;
 
+use Tricolore\Foundation\Application;
+use Tricolore\Config\Config;
 use Tricolore\Services\ServiceLocator;
 
 class Installer extends ServiceLocator
@@ -23,6 +25,36 @@ class Installer extends ServiceLocator
         } else {
             $components['php'] = [
                 'name' => $this->get('translator')->trans('PHP 5.5'),
+                'status' => 'fail',
+                'required' => true
+            ];
+        }
+
+        if (is_writable(Application::createPath(Config::getParameter('directory.storage')))) {
+            $components['storage_writable'] = [
+                'name' => $this->get('translator')->trans('Writable storage directory'),
+                'status' => 'ok',
+                'required' => true
+            ];
+        } else {
+            $components['storage_writable'] = [
+                'name' => $this->get('translator')->trans('Writable storage directory', [
+                    '%directory%' => Application::createPath(Config::getParameter('directory.storage'))
+                ]),
+                'status' => 'fail',
+                'required' => true
+            ];
+        }
+
+        if (is_writable(Application::createPath('app/config/configuration.yml'))) {
+            $components['config_writable'] = [
+                'name' => $this->get('translator')->trans('Writable configuration file'),
+                'status' => 'ok',
+                'required' => true
+            ];
+        } else {
+            $components['config_writable'] = [
+                'name' => $this->get('translator')->trans('Writable configuration file'),
                 'status' => 'fail',
                 'required' => true
             ];

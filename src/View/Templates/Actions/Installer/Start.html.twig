@@ -37,6 +37,14 @@
           {% if component == 'php' %}
             <span class="badge">{% trans with {'%phpversion%': phpversion} %}current %phpversion%{% endtrans %}</span>
           {% endif %}
+
+          {% if component == 'storage_writable' %}
+            <span class="badge">{{ app.createPath(config('directory.storage')) }}</span>
+          {% endif %}
+
+          {% if component == 'config_writable' %}
+            <span class="badge">{{ app.createPath('app/config/configuration.yml') }}</span>
+          {% endif %}
         </li>
       {% endfor %}
     </ul>
