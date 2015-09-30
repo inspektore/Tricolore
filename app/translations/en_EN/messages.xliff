@@ -343,10 +343,14 @@
                 <target>Redis (optional)</target>
             </trans-unit>
             <trans-unit id="86">
+                <source>XCache (optional)</source>
+                <target>XCache (optional)</target>
+            </trans-unit>
+            <trans-unit id="87">
                 <source>Writable storage directory</source>
                 <target>Writable storage directory</target>
             </trans-unit>
-            <trans-unit id="87">
+            <trans-unit id="88">
                 <source>Writable configuration file</source>
                 <target>Writable configuration file</target>
             </trans-unit>

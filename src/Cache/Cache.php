@@ -16,7 +16,7 @@ class Cache
      */
     public function getProvider($cache_folder = null)
     {
-        $provider_name = underscoreToStudlyCaps(Config::getParameter('cache.provider'));
+        $provider_name = Config::getParameter('cache.provider');
         $provider_class = 'Tricolore\\Cache\\Providers\\' . $provider_name;
 
         if (class_exists($provider_class) === false) {

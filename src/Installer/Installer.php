@@ -158,6 +158,20 @@ class Installer extends ServiceLocator
             ];
         }
 
+        if (function_exists('xcache_set') === true) {
+            $components['xcache'] = [
+                'name' => $this->get('translator')->trans('XCache (optional)'),
+                'status' => 'ok',
+                'required' => false
+            ];
+        } else {
+            $components['xcache'] = [
+                'name' => $this->get('translator')->trans('XCache (optional)'),
+                'status' => 'fail',
+                'required' => false
+            ];
+        }
+
         return $components;
     }
 
