@@ -31,7 +31,7 @@ class CacheClear extends Command
 
         $directories = $finder
             ->directories()
-            ->in(Application::createPath('storage'));
+            ->in(Application::createPath(Config::getParameter('directory.storage')));
 
         $output->writeln('Detecting cache folders...');
 
