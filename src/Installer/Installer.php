@@ -84,6 +84,48 @@ class Installer extends ServiceLocator
             ];
         }
 
+        if (class_exists('Memcache') === true) {
+            $components['memcache'] = [
+                'name' => $this->get('translator')->trans('Memcache (optional)'),
+                'status' => 'ok',
+                'required' => false
+            ];
+        } else {
+            $components['memcache'] = [
+                'name' => $this->get('translator')->trans('Memcache (optional)'),
+                'status' => 'fail',
+                'required' => false
+            ];
+        }
+
+        if (class_exists('Memcached') === true) {
+            $components['memcached'] = [
+                'name' => $this->get('translator')->trans('Memcached (optional)'),
+                'status' => 'ok',
+                'required' => false
+            ];
+        } else {
+            $components['memcached'] = [
+                'name' => $this->get('translator')->trans('Memcached (optional)'),
+                'status' => 'fail',
+                'required' => false
+            ];
+        }
+
+        if (class_exists('Redis') === true) {
+            $components['redis'] = [
+                'name' => $this->get('translator')->trans('Redis (optional)'),
+                'status' => 'ok',
+                'required' => false
+            ];
+        } else {
+            $components['redis'] = [
+                'name' => $this->get('translator')->trans('Redis (optional)'),
+                'status' => 'fail',
+                'required' => false
+            ];
+        }
+
         return $components;
     }
 

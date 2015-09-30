@@ -330,6 +330,18 @@
                 <source>Tricolore version: %version%</source>
                 <target>Tricolore version: %version%</target>
             </trans-unit>
+            <trans-unit id="83">
+                <source>Memcache (optional)</source>
+                <target>Memcache (optional)</target>
+            </trans-unit>
+            <trans-unit id="84">
+                <source>Memcached (optional)</source>
+                <target>Memcached (optional)</target>
+            </trans-unit>
+            <trans-unit id="85">
+                <source>Redis (optional)</source>
+                <target>Redis (optional)</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
