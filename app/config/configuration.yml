@@ -20,6 +20,12 @@ prod:
     directory.assets: "static"
 
     cache.provider: "PhpFile"
+    cache.memcache.server: "127.0.0.1"
+    cache.memcache.port: 11211
+    cache.memcached.server: "127.0.0.1"
+    cache.memcached.port: 11211
+    cache.redis.server: "127.0.0.1"
+    cache.redis.port: 6379
 
 dev:
     base.full_url: "http://php.dev/tricolore"
@@ -43,6 +49,12 @@ dev:
     directory.assets: "static"
 
     cache.provider: "PhpFile"
+    cache.memcache.server: "127.0.0.1"
+    cache.memcache.port: 11211
+    cache.memcached.server: "127.0.0.1"
+    cache.memcached.port: 11211
+    cache.redis.server: "127.0.0.1"
+    cache.redis.port: 6379
 
 test:
     base.full_url: "http://localhost/Tricolore/tests"
