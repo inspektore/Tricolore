@@ -3,6 +3,7 @@ namespace Tricolore\Console;
 
 use Tricolore\Foundation\Application;
 use Tricolore\Config\Config;
+use Tricolore\Cache\Cache;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -28,6 +29,11 @@ class CacheClear extends Command
     {
         $filesystem = new Filesystem();
         $finder = new Finder();
+        $cache = new Cache();
+
+        $output->writeln('<info>Flushing cache...</info>');
+
+        $cache->getProvider()->flushAll();
 
         $directories = $finder
             ->directories()
