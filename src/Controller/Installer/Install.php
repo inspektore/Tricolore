@@ -43,7 +43,7 @@ class Install extends ControllerAbstract
     /**
      * @Access can_see_index
      */
-    public function collectData()
+    public function details()
     {
         if ($this->installer->canInstall() === false) {
             throw new RuntimeException('You cannot continue installation because your server not meets the minimum requirements.');
@@ -63,6 +63,6 @@ class Install extends ControllerAbstract
             'form' => $form->createView()
         ];
 
-        return $this->get('view')->display('Actions/Installer', 'CollectData', $render);
+        return $this->get('view')->display('Actions/Installer', 'Details', $render);
     }
 }
