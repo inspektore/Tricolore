@@ -17,7 +17,7 @@ class Cache
     public function getProvider($cache_folder = null)
     {
         $provider_name = Config::getParameter('cache.provider');
-        $provider_class = 'Tricolore\\Cache\\Providers\\' . $provider_name;
+        $provider_class = __NAMESPACE__ . '\\Providers\\' . $provider_name;
 
         if (class_exists($provider_class) === false) {
             throw new RuntimeException(sprintf('Cache provider "%s" do not exists.', $provider_name));
