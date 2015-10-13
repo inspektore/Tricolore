@@ -14,162 +14,173 @@ class Installer extends ServiceLocator
      */
     public function checkRequirements()
     {
-        $components = [];
-
-        if (version_compare(phpversion(), '5.5.0', '>') === true) {
-            $components['php'] = [
+        $components['php'] = function () {
+            $details = [
                 'name' => $this->get('translator')->trans('PHP 5.5'),
-                'status' => 'ok',
-                'required' => true
+                'required' => true,
+                'status' => 'fail'
             ];
-        } else {
-            $components['php'] = [
-                'name' => $this->get('translator')->trans('PHP 5.5'),
-                'status' => 'fail',
-                'required' => true
-            ];
-        }
 
-        if (is_writable(Application::createPath(Config::getParameter('directory.storage')))) {
-            $components['storage_writable'] = [
+            if (version_compare(phpversion(), '5.5.0', '>') === true) {
+                $details['status'] = 'ok';
+            }
+
+            return $details;
+        };
+
+        $components['storage_writable'] = function () {
+            $details = [
                 'name' => $this->get('translator')->trans('Writable storage directory'),
-                'status' => 'ok',
-                'required' => true
+                'required' => true,
+                'status' => 'fail'
             ];
-        } else {
-            $components['storage_writable'] = [
-                'name' => $this->get('translator')->trans('Writable storage directory', [
-                    '%directory%' => Application::createPath(Config::getParameter('directory.storage'))
-                ]),
-                'status' => 'fail',
-                'required' => true
-            ];
-        }
 
-        if (is_writable(Application::createPath('app/config/configuration.yml'))) {
-            $components['config_writable'] = [
+            if (is_writable(Application::createPath(Config::getParameter('directory.storage')))) {
+                $details['status'] = 'ok';
+            }
+
+            return $details;
+        };
+
+        $components['config_writable'] = function () {
+            $details = [
                 'name' => $this->get('translator')->trans('Writable configuration file'),
-                'status' => 'ok',
-                'required' => true
+                'required' => true,
+                'status' => 'fail'
             ];
-        } else {
-            $components['config_writable'] = [
-                'name' => $this->get('translator')->trans('Writable configuration file'),
-                'status' => 'fail',
-                'required' => true
-            ];
-        }
-        
-        if (extension_loaded('intl') === true) {
-            $components['intl'] = [
+
+            if (is_writable(Application::createPath('app/config/configuration.yml'))) {
+                $details['status'] = 'ok';
+            }
+
+            return $details;
+        };
+
+        $components['intl'] = function () {
+            $details = [
                 'name' => $this->get('translator')->trans('INTL extension'),
-                'status' => 'ok',
-                'required' => true
+                'required' => true,
+                'status' => 'fail'
             ];
-        } else {
-            $components['intl'] = [
-                'name' => $this->get('translator')->trans('INTL extension'),
-                'status' => 'fail',
-                'required' => true
-            ];
-        }
 
-        if (extension_loaded('pdo_pgsql') === true) {
-            $components['pgsql'] = [
+            if (extension_loaded('intl') === true) {
+                $details['status'] = 'ok';
+            }
+
+            return $details;
+        };
+
+        $components['pgsql'] = function () {
+            $details = [
                 'name' => $this->get('translator')->trans('Enabled pdo_pgsql extension'),
-                'status' => 'ok',
-                'required' => true
+                'required' => true,
+                'status' => 'fail'
             ];
-        } else {
-            $components['pgsql'] = [
-                'name' => $this->get('translator')->trans('Enabled pdo_pgsql extension'),
-                'status' => 'fail',
-                'required' => true
-            ];
-        }
 
-        if (extension_loaded('zlib') === true) {
-            $components['zlib'] = [
+            if (extension_loaded('pdo_pgsql') === true) {
+                $details['status'] = 'ok';
+            }
+
+            return $details;
+        };
+
+        $components['zlib'] = function () {
+            $details = [
                 'name' => $this->get('translator')->trans('zlib (optional)'),
-                'status' => 'ok',
-                'required' => false
+                'required' => false,
+                'status' => 'fail'
             ];
-        } else {
-            $components['zlib'] = [
-                'name' => $this->get('translator')->trans('zlib (optional)'),
-                'status' => 'fail',
-                'required' => false
-            ];
-        }
 
-        if (function_exists('xdebug_get_headers') === true) {
-            $components['xdebug'] = [
+            if (extension_loaded('zlib') === true) {
+                $details['status'] = 'ok';
+            }
+
+            return $details;
+        };
+
+        $components['xdebug'] = function () {
+            $details = [
                 'name' => $this->get('translator')->trans('Xdebug (optional)'),
-                'status' => 'ok',
-                'required' => false
+                'required' => false,
+                'status' => 'fail'
             ];
-        } else {
-            $components['xdebug'] = [
-                'name' => $this->get('translator')->trans('Xdebug (optional)'),
-                'status' => 'fail',
-                'required' => false
-            ];
-        }
 
-        if (class_exists('Memcache') === true) {
-            $components['memcache'] = [
+            if (function_exists('xdebug_get_headers') === true) {
+                $details['status'] = 'ok';
+            }
+
+            return $details;
+        };
+
+        $components['memcache'] = function () {
+            $details = [
                 'name' => $this->get('translator')->trans('Memcache (optional)'),
-                'status' => 'ok',
-                'required' => false
+                'required' => false,
+                'status' => 'fail'
             ];
-        } else {
-            $components['memcache'] = [
-                'name' => $this->get('translator')->trans('Memcache (optional)'),
-                'status' => 'fail',
-                'required' => false
-            ];
-        }
 
-        if (class_exists('Memcached') === true) {
-            $components['memcached'] = [
+            if (class_exists('Memcache') === true) {
+                $details['status'] = 'ok';
+            }
+
+            return $details;
+        };
+
+        $components['memcached'] = function () {
+            $details = [
                 'name' => $this->get('translator')->trans('Memcached (optional)'),
-                'status' => 'ok',
-                'required' => false
+                'required' => false,
+                'status' => 'fail'
             ];
-        } else {
-            $components['memcached'] = [
-                'name' => $this->get('translator')->trans('Memcached (optional)'),
-                'status' => 'fail',
-                'required' => false
-            ];
-        }
 
-        if (class_exists('Redis') === true) {
-            $components['redis'] = [
-                'name' => $this->get('translator')->trans('Redis (optional)'),
-                'status' => 'ok',
-                'required' => false
-            ];
-        } else {
-            $components['redis'] = [
-                'name' => $this->get('translator')->trans('Redis (optional)'),
-                'status' => 'fail',
-                'required' => false
-            ];
-        }
+            if (class_exists('Memcached') === true) {
+                $details['status'] = 'ok';
+            }
 
-        if (function_exists('xcache_set') === true) {
-            $components['xcache'] = [
-                'name' => $this->get('translator')->trans('XCache (optional)'),
-                'status' => 'ok',
-                'required' => false
+            return $details;
+        };
+
+        $components['redis'] = function () {
+            $details = [
+                'name' => $this->get('translator')->trans('Redis (optional)'),
+                'required' => false,
+                'status' => 'fail'
             ];
-        } else {
-            $components['xcache'] = [
+
+            if (class_exists('Redis') === true) {
+                $details['status'] = 'ok';
+            }
+
+            return $details;
+        };
+
+        $components['xcache'] = function () {
+            $details = [
                 'name' => $this->get('translator')->trans('XCache (optional)'),
-                'status' => 'fail',
-                'required' => false
+                'required' => false,
+                'status' => 'fail'
             ];
+
+            if (function_exists('xcache_set') === true) {
+                $details['status'] = 'ok';
+            }
+
+            return $details;
+        };
+
+        return $this->returnClosureArray($components);
+    }
+
+    /**
+     * Return closure array
+     *
+     * @param array $components
+     * @return array
+     */
+    private function returnClosureArray(array $components)
+    {
+        foreach ($components as $component => $closure) {
+            $components[$component] = $closure();  
         }
 
         return $components;
