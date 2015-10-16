@@ -1,4 +1,4 @@
-#Tricolore [![Build Status](https://travis-ci.org/Macsch15/Tricolore.svg)](https://travis-ci.org/Macsch15/Tricolore) [![Coverage Status](https://coveralls.io/repos/Macsch15/Tricolore/badge.svg?branch=master)](https://coveralls.io/r/Macsch15/Tricolore?branch=master) [![Dependency Status](https://www.versioneye.com/user/projects/551af4933661f134fe0001e8/badge.svg?style=flat)](https://www.versioneye.com/user/projects/551af4933661f134fe0001e8)
+#Tricolore [![Build Status](https://travis-ci.org/Macsch15/Tricolore.svg)](https://travis-ci.org/Macsch15/Tricolore) [![Coverage Status](https://coveralls.io/repos/Macsch15/Tricolore/badge.svg?branch=master)](https://coveralls.io/r/Macsch15/Tricolore?branch=master) [![Dependency Status](https://www.versioneye.com/user/projects/551af4933661f134fe0001e8/badge.svg?style=flat)](https://www.versioneye.com/user/projects/551af4933661f134fe0001e8) [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Macsch15/Tricolore?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 #####A robust discussion software
 *Work in progress...*
