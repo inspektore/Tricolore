@@ -7,6 +7,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Finder\Finder;
 
 class RebuildTransUnitId extends Command
 {
@@ -26,12 +27,12 @@ class RebuildTransUnitId extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $filesystem = new Filesystem();
+        $finder = new Finder();
         $locale = Config::getParameter('trans.locale');
 
-        $translation_files = [
-            Application::createPath(sprintf('app/translations/%s/messages.xliff', $locale)),
-            Application::createPath(sprintf('app/translations/%s/validators.xliff', $locale))
-        ];
+        $translation_files = $finder->files()
+            ->in(Application::createPath('app/translations/*'))
+            ->name('*.xliff');
 
         $output->writeln('Loaded files:');
 
