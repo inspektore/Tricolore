@@ -30,7 +30,8 @@ class RebuildTransUnitId extends Command
         $finder = new Finder();
         $locale = Config::getParameter('trans.locale');
 
-        $translation_files = $finder->files()
+        $translation_files = $finder
+            ->files()
             ->in(Application::createPath('app/translations/*'))
             ->name('*.xliff');
 
