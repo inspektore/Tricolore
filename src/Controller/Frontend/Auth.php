@@ -2,7 +2,6 @@
 namespace Tricolore\Controller\Frontend;
 
 use Tricolore\Member\Auth\Auth as AuthService;
-use Tricolore\Form\FormTypes\Frontend\AuthType;
 use Tricolore\Controller\ControllerAbstract;
 use Tricolore\Config\Config;
 use Tricolore\Security\Csrf\CsrfToken;
@@ -19,7 +18,7 @@ class Auth extends ControllerAbstract
      */
     public function login()
     {
-        $form = $this->get('form')->create(new AuthType(), [
+        $form = $this->get('form')->create('Tricolore\Form\FormTypes\Frontend\AuthType', [
             'translator' => $this->get('translator')
         ]);
 

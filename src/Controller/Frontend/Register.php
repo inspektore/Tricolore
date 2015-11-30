@@ -2,7 +2,6 @@
 namespace Tricolore\Controller\Frontend;
 
 use Tricolore\Controller\ControllerAbstract;
-use Tricolore\Form\FormTypes\Frontend\RegisterType;
 use Tricolore\Member\Member;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -14,7 +13,7 @@ class Register extends ControllerAbstract
      */
     public function process()
     {
-        $form = $this->get('form')->create(new RegisterType(), [
+        $form = $this->get('form')->create('Tricolore\Form\FormTypes\Frontend\RegisterType', [
             'translator' => $this->get('translator')
         ]);
 

@@ -7,9 +7,7 @@ use Tricolore\Exception\AclException;
 use Tricolore\Exception\ValidationException;
 use Tricolore\Security\Encoder\BCrypt;
 use CrawlerDetector\Detector\CrawlerDetector;
-use Symfony\Component\Security\Core\Util\StringUtils;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\Util\SecureRandom;
 use Carbon\Carbon;
 
 class Member extends ServiceLocator
@@ -119,7 +117,7 @@ class Member extends ServiceLocator
             $validation = false;
 
             if ($member_finder->exists() === true) {
-                if (StringUtils::equals($member_finder->container()['token'], $this->get('cookiejar')->get('token')) === true) {
+                if (hash_equals($member_finder->container()['token'], $this->get('cookiejar')->get('token')) === true) {
                     $validation = true;
                 }
             }
@@ -185,8 +183,6 @@ class Member extends ServiceLocator
             throw new AclException(sprintf('Email "%s" is not valid', $email));
         }
 
-        $generator = new SecureRandom();
-
         $this->get('datasource')->buildQuery('insert')
             ->into('members')
             ->values([
@@ -196,7 +192,7 @@ class Member extends ServiceLocator
                 'role' => $role,
                 'joined' => Carbon::now()->timestamp,
                 'email' => $email,
-                'token' => BCrypt::hash(bin2hex($generator->nextBytes(25))),
+                'token' => BCrypt::hash(bin2hex(random_bytes(25))),
                 'ip_address' => Request::createFromGlobals()->getClientIp()
             ])
             ->execute();

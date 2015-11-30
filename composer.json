@@ -1,4 +1,5 @@
 {
+    "minimum-stability": "dev",
     "require": {
         "php": ">=5.5",
         "nesbot/carbon": "1.21.0",
@@ -7,21 +8,21 @@
         "phpdocumentor/reflection-docblock": "2.0.4",
         "macsch15/crawler-detector": "1.2.0",
         "doctrine/cache": "1.5.1",
-        "symfony/config": "2.8.x-dev",
-        "symfony/event-dispatcher": "2.8.x-dev",
-        "symfony/filesystem": "2.8.x-dev",
-        "symfony/finder": "2.8.x-dev",
-        "symfony/form": "2.8.x-dev",
-        "symfony/http-foundation": "2.8.x-dev",
-        "symfony/options-resolver": "2.8.x-dev",
-        "symfony/routing": "2.8.x-dev",
-        "symfony/security": "2.8.x-dev",
-        "symfony/translation": "2.8.x-dev",
-        "symfony/validator": "2.8.x-dev",
-        "symfony/yaml": "2.8.x-dev",
-        "symfony/console": "2.8.x-dev",
-        "symfony/var-dumper": "2.8.x-dev",
-        "symfony/twig-bridge": "2.8.x-dev"
+        "symfony/config": "3.0.0-BETA1",
+        "symfony/event-dispatcher": "3.0.0-BETA1",
+        "symfony/filesystem": "3.0.0-BETA1",
+        "symfony/finder": "3.0.0-BETA1",
+        "symfony/form": "3.0.0-BETA1",
+        "symfony/http-foundation": "3.0.0-BETA1",
+        "symfony/options-resolver": "3.0.0-BETA1",
+        "symfony/routing": "3.0.0-BETA1",
+        "symfony/security": "3.0.0-BETA1",
+        "symfony/translation": "3.0.0-BETA1",
+        "symfony/validator": "3.0.0-BETA1",
+        "symfony/yaml": "3.0.0-BETA1",
+        "symfony/console": "3.0.0-BETA1",
+        "symfony/var-dumper": "3.0.0-BETA1",
+        "symfony/twig-bridge": "3.0.0-BETA1"
     },
 
     "require-dev": {

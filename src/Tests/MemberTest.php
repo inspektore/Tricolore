@@ -3,14 +3,11 @@ namespace Tricolore\Tests;
 
 use Tricolore\Security\Encoder\BCrypt;
 use Carbon\Carbon;
-use Symfony\Component\Security\Core\Util\SecureRandom;
 
 class MemberTest extends \PHPUnit_Framework_TestCase
 {
     protected function setUp()
     {
-        $generator = new SecureRandom();
-
         $this->getDataSource()->buildQuery('create_table')
             ->name('members')
             ->columns([
@@ -36,7 +33,7 @@ class MemberTest extends \PHPUnit_Framework_TestCase
                 'role' => 'ROLE_ADMIN',
                 'joined' => Carbon::now()->timestamp,
                 'email' => 'testing@example.com',
-                'token' => BCrypt::hash(bin2hex($generator->nextBytes(25))),
+                'token' => BCrypt::hash(bin2hex(random_bytes(25))),
                 'ip_address' => '0.0.0.0'
             ])
             ->execute();

@@ -5,7 +5,6 @@ use Tricolore\Services\ServiceLocator;
 use Tricolore\Exception\NoPermissionException;
 use Tricolore\Exception\RuntimeException;
 use phpDocumentor\Reflection\DocBlock;
-use Symfony\Component\Security\Core\Util\StringUtils;
 
 class CheckControllerAccess extends ServiceLocator
 {
@@ -33,7 +32,7 @@ class CheckControllerAccess extends ServiceLocator
                 throw new RuntimeException(sprintf('Role "%s" do not exists', $role_access));
             }
 
-            if (StringUtils::equals($this->get('member')->getRole(), $role_access) === false) {
+            if (hash_equals($this->get('member')->getRole(), $role_access) === false) {
                 throw new NoPermissionException($this->errorMessage($phpdoc));
             }
         }
