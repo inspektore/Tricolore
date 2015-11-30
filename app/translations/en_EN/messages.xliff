@@ -179,8 +179,8 @@
                 <target>Try again</target>
             </trans-unit>
             <trans-unit id="45">
-                <source>PHP 5.5</source>
-                <target>PHP 5.5</target>
+                <source>PHP 5.6</source>
+                <target>PHP 5.6</target>
             </trans-unit>
             <trans-unit id="46">
                 <source>INTL extension</source>

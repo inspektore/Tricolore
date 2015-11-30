@@ -16,12 +16,12 @@ class Installer extends ServiceLocator
     {
         $components['php'] = function () {
             $details = [
-                'name' => $this->get('translator')->trans('PHP 5.5'),
+                'name' => $this->get('translator')->trans('PHP 5.6'),
                 'required' => true,
                 'status' => 'fail'
             ];
 
-            if (version_compare(phpversion(), '5.5.0', '>') === true) {
+            if (version_compare(phpversion(), '5.6.0', '>') === true) {
                 $details['status'] = 'ok';
             }
 
