@@ -13,7 +13,7 @@ class AuthType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('login', 'text', [
+            ->add('login', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
                 'constraints' => [
                     new Assert\NotBlank()
                 ],
@@ -23,7 +23,7 @@ class AuthType extends AbstractType
                     'class' => 'backend-auth-input'
                 ]
             ])
-            ->add('password', 'password', [
+            ->add('password', 'Symfony\Component\Form\Extension\Core\Type\PasswordType', [
                 'constraints' => [
                     new Assert\NotBlank()
                 ],
@@ -33,7 +33,7 @@ class AuthType extends AbstractType
                     'class' => 'backend-auth-input'
                 ]
             ])
-            ->add('admincp_auth_submit', 'submit', [
+            ->add('admincp_auth_submit', 'Symfony\Component\Form\Extension\Core\Type\SubmitType', [
                 'label' => $options['data']['translator']->trans('Log in'),
                 'attr' => [
                     'class' => 'btn btn-success backend-auth-button-continue full-width'

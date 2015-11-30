@@ -13,12 +13,12 @@ class InstallerType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add($builder->create('general_settings', 'form', [
+            ->add($builder->create('general_settings', 'Symfony\Component\Form\Extension\Core\Type\FormType', [
                 'label_attr' => [
                     'class' => 'installer-step-title'
-                ], 'virtual' => true
+                ], 'inherit_data' => true
             ]))
-            ->add('general_url', 'url', [
+            ->add('general_url', 'Symfony\Component\Form\Extension\Core\Type\UrlType', [
                 'constraints' => [
                     new Assert\NotBlank()
                 ],
@@ -28,12 +28,12 @@ class InstallerType extends AbstractType
                     'placeholder' => $options['data']['translator']->trans('http://example.com')
                 ]
             ])
-            ->add($builder->create('database', 'form', [
+            ->add($builder->create('database', 'Symfony\Component\Form\Extension\Core\Type\FormType', [
                 'label_attr' => [
                     'class' => 'installer-step-title'
-                ], 'virtual' => true
+                ], 'inherit_data' => true
             ]))
-            ->add('database_host', 'text', [
+            ->add('database_host', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
                 'constraints' => [
                     new Assert\NotBlank()
                 ],
@@ -43,7 +43,7 @@ class InstallerType extends AbstractType
                     'placeholder' => $options['data']['translator']->trans('localhost')
                 ]
             ])
-            ->add('database_name', 'text', [
+            ->add('database_name', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
                 'constraints' => [
                     new Assert\NotBlank()
                 ],
@@ -53,7 +53,7 @@ class InstallerType extends AbstractType
                     'placeholder' => $options['data']['translator']->trans('tricolore')
                 ]
             ])
-            ->add('database_test_name', 'text', [
+            ->add('database_test_name', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
                 'constraints' => [
                     new Assert\NotBlank()
                 ],
@@ -63,7 +63,7 @@ class InstallerType extends AbstractType
                     'placeholder' => $options['data']['translator']->trans('tricolore_tests')
                 ]
             ])
-            ->add('database_username', 'text', [
+            ->add('database_username', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
                 'constraints' => [
                     new Assert\NotBlank()
                 ],
@@ -73,7 +73,7 @@ class InstallerType extends AbstractType
                     'placeholder' => $options['data']['translator']->trans('PostgreSQL username')
                 ]
             ])
-            ->add('database_password', 'password', [
+            ->add('database_password', 'Symfony\Component\Form\Extension\Core\Type\PasswordType', [
                 'constraints' => [
                     new Assert\NotBlank()
                 ],
@@ -83,7 +83,7 @@ class InstallerType extends AbstractType
                     'placeholder' => $options['data']['translator']->trans('PostgreSQL password')
                 ]
             ])
-            ->add('database_prefix', 'text', [
+            ->add('database_prefix', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
                 'constraints' => [
                     new Assert\NotBlank()
                 ],
@@ -93,12 +93,12 @@ class InstallerType extends AbstractType
                     'placeholder' => $options['data']['translator']->trans('tricolore_')
                 ]
             ])
-            ->add($builder->create('administrator_account', 'form', [
+            ->add($builder->create('administrator_account', 'Symfony\Component\Form\Extension\Core\Type\FormType', [
                 'label_attr' => [
                     'class' => 'installer-step-title'
-                ], 'virtual' => true
+                ], 'inherit_data' => true
             ]))
-            ->add('admin_username', 'text', [
+            ->add('admin_username', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
                 'constraints' => [
                     new Assert\NotBlank()
                 ],
@@ -108,7 +108,7 @@ class InstallerType extends AbstractType
                     'placeholder' => $options['data']['translator']->trans('Administrator username')
                 ]
             ])
-            ->add('admin_password', 'password', [
+            ->add('admin_password', 'Symfony\Component\Form\Extension\Core\Type\PasswordType', [
                 'constraints' => [
                     new Assert\NotBlank()
                 ],
@@ -118,7 +118,7 @@ class InstallerType extends AbstractType
                     'placeholder' => $options['data']['translator']->trans('Administrator password')
                 ]
             ])
-            ->add('admin_password_confirm', 'password', [
+            ->add('admin_password_confirm', 'Symfony\Component\Form\Extension\Core\Type\PasswordType', [
                 'constraints' => [
                     new Assert\NotBlank()
                 ],
@@ -128,7 +128,7 @@ class InstallerType extends AbstractType
                     'placeholder' => $options['data']['translator']->trans('Confirm password')
                 ]
             ])
-            ->add('admin_email', 'email', [
+            ->add('admin_email', 'Symfony\Component\Form\Extension\Core\Type\EmailType', [
                 'constraints' => [
                     new Assert\NotBlank()
                 ],
@@ -138,7 +138,7 @@ class InstallerType extends AbstractType
                     'placeholder' => $options['data']['translator']->trans('Administrator e-mail')
                 ]
             ])
-            ->add('auth_submit', 'submit', [
+            ->add('auth_submit', 'Symfony\Component\Form\Extension\Core\Type\SubmitType', [
                 'label' => $options['data']['translator']->trans('Continue installation'),
                 'attr' => [
                     'class' => 'btn-default btn installer-step-button'

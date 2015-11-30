@@ -13,7 +13,7 @@ class RegisterType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('username', 'text', [
+            ->add('username', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
                 'constraints' => [
                     new Assert\NotBlank(),
                     new Assert\Length([
@@ -26,7 +26,7 @@ class RegisterType extends AbstractType
                     'placeholder' => $options['data']['translator']->trans('Type your username')
                 ]
             ])
-            ->add('email', 'email', [
+            ->add('email', 'Symfony\Component\Form\Extension\Core\Type\EmailType', [
                 'constraints' => [
                     new Assert\NotBlank(),
                     new Assert\Email()
@@ -36,7 +36,7 @@ class RegisterType extends AbstractType
                     'placeholder' => $options['data']['translator']->trans('Type your active e-mail')
                 ]
             ])
-            ->add('password', 'password', [
+            ->add('password', 'Symfony\Component\Form\Extension\Core\Type\PasswordType', [
                 'constraints' => [
                     new Assert\NotBlank(),
                     new Assert\Length([
@@ -48,7 +48,7 @@ class RegisterType extends AbstractType
                     'placeholder' => $options['data']['translator']->trans('Type your password')
                 ]
             ])
-            ->add('password_repeat', 'password', [
+            ->add('password_repeat', 'Symfony\Component\Form\Extension\Core\Type\PasswordType', [
                 'constraints' => [
                     new Assert\NotBlank(),
                     new Assert\Length([
@@ -60,7 +60,7 @@ class RegisterType extends AbstractType
                     'placeholder' => $options['data']['translator']->trans('Type your password')
                 ]
             ])
-            ->add('register_submit', 'submit', [
+            ->add('register_submit', 'Symfony\Component\Form\Extension\Core\Type\SubmitType', [
                 'label' => $options['data']['translator']->trans('Register'),
                 'attr' => [
                     'class' => 'btn-primary'
