@@ -4,6 +4,7 @@ namespace Tricolore\Form\FormTypes\Frontend;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Form\Extension\Core\Type as Type;
 
 class RegisterType extends AbstractType
 {
@@ -13,7 +14,7 @@ class RegisterType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('username', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
+            ->add('username', Type\TextType::class, [
                 'constraints' => [
                     new Assert\NotBlank(),
                     new Assert\Length([
@@ -26,7 +27,7 @@ class RegisterType extends AbstractType
                     'placeholder' => $options['data']['translator']->trans('Type your username')
                 ]
             ])
-            ->add('email', 'Symfony\Component\Form\Extension\Core\Type\EmailType', [
+            ->add('email', Type\EmailType::class, [
                 'constraints' => [
                     new Assert\NotBlank(),
                     new Assert\Email()
@@ -36,7 +37,7 @@ class RegisterType extends AbstractType
                     'placeholder' => $options['data']['translator']->trans('Type your active e-mail')
                 ]
             ])
-            ->add('password', 'Symfony\Component\Form\Extension\Core\Type\PasswordType', [
+            ->add('password', Type\PasswordType::class, [
                 'constraints' => [
                     new Assert\NotBlank(),
                     new Assert\Length([
@@ -48,7 +49,7 @@ class RegisterType extends AbstractType
                     'placeholder' => $options['data']['translator']->trans('Type your password')
                 ]
             ])
-            ->add('password_repeat', 'Symfony\Component\Form\Extension\Core\Type\PasswordType', [
+            ->add('password_repeat', Type\PasswordType::class, [
                 'constraints' => [
                     new Assert\NotBlank(),
                     new Assert\Length([
@@ -60,7 +61,7 @@ class RegisterType extends AbstractType
                     'placeholder' => $options['data']['translator']->trans('Type your password')
                 ]
             ])
-            ->add('register_submit', 'Symfony\Component\Form\Extension\Core\Type\SubmitType', [
+            ->add('register_submit', Type\SubmitType::class, [
                 'label' => $options['data']['translator']->trans('Register'),
                 'attr' => [
                     'class' => 'btn-primary'

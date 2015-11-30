@@ -4,6 +4,7 @@ namespace Tricolore\Form\FormTypes\Frontend;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Form\Extension\Core\Type as Type;
 
 class AuthType extends AbstractType
 {
@@ -13,7 +14,7 @@ class AuthType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('login', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
+            ->add('login', Type\TextType::class, [
                 'constraints' => [
                     new Assert\NotBlank()
                 ],
@@ -22,7 +23,7 @@ class AuthType extends AbstractType
                     'placeholder' => $options['data']['translator']->trans('Email address or username')
                 ]
             ])
-            ->add('password', 'Symfony\Component\Form\Extension\Core\Type\PasswordType', [
+            ->add('password', Type\PasswordType::class, [
                 'constraints' => [
                     new Assert\NotBlank()
                 ],
@@ -31,7 +32,7 @@ class AuthType extends AbstractType
                     'placeholder' => $options['data']['translator']->trans('Password')
                 ]
             ])
-            ->add('autologin', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
+            ->add('autologin', Type\CheckboxType::class, [
                 'label' => $options['data']['translator']->trans('Remember me'),
                 'label_attr' => [
                     'for' => 'auth_frontend_autologin'
@@ -41,7 +42,7 @@ class AuthType extends AbstractType
                 ],
                 'required' => false
             ])
-            ->add('auth_submit', 'Symfony\Component\Form\Extension\Core\Type\SubmitType', [
+            ->add('auth_submit', Type\SubmitType::class, [
                 'label' => $options['data']['translator']->trans('Log in'),
                 'attr' => [
                     'class' => 'btn-primary frontend-auth-button-continue full-width'
