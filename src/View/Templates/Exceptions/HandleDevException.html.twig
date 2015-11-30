@@ -31,7 +31,7 @@
           <h2 {{ exception.getMessage()|length > 80 ? 'class="less-font-size"' : null }}>
             <blockquote>
               {% if exception.getMessage() is empty %} 
-                <em>(No message)</em>
+                ಠ_ಠ
               {% else %}
                 {{ exception.getMessage() }}
               {% endif %}
@@ -48,8 +48,8 @@
           </h2>
         </div>
 
-        <i class="fa fa-circle-o"></i> <b>Location:</b> <em>{{ path_info }}</em><br />
-        <i class="fa fa-circle-o"></i> <b>Source:</b> <em>{{ error_file }}:{{ error_line }}</em>
+        <i class="fa fa-angle-right"></i> <b>Location:</b> <em>{{ path_info }}</em><br />
+        <i class="fa fa-angle-right"></i> <b>Source:</b> <em>{{ error_file }}:{{ error_line }}</em>
 
         {% if file_lines|length > 1 %}
           <pre data-line-offset="{{ error_line - 5 }}" data-line="{{ error_line }}"><code class="language-php">
