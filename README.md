@@ -4,7 +4,7 @@
 *Work in progress...*
 
 ###Environment requirements
-- PHP 5.5 (5.6 recommended)
+- PHP 5.6 or later
 - PostgreSQL 9.1 (or later)
 - INTL extension
 - pdo_pgsql extension **(currently unsupported by HHVM)**
