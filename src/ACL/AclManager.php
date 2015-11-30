@@ -2,7 +2,6 @@
 namespace Tricolore\ACL;
 
 use Tricolore\ACL\DataCollector\AclDataCollectorAbstract;
-use Symfony\Component\Security\Core\Util\StringUtils;
 
 class AclManager extends AclDataCollectorAbstract
 {
@@ -21,11 +20,11 @@ class AclManager extends AclDataCollectorAbstract
             return false;
         }
 
-        if (StringUtils::equals($client_role, $permission_role) === false) {
+        if (hash_equals($client_role, $permission_role) === false) {
             return false;
         }
 
-        if (StringUtils::equals($this->getPermission($permission_key, $client_role)['permission_value'], '0') === true) {
+        if (hash_equals($this->getPermission($permission_key, $client_role)['permission_value'], '0') === true) {
             return false;
         }
 
