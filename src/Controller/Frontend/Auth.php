@@ -7,6 +7,7 @@ use Tricolore\Config\Config;
 use Tricolore\Security\Csrf\CsrfToken;
 use Tricolore\Exception\NoPermissionException;
 use Tricolore\Exception\ValidationException;
+use Tricolore\Form\FormTypes\Frontend\AuthType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\FormError;
 
@@ -18,7 +19,7 @@ class Auth extends ControllerAbstract
      */
     public function login()
     {
-        $form = $this->get('form')->create('Tricolore\Form\FormTypes\Frontend\AuthType', [
+        $form = $this->get('form')->create(AuthType::class, [
             'translator' => $this->get('translator')
         ]);
 
