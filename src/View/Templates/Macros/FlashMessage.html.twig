@@ -1,7 +1,0 @@
-{% macro getAllMessages() %}
-  {% for type, message in session.getFlashBag().all() %}
-    <div class="flash-message alert {{ type }}">
-      <b>{{ message.0 }}</b>
-    </div>
-  {% endfor %}
-{% endmacro %}
