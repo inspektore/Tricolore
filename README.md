@@ -3,6 +3,19 @@
 #####Rapid community environment built with Laravel framework
 *Work in progress...*
 
+###Requirements
+- PHP 7
+- Support for PostgreSQL, MySQL, SQLite or SQL Server
+- composer and CLI access
+- (Optional) Redis for cache
+
+###Downloading and installing dependencies
+```
+$ git clone https://github.com/Macsch15/Tricolore.git
+$ cd Tricolore
+$ composer install
+```
+
 ###MIT Licence
 
 Copyright (c) 2016 Maciej Schmidt
