@@ -1,4 +1,4 @@
-#Tricolore
+#Tricolore [![Build Status](https://travis-ci.org/Macsch15/Tricolore.svg?branch=master)](https://travis-ci.org/Macsch15/Tricolore)
 
 #####Rapid community environment built with Laravel framework
 *Work in progress...*
