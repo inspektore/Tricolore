@@ -16,7 +16,7 @@ before_script:
 
 script:
   - mkdir -p build/logs
-  - phpunit --verbose --coverage-text'
+  - phpunit --verbose --coverage-text
 
 after_script:
   - php vendor/bin/coveralls -v
