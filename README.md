@@ -6,7 +6,7 @@
 ###Requirements
 - PHP 7
 - Support for PostgreSQL, MySQL, SQLite or SQL Server
-- composer and CLI access
+- Composer and CLI access
 - (Optional) Redis for cache
 
 ###Downloading and installing dependencies
