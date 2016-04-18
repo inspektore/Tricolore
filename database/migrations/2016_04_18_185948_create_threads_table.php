@@ -15,12 +15,12 @@ class CreateThreadsTable extends Migration
         Schema::create('threads', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title');
-            $table->dateTime('created_at');
             $table->string('member_username');
-            $table->integer('member_id');
-            $table->string('forum_id');
+            $table->integer('member_id')->unsigned()->index();
+            $table->string('forum_id')->unsigned()->index();
             $table->string('flag');
             $table->ipAddress('visitor');
+            $table->timestamps();
         });
 
         Artisan::call('db:seed');
