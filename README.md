@@ -16,6 +16,11 @@ $ cd Tricolore
 $ composer install
 ```
 
+###Migrations and seeders
+```
+$ php artisan migrate
+```
+
 ###MIT Licence
 
 Copyright (c) 2016 Maciej Schmidt
