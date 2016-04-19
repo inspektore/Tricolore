@@ -14,8 +14,7 @@ class ThreadsTableSeeder extends Seeder
         DB::table('threads')->insert([
             'title' => 'Welcome to Tricolore!',
             'created_at' => Carbon\Carbon::now(),
-            'member_username' => 'Tricolore',
-            'member_id' => 0,
+            'user_id' => 1,
             'forum_id' => 0,
             'flag' => 'closed',
             'visitor' => '0.0.0.0'
