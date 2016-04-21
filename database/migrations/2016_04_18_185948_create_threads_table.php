@@ -21,8 +21,6 @@ class CreateThreadsTable extends Migration
             $table->ipAddress('visitor');
             $table->timestamps();
         });
-
-        Artisan::call('db:seed');
     }
 
     /**

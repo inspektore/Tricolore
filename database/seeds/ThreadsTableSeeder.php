@@ -11,13 +11,6 @@ class ThreadsTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('threads')->insert([
-            'title' => 'Welcome to Tricolore!',
-            'created_at' => Carbon\Carbon::now(),
-            'user_id' => 1,
-            'forum_id' => 0,
-            'flag' => 'closed',
-            'visitor' => '0.0.0.0'
-        ]);
+        factory(Tricolore\Thread::class, 5)->create();
     }
 }
