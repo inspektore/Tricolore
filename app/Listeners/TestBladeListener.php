@@ -20,8 +20,7 @@ class TestBladeListener
     /**
      * Show name
      *
-     * @throws string
-     * @return void
+     * @return string
      */
     public function showName()
     {
