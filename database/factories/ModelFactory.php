@@ -23,7 +23,7 @@ $factory->define(Tricolore\User::class, function (Faker\Generator $faker) {
 $factory->define(Tricolore\Thread::class, function (Faker\Generator $faker) {
     return [
         'title' => $faker->text(50),
-        'user_id' => mt_rand(1, 500),
+        'user_id' => mt_rand(1, 5),
         'forum_id' => mt_rand(1, 500),
         'flag' => 'open',
         'visitor' => $faker->ipv4

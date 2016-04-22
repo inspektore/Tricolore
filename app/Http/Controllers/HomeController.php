@@ -26,14 +26,4 @@ class HomeController extends Controller
     {
         return view('home');
     }
-
-    /**
-     * Show the application index
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        return view('welcome');
-    }
 }
