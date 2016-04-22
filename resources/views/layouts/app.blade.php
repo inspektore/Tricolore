@@ -77,7 +77,16 @@
         </div>
     </nav>
 
-    @yield('content')
+    <div class="container">
+        @if(Session::has('flash_message'))
+            <div class="alert alert-success">
+                <i class="fa fa-check" aria-hidden="true"></i> {{ Session::get('flash_message') }}
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            </div>
+        @endif
+
+        @yield('content')
+    </div>
 
     <!-- JavaScripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
