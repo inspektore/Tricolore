@@ -149,7 +149,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
 
         /*
-         * 3'rd Party Service Providers
+         * 3'rd Party Service Providers...
          */
         Collective\Html\HtmlServiceProvider::class,
         Themsaid\Langman\LangmanServiceProvider::class,
