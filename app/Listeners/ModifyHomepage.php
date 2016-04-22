@@ -28,6 +28,6 @@ class ModifyHomepage
      */
     public function handle(HomepageWillBeRendered $event)
     {
-        return $event->controller->default = 'home';
+        $event->controller->default = 'home';
     }
 }

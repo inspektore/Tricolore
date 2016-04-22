@@ -8,7 +8,7 @@
                 <div class="panel-heading">Dashboard</div>
 
                 <div class="panel-body">
-                    You are logged in!
+                    Hello @event('blade_test_hello_user'), You are logged in!
                 </div>
             </div>
         </div>

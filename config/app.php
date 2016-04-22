@@ -162,6 +162,7 @@ return [
         Tricolore\Providers\AuthServiceProvider::class,
         Tricolore\Providers\EventServiceProvider::class,
         Tricolore\Providers\RouteServiceProvider::class,
+        Tricolore\Providers\BladeServiceProvider::class,
 
     ],
 

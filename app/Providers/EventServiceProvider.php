@@ -19,6 +19,15 @@ class EventServiceProvider extends ServiceProvider
     ];
 
     /**
+     * Subscribed listeners
+     *
+     * @var array
+     */
+    protected $subscribe = [
+        'Tricolore\Listeners\TestBladeListener',
+    ];
+
+    /**
      * Register any other events for your application.
      *
      * @param  \Illuminate\Contracts\Events\Dispatcher  $events
