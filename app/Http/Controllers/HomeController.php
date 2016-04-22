@@ -4,9 +4,12 @@ namespace Tricolore\Http\Controllers;
 
 use Tricolore\Http\Requests;
 use Illuminate\Http\Request;
+use Event;
 
 class HomeController extends Controller
 {
+    public $default = 'home';
+
     /**
      * Create a new controller instance.
      *
@@ -24,6 +27,8 @@ class HomeController extends Controller
      */
     public function home()
     {
-        return view('home');
+        Event::fire(new \Tricolore\Events\HomepageWillBeRendered($this));
+
+        return view($this->default);
     }
 }

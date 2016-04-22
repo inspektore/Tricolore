@@ -13,8 +13,8 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        'Tricolore\Events\SomeEvent' => [
-            'Tricolore\Listeners\EventListener',
+        \Tricolore\Events\HomepageWillBeRendered::class => [
+            \Tricolore\Listeners\ModifyHomepage::class,
         ],
     ];
 
