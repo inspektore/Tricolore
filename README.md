@@ -19,7 +19,7 @@ Tricolore is a fat-free environment that provides flexible solutions for create 
 - (optional-dev) Git
 - (optional-dev) Node.js (with NPM)
 
-###MIT Licence
+### MIT Licence
 
 Copyright (c) 2018 Maciej Schmidt
 
