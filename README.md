@@ -5,8 +5,6 @@
 
 Tricolore is a fat-free environment that provides flexible solutions for create and maintain an online community.
 
-------------
-
 ### Requirements
 - PHP >= 7.1.3
 - OpenSSL PHP Extension
