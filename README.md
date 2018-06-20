@@ -1,4 +1,4 @@
-## [WIP] Tricolore 
+## Tricolore 
 ##### Community environment project
 
 ------------
