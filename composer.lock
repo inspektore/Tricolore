@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1836b1d1115bb3d19717fe6e2224046e",
+    "content-hash": "8aab41b38ace1a1b6dad6c6c7241a13b",
     "packages": [
         {
             "name": "acfbentveld/laravel-datatables",

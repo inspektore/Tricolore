@@ -3,9 +3,7 @@ language: php
 sudo: false
 
 php:
-  - 7.1
   - 7.2
-  - nightly
 
 before_script:
   - composer install
@@ -13,4 +11,4 @@ before_script:
   - php artisan key:generate
 
 script:
-  - phpunit
+  - ./vendor/bin/phpunit
