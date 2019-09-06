@@ -1,0 +1,16 @@
+language: php
+
+sudo: false
+
+php:
+  - 7.1
+  - 7.2
+  - nightly
+
+before_script:
+  - composer install
+  - php -r \"file_exists('.env') || copy('.env.example', '.env');\"
+  - php artisan key:generate
+
+script:
+  - phpunit

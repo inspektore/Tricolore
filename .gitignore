@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /node_modules
 /public/hot
 /public/storage
@@ -14,6 +13,18 @@ yarn-error.log
 vendor/
 node_modules/
 npm-debug.log
+
+# Folder view configuration files
+.DS_Store
+Desktop.ini
+
+# Thumbnail cache files
+._*
+Thumbs.db
+
+# Files that might appear on external disks
+.Spotlight-V100
+.Trashes
 
 # Laravel 4 specific
 bootstrap/compiled.php
@@ -31,4 +42,3 @@ Homestead.json
 
 # Rocketeer PHP task runner and deployment package. https://github.com/rocketeers/rocketeer
 .rocketeer/
->>>>>>> 3900deffb8b0b3cab33b6a581d8ae010b9f4ac24
