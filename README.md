@@ -1,22 +1,7 @@
-## Aurora
-
+## Tricolore
 ------------
 
-Aurora is a fat-free environment that provides flexible solutions for create and maintain an online community.
-
-### Requirements
-- PHP >= 7.1.3
-- OpenSSL PHP Extension
-- PDO PHP Extension
-- Mbstring PHP Extension
-- Tokenizer PHP Extension
-- XML PHP Extension
-- Ctype PHP Extension
-- JSON PHP Extension
-- Support for PostgreSQL, MySQL, SQLite or SQL Server
-- Composer and Command Line Interface (CLI) access
-- (optional-dev) Git
-- (optional-dev) Node.js (with NPM)
+Tricolore is a fat-free environment that provides flexible solutions for create and maintain an online community.
 
 ## Author
 **Maciej Schmidt**
@@ -26,7 +11,7 @@ Aurora is a fat-free environment that provides flexible solutions for create and
 
 ### MIT Licence
 
-Copyright (c) 2018 Maciej Schmidt
+Copyright (c) 2019 Maciej Schmidt
 
 Permission is hereby granted, free of charge, to any person obtaining a copy 
 of this software and associated documentation files (the "Software"), to deal
