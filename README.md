@@ -1,4 +1,4 @@
-## Tricolore
+## Tricolore [![Build Status](https://travis-ci.org/Macsch15/Tricolore.svg?branch=master)](https://travis-ci.org/Macsch15/Tricolore)
 ------------
 
 Tricolore is a fat-free environment that provides flexible solutions for create and maintain an online community.
