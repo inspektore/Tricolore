@@ -69,7 +69,7 @@ $ cd /home/tricolore/path
 $ php artisan migrate --seed
 ```
 
-**Step 5***
+**Step 5**
 
 Run tricolore installer to create admin account.
 ```
