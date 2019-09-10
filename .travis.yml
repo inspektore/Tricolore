@@ -5,10 +5,19 @@ sudo: false
 php:
   - 7.2
 
+env:
+  - APP_ENV=local
+  - DB_CONNECTION=pgsql
+  - DB_DATABASE=travis_ci_test
+  - DB_USERNAME=postgres
+  - DB_PASSWORD=
+
 before_script:
+  - psql -c 'create database travis_ci_test;' -U postgres
   - composer install
   - php -r "file_exists('.env') || copy('.env.example', '.env');"
   - php artisan key:generate
+  - php artisan migrate
 
 script:
   - ./vendor/bin/phpunit
