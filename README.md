@@ -27,6 +27,56 @@ For development:
 ## Installation
 *Work in progress...*
 
+**Step 1**
+
+Clone repository to local machine.
+
+Hint: [How to install Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git "Git")
+
+```
+$ git clone https://github.com/Macsch15/Tricolore.git
+```
+
+**Step 2**
+
+Run composer to install required dependencies.
+
+Hint: [How to install composer](https://getcomposer.org/doc/00-intro.md "Composer")
+
+```
+$ composer install --no-dev --optimize-autoloader
+```
+
+**Step 3**
+
+Configure Tricolore in **.env** file.
+
+Most important settings to change:
+```
+DB_CONNECTION=pgsql
+DB_HOST=127.0.0.1
+DB_PORT=5432
+DB_DATABASE=database_name
+DB_USERNAME=database_user
+DB_PASSWORD=secret
+```
+
+**Step 4**
+
+Run migrations.
+```
+$ cd /home/tricolore/path
+$ php artisan migrate --seed
+```
+
+**Step 5***
+
+Run tricolore installer to create admin account.
+```
+$ php artisan tricolore:account admin
+```
+
+
 ## Pretty URLs
 **Apache (.htaccess file)**
 ```
