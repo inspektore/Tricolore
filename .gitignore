@@ -9,10 +9,10 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
-=======
 vendor/
 node_modules/
 npm-debug.log
+composer.lock
 
 # Folder view configuration files
 .DS_Store
