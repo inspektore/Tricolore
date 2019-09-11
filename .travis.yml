@@ -10,5 +10,8 @@ before_script:
   - php -r "file_exists('.env') || copy('.env.example', '.env');"
   - php artisan key:generate
 
+after_success:
+  - travis_retry php vendor/bin/php-coveralls
+
 script:
   - ./vendor/bin/phpunit
