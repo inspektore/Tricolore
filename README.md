@@ -1,4 +1,4 @@
-## Tricolore [![Build Status](https://travis-ci.org/Macsch15/Tricolore.svg?branch=master)](https://travis-ci.org/Macsch15/Tricolore) [![StyleCI](https://github.styleci.io/repos/21590926/shield?branch=master)](https://github.styleci.io/repos/21590926) [![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=Macsch15/Tricolore)](https://dependabot.com)
+## Tricolore [![Build Status](https://travis-ci.org/Macsch15/Tricolore.svg?branch=master)](https://travis-ci.org/Macsch15/Tricolore) [![Coverage Status](https://coveralls.io/repos/github/Macsch15/Tricolore/badge.svg)](https://coveralls.io/github/Macsch15/Tricolore) [![StyleCI](https://github.styleci.io/repos/21590926/shield?branch=master)](https://github.styleci.io/repos/21590926) [![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=Macsch15/Tricolore)](https://dependabot.com)
 
 Tricolore is a fat-free environment that provides flexible solutions for create and maintain an online community.
 
