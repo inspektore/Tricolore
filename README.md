@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://storage.macsch15.pl/images/JAaT9N75nOSy91tfzhCGvK0ZmOxjrf.png">
+  <img src="https://storage.macsch15.pl/images/KW7Ii9GYfRMuIkJ6bujxPlGh4nVamy.png">
 </p>
 
 
